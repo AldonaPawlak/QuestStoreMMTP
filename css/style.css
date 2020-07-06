@@ -1,0 +1,52 @@
+body {
+background-image: linear-gradient(#93FFE2, #FFF1BD);
+font-family: arial, helvetica, sans-serif;
+}
+
+html{
+height: 100%;
+}
+
+#logo{
+background-color: none;
+}
+
+.buttons{
+position: absolute;
+width: 400px;
+height: 101px;
+left: 882px;
+top: 203px;
+}
+
+input[type=text] {
+text-align: center;
+font-family: 'Poiret One', cursive;;
+font-style: normal;
+font-weight: normal;
+font-size: 24px;
+line-height: 28px;
+letter-spacing: 0.2em;
+color: #616161;
+border: 1px solid #000000;
+border-radius: 30px;
+width: 400px;
+height: 101px;
+}
+
+input[type=submit] {
+  text-align: center;
+  font-family: 'Poiret One', cursive;;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 72px;
+  line-height: 84px;
+  text-align: center;
+  letter-spacing: 0.15em;
+  color: #54745B;
+  border: 1px solid #000000;
+  border-radius: 30px;
+  width: 400px;
+  height: 101px;
+  background-color: #FFF1BD
+  }
