@@ -1,52 +1,84 @@
+@import url('https://fonts.googleapis.com/css?family=Alegreya+Sans:800');
+
 body {
-background-image: linear-gradient(#93FFE2, #FFF1BD);
-font-family: arial, helvetica, sans-serif;
+	font-family: 'Alegreya Sans', sans-serif;
+	overflow-x: hidden;
+	margin: 0;
 }
 
-html{
-height: 100%;
+header {
+	display: flex;
+	height: 10vh;
+	width: 100%;
+	background-color: gray;
+	justify-content: center;
+	align-items: center;
 }
 
-#logo{
-background-color: none;
+.nav {
+	height: 100%;
+	width: 0;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	background-color: #111;
+	opacity: .9;
+	overflow-x: hidden;
+	padding-top: 60px;
+	transition: 0.7s;
 }
 
-.buttons{
-position: absolute;
-width: 400px;
-height: 101px;
-left: 882px;
-top: 203px;
+.nav a {
+	display: block;
+	padding: 20px 30px;
+	font-size: 25px;
+	text-decoration: none;
+	color: #ccc;
 }
 
-input[type=text] {
-text-align: center;
-font-family: 'Poiret One', cursive;;
-font-style: normal;
-font-weight: normal;
-font-size: 24px;
-line-height: 28px;
-letter-spacing: 0.2em;
-color: #616161;
-border: 1px solid #000000;
-border-radius: 30px;
-width: 400px;
-height: 101px;
+.nav a:hover {
+	color: #fff;
+	transition: 0.4s;
 }
 
-input[type=submit] {
-  text-align: center;
-  font-family: 'Poiret One', cursive;;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 72px;
-  line-height: 84px;
-  text-align: center;
-  letter-spacing: 0.15em;
-  color: #54745B;
-  border: 1px solid #000000;
-  border-radius: 30px;
-  width: 400px;
-  height: 101px;
-  background-color: #FFF1BD
-  }
+.nav .close {
+	position: absolute;
+	top: 0;
+	right: 22px;
+	margin-left: 50px;
+	font-size: 30px
+}
+
+header > * {
+	color: #000;
+	font-size: 36px;
+	margin: 8px;
+}
+
+header > #hamburgerMenu {
+	position: absolute;
+	left: 8px;
+}
+
+header > #signOut {
+	position: absolute;
+	right: 2vw;
+}
+
+header > #user {
+	position: absolute;
+	right: 10vw;
+}
+
+header > #image {
+	width: 12vw;
+	height: 12vh;
+}
+
+#content {
+	margin: 8px;
+	transition: margin-left 0.7s;
+	overflow: hidden;
+	width: 100%;
+}
