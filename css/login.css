@@ -1,31 +1,13 @@
-*{
+* {
     margin: 0;
-    padding: 0;
-    position: relative;
+    padding: 0;    
 }
 
-
-
-body{
+body {
+    background-image: linear-gradient(#9d9d9d, #ffffff);
+    font-family: arial, helvetica, sans-serif;
     width: 100vw;
     height: 100vh;
-    position: absolute;
-    top: 0;
-    left: 0;
-    margin: 0;
-    padding: 0;
-}
-
-section{
-    background-color: red;
-    position: absolute;
-    width: 35vw;
-    height: 50vh;
-    top: 20vh;
-    left: 25vw;
-    margin: 0;
-    padding: 0;
-
 }
 
 section {
@@ -33,13 +15,24 @@ section {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: red;
+    position: absolute;
+    width: 35vw;
+    height: 50vh;
+    top: 20vh;
+    left: 25vw;
 }
 
 section > input {
     display: block;
+    text-align: center;
+    cursor: pointer;
 }
+
 div > input{
     display:block;
+    text-align: center;
+    cursor: pointer;
 }
 
 .container {
