@@ -14,14 +14,14 @@ body{
     padding: 0;
 }
 
-div{
+section{
     background-color: red;
     position: absolute;
     width: 35vw;
     height: 40vh;
     top: 40vh;
     left: 16.25vw;
-    maxgin: 0;
+    margin: 0;
     padding: 0;
 
 }
