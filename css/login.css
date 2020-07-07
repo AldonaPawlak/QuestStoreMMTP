@@ -1,6 +1,6 @@
 * {
     margin: 0;
-    padding: 0;    
+    padding: 0;
 }
 
 body {
@@ -26,12 +26,30 @@ section {
 section > input {
     display: block;
     text-align: center;
+    font-family: 'Poiret One', cursive;;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 2em;
+    line-height: 2.5em;
+    letter-spacing: 0.2em;
+    color: #616161;
+    border: 1px solid #000000;
+    border-radius: 30px;
     cursor: pointer;
 }
 
 div > input{
     display:block;
     text-align: center;
+    font-family: 'Poiret One', cursive;;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 2em;
+    line-height: 2.5em;
+    letter-spacing: 0.2em;
+    color: #616161;
+    border: 1px solid #000000;
+    border-radius: 30px;
     cursor: pointer;
 }
 
@@ -43,6 +61,9 @@ div > input{
 }
 
 .image {
-    width: 20%;
-    height: 20%;
+    position: absolute;
+    top: 35vh;
+    left: 2vw;
+    width: 15vw;
+    height: 30vh;
  }
