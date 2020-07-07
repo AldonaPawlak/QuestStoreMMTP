@@ -1,0 +1,26 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    width: 100vw;
+    height: 100vh;
+}
+
+div{
+    width: 35vw;
+    height: 20vh;
+    margin-top: 40vh;
+    margin-left: 27.5vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.container{
+    width: 35vw;
+    height: 5vh;
+
+}
