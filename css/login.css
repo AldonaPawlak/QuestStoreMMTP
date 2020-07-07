@@ -8,6 +8,10 @@ body {
     font-family: arial, helvetica, sans-serif;
     width: 100vw;
     height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 
 section {
@@ -15,7 +19,6 @@ section {
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    background-color: red;
     position: absolute;
     width: 50vw;
     height: 80vh;
@@ -56,19 +59,15 @@ div > input{
 }
 
 .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     width: 50vw;
+    position: relative;
+    margin-left: 50%;
 }
 
 .image {
-    position: absolute;
-    top: 35vh;
-    left: 2vw;
-    width: 15vw;
-    height: 30vh;
+    width: 20vw;
+    height: 40vh;
+    margin-left: 10%;
  }
 
  .submit {
@@ -86,3 +85,29 @@ div > input{
     border-radius: 30px;
     cursor: pointer;
  }
+
+
+.inside {
+    position: absolute;
+    top:0;
+    left:0;
+    width: 50%;
+    display:block;
+    text-align: center;
+    font-family: 'Poiret One', cursive;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 2em;
+    line-height: 2.5em;
+    letter-spacing: 0.2em;
+    color: #616161;
+    border: 1px solid #000000;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+ .hide {
+     display: none;
+     z-index: -1;
+ }
+
