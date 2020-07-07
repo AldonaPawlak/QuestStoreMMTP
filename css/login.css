@@ -13,14 +13,14 @@ body {
 section {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     background-color: red;
     position: absolute;
-    width: 35vw;
-    height: 50vh;
-    top: 20vh;
-    left: 25vw;
+    width: 50vw;
+    height: 80vh;
+    top: 10vh;
+    left: 40vw;
 }
 
 section > input {
@@ -41,7 +41,7 @@ section > input {
 div > input{
     display:block;
     text-align: center;
-    font-family: 'Poiret One', cursive;;
+    font-family: 'Poiret One', cursive;
     font-style: normal;
     font-weight: normal;
     font-size: 2em;
@@ -66,4 +66,19 @@ div > input{
     left: 2vw;
     width: 15vw;
     height: 30vh;
+ }
+
+ .submit {
+    display:block;
+    text-align: center;
+    font-family: 'Poiret One', cursive;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 2em;
+    line-height: 2.5em;
+    letter-spacing: 0.2em;
+    color: #616161;
+    border: 1px solid #000000;
+    border-radius: 30px;
+    cursor: pointer;
  }
