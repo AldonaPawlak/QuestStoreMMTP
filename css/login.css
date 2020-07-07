@@ -1,11 +1,16 @@
 *{
     margin: 0;
     padding: 0;
+    position: relative;
+
 }
 
 body{
     width: 100vw;
     height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 div{
