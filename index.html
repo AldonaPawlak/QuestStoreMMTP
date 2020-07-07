@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="eng">
 
 <head>
   <title>Quest Store</title>
@@ -17,11 +17,9 @@
   <script>
     function openSlideMenu() {
       document.getElementById('menu').style.width = '250px';
-      document.getElementById('content').style.marginLeft = '258px';
     }
     function closeSlideMenu() {
       document.getElementById('menu').style.width = '0';
-      document.getElementById('content').style.marginLeft = '8px';
     }
   </script>
 
@@ -32,14 +30,19 @@
   <header>
     <a id="hamburgerMenu" href="#" onclick="openSlideMenu()">
       <i class="fas fa-bars"></i>
+    <a href="index.html">
+      <img id="image" src="images/logo.png">
     </a>
-    <img id="image" src="images/logo.png">
-    <a id="user" href="#">
-      <i class="far fa-user-circle"></i>
-    </a>
-    <a id="signOut" href="#">
-      <i class="fas fa-sign-out-alt"></i>
-    </a>
+    <div class="topBarButtons" id="topBarButton">
+      <a id="user" href="userView.html">
+        <i class="far fa-user-circle"></i>
+        user
+      </a>
+      <a id="signOut" href="login.html">
+        <i class="fas fa-sign-out-alt"></i>
+        sign out
+      </a>
+    </div>
   </header>
 
   <div id="content">
