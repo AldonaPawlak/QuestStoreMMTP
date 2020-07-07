@@ -18,7 +18,7 @@ section{
     background-color: red;
     position: absolute;
     width: 35vw;
-    height: 40vh;
+    height: 50vh;
     top: 40vh;
     left: 16.25vw;
     margin: 0;
@@ -26,6 +26,9 @@ section{
 
 }
 
+section > input {
+    display: block;
+}
 div >input{
     display:block;
 }
