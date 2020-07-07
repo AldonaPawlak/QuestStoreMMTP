@@ -38,19 +38,15 @@ section {
 section > input {
     display: block;
 }
-div >input{
+div > input{
     display:block;
 }
 
-.container{
-
-    /*width: 35vw;*/
-    /*height: 5vh;*/
-    position: relative;
-    margin: 0;
-    padding: 0;
-    left: 0;
-
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .image {
