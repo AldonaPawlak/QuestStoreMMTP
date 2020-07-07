@@ -4,6 +4,8 @@
     position: relative;
 }
 
+
+
 body{
     width: 100vw;
     height: 100vh;
@@ -19,11 +21,18 @@ section{
     position: absolute;
     width: 35vw;
     height: 50vh;
-    top: 40vh;
-    left: 16.25vw;
+    top: 20vh;
+    left: 25vw;
     margin: 0;
     padding: 0;
 
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 section > input {
@@ -43,3 +52,8 @@ div >input{
     left: 0;
 
 }
+
+.image {
+    width: 20%;
+    height: 20%;
+ }
