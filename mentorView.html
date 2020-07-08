@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="eng">
+
+<head>
+    <title>MentorView</title>
+
+    <meta charset="UTF-8">
+    <meta name="description" content="MentorView">
+    <meta name="keywords" content="Codecool, Quest Store">
+    <meta name="author" content="John Doe">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poiret+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/mentor.css">
+
+    <script src="https://kit.fontawesome.com/bd5d5911de.js" crossorigin="anonymous"></script>
+
+    <script>
+        function openSlideMenu() {
+            document.getElementById('menu').style.width = '250px';
+        }
+        function closeSlideMenu() {
+            document.getElementById('menu').style.width = '0';
+        }
+    </script>
+
+</head>
+
+<body>
+
+<header>
+    <a id="hamburgerMenu" href="#" onclick="openSlideMenu()">
+        <i class="fas fa-bars"></i>
+    </a>
+        <a href="index.html">
+            <img id="image" src="images/logo.png">
+        </a>
+        <div class="topBarButtons" id="topBarButton">
+            <a id="user" href="userView.html">
+                <i class="far fa-user-circle"></i>
+                user
+            </a>
+            <a id="signOut" href="login.html">
+                <i class="fas fa-sign-out-alt"></i>
+                sign out
+            </a>
+        </div>
+</header>
+
+<div id="content">
+
+    <div class="students">
+            <div class="wholeSearch">
+                <input class="search" type="text" name="surname" value="Surname">
+                <button class="button"><i class="fas fa-search"></i>
+                </button>
+            </div>
+        <button class="button" class="addStudent"><i class="fas fa-trash-alt"></i></button>
+        <button class="button" class="addStudent"><i class="fas fa-arrow-up"></i></button>
+            <button class="button" class="addStudent"><i class="fas fa-plus"></i></button>
+    </div>
+<div class="belowContent">
+    <section class="listOfStudents">
+        <div class="singleStudent"><p class="studentText">  1. Mikolaj Urbanek</p></div>
+        <div class="singleStudent"><p class="studentText">  2. Marta Skarbek   </p></div>
+        <div class="singleStudent"><p class="studentText">  3. Patryk Król    </p></div>
+        <div class="singleStudent"><p class="studentText">  4. Tomasz Krogulec    </p></div>
+    </section>
+
+    <div class="formula">
+        <input class="update"  type="text" name="surname" value="Surname">
+        <input class="update"  type="text" name="name" value="Name">
+        <input class="update"  type="text" name="age" value="Age">
+    </div>
+</div>
+
+    <div class="store">
+        <p>lala</p>
+    </div>
+
+    <div class="quests">
+        <p>lala</p>
+    </div>
+
+
+</div>
+
+<div id="menu" class="nav">
+    <a href="#" class="close" onclick="closeSlideMenu()">
+        <i class="fas fa-times"></i>
+    </a>
+    <a href="#">Students</a>
+    <a href="#">Store</a>
+    <a href="#">Quests</a>
+</div>
+
+
+</body>
+
+</html>
