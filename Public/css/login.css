@@ -24,39 +24,25 @@ section {
     left: 40vw;
 }
 
-section > input {
-    margin: 0.5em 0;
-    width: 50%;
-    display: block;
-    text-align: center;
-    font-family: 'Poiret One', cursive;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 2em;
-    line-height: 2.5em;
-    letter-spacing: 0.2em;
-    color: #616161;
-    border: 1px solid #000000;
-    border-radius: 30px;
-    cursor: pointer;
-    box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.25), inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+section > input, div > input, .submit {
+width: 50%;
+display: block;
+text-align: center;
+font-family: 'Poiret One', cursive;
+font-style: normal;
+font-weight: normal;
+font-size: 2em;
+line-height: 2.5em;
+letter-spacing: 0.2em;
+color: #616161;
+border: 1px solid #000000;
+border-radius: 30px;
+cursor: pointer;
+box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.25), inset 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-div > input{
-    width: 50%;
-    display:block;
-    text-align: center;
-    font-family: 'Poiret One', cursive;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 2em;
-    line-height: 2.5em;
-    letter-spacing: 0.2em;
-    color: #616161;
-    border: 1px solid #000000;
-    border-radius: 30px;
-    cursor: pointer;
-    box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.25), inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+section > input {
+    margin: 0.5em 0;
 }
 
 .container {
@@ -72,22 +58,7 @@ div > input{
 
 .submit {
     margin: 1em 0;
-    width: 50%;
-    display:block;
-    text-align: center;
-    font-family: 'Poiret One', cursive;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 2em;
-    line-height: 2.5em;
-    letter-spacing: 0.2em;
-    color: #616161;
-    border: 1px solid #000000;
-    border-radius: 30px;
-    cursor: pointer;
-    box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.25), inset 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
-
 
 .inside {
     margin: 0.5em 0;
