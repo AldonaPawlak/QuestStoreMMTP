@@ -1,0 +1,44 @@
+#inner-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 8px 250px;
+}
+
+#inner-content *{
+    display: flex;
+    border-radius: 15px;
+}
+
+.cards-container {
+    justify-content: center;
+    margin-top: 8px;
+    background-color: lightgrey;
+    flex-wrap: wrap;
+}
+
+.artifact-card {
+    flex-direction: column;
+    background-color: #03bfcb;
+    align-items: center;
+    border-radius: 10px;
+    width: 200px;
+    margin: 1vw;
+    padding: 1vw;
+}
+
+.description{
+    font-size: 80%;
+}
+
+.artifact-card > h2 {
+    text-align: center;
+    color: white;
+}
+
+.artifact-card > img {
+    border-radius: 10px;
+}
+
+
+
