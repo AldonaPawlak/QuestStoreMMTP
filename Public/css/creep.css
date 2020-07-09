@@ -110,7 +110,7 @@ h1 {
   }
 
 .button{
-    float: right;
+    align-self: flex-end;
 	text-decoration: none;
 	background-color: #C4C4C4;
 	padding: 0.2%;

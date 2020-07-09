@@ -9,10 +9,6 @@ body {
 	padding: 0;
 }
 
-body *{
-	/*display: flex;*/
-}
-
 header {
 	display: flex;
 	height: 15vh;
