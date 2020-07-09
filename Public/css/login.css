@@ -15,7 +15,7 @@ body {
     align-items: center;
 }
 
-section {
+form {
     display: flex;
     flex-direction: column;
     /* justify-content: space-around; */
