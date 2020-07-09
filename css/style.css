@@ -1,10 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Alegreya+Sans:800');
 
 body {
+	display: flex;
+	flex-direction: column;
 	font-family: 'Alegreya Sans', sans-serif;
 	overflow-x: hidden;
 	margin: 0;
 	padding: 0;
+}
+
+body *{
+	/*display: flex;*/
 }
 
 header {
@@ -25,6 +31,10 @@ header * {
 	text-decoration: none;
 }
 
+img {
+	max-width:100%;
+	max-height:100%;
+}
 
 .topBarButtons > a {
 	flex-direction: column;
@@ -32,6 +42,7 @@ header * {
 }
 
 .nav {
+	flex-direction: column;
 	height: 100%;
 	width: 0;
 	position: fixed;
@@ -65,13 +76,10 @@ header * {
 	font-size: 30px
 }
 
-img {
-	max-width:100%;
-	max-height:100%;
-}
-
 #content {
 	display: flex;
+	justify-content: center;
+	align-content: center;
 	margin: 8px;
 	overflow: hidden;
 	width: 100%;
@@ -79,48 +87,22 @@ img {
 	align-content: center;
 }
 
-.card-container {
-	background-color: #03bfcb;
-	border-radius: 5px;
-	box-shadow: 0px 10px 20px -10px rgba(0, 0, 0, 0.75);
-	padding-top: 30px;
-	position: relative;
-	width: 350px;
-	max-width: 100%;
-	text-align: center;
+#hamburgerMenu {
+	margin: 0 75px;
 }
 
-.card-container .round {
-	border: 2px dashed red;
-	border-radius: 50%;
-	padding: 7px;
+.topBarButtons > *{
+	transition: all .2s ease-in-out  ;
 }
-
-.skills {
-	background-color: #03bfcb;
-	text-align: left;
-	padding: 15px;
-}
-
-.skills ul {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-}
-
-.skills ul li {
-	border: 1px solid #2d2747;
-	border-radius: 2px;
-	display: inline-block;
-	font-size: 12px;
-	margin: 0 7px 7px 0;
-	padding: 7px;
+.topBarButtons > *:hover{
+	transform: scale(1.1);
 }
 
 #hamburgerMenu {
-	margin-right: 150px;
+	transition: all .2s ease-in-out  ;
+}
+#hamburgerMenu:hover{
+	transform: scale(1.1);
 }
 
-.skills h6 {
-	margin-top: 8px;
-}
+
