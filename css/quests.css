@@ -5,7 +5,7 @@
     margin: 8px 250px;
 }
 
-#inner-content *{
+#inner-content * {
     display: flex;
     border-radius: 15px;
 }
@@ -17,7 +17,9 @@
     flex-wrap: wrap;
 }
 
-.artifact-card {
+.quest-card {
+    position: relative;
+    display: inline-block;
     flex-direction: column;
     background-color: #03bfcb;
     align-items: center;
@@ -27,18 +29,19 @@
     padding: 1vw;
 }
 
-.description{
+.description {
     font-size: 80%;
 }
 
-.artifact-card > h2 {
+.quest-card > h2 {
     text-align: center;
     color: white;
 }
 
-.artifact-card > img {
+.quest-card > img {
     border-radius: 10px;
 }
+
 
 
 
