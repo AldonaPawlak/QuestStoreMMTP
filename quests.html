@@ -16,6 +16,7 @@
 
 
     <script src="https://kit.fontawesome.com/bd5d5911de.js" crossorigin="anonymous"></script>
+    <script src="script.js" defer></script>
 
     <script>
         function openSlideMenu() {
@@ -26,7 +27,6 @@
             document.getElementById('menu').style.width = '0';
         }
     </script>
-
 </head>
 
 <body>
@@ -35,19 +35,19 @@
     <a id="hamburgerMenu" href="#" onclick="openSlideMenu()">
         <i class="fas fa-bars"></i>
     </a>
-        <a href="index.html">
-            <img id="image" src="images/logo.png" alt="">
+    <a href="index.html">
+        <img id="image" src="images/logo.png" alt="">
+    </a>
+    <div class="topBarButtons" id="topBarButton">
+        <a id="user" href="userView.html">
+            <i class="far fa-user-circle"></i>
+            Codecooler
         </a>
-        <div class="topBarButtons" id="topBarButton">
-            <a id="user" href="userView.html">
-                <i class="far fa-user-circle"></i>
-                Codecooler
-            </a>
-            <a id="signOut" href="login.html">
-                <i class="fas fa-sign-out-alt"></i>
-                Log out
-            </a>
-        </div>
+        <a id="signOut" href="login.html">
+            <i class="fas fa-sign-out-alt"></i>
+            Log out
+        </a>
+    </div>
 </header>
 
 <div id="content">
@@ -116,5 +116,4 @@
     </div>
 </div>
 </body>
-
 </html>
