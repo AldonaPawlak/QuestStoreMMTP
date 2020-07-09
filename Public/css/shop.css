@@ -18,6 +18,9 @@
 }
 
 .artifact-card {
+    position:relative;
+    padding-top:20px;
+    display:inline-block;
     flex-direction: column;
     background-color: lightcoral;
     align-items: center;
@@ -44,5 +47,19 @@
     border-radius: 10px;
 }
 
+.price-tag{
+    position: absolute;
+    right:5px;
+    top: 5px;
+    background: beige;
+    text-align: center;
+    border-radius: 30px 30px 30px 30px;
+    color: black;
+    border-style: solid;
+    border-width: 6px;
+    border-color: black;
+    padding:5px 10px;
+    font-size:20px;
+}
 
 
