@@ -17,7 +17,10 @@
     flex-wrap: wrap;
 }
 
-.artifact-card {
+.quest-card {
+    position:relative;
+    padding-top:20px;
+    display:inline-block;
     flex-direction: column;
     background-color: #03bfcb;
     align-items: center;
@@ -31,14 +34,15 @@
     font-size: 80%;
 }
 
-.artifact-card > h2 {
+.quest-card > h2 {
     text-align: center;
     color: white;
 }
 
-.artifact-card > img {
+.quest-card > img {
     border-radius: 10px;
 }
+
 
 
 
