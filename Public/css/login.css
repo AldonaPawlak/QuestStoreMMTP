@@ -73,6 +73,7 @@ input[name='confirm_password'] {
     display: none;
 }
 
+
 @media screen and (max-width: 740px){
     form > input, div > input, .submit, .inside {
         font-size: 12px;
@@ -91,4 +92,8 @@ input[name='confirm_password'] {
     form > input, div > input, .submit, .inside {
         width: 80%;
     }
+
+#shortcuts {
+    padding: 5em;
+
 }
