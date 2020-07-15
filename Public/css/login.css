@@ -80,7 +80,7 @@ input[name='confirm_password'] {
     }
 }
 
-@media screen and (max-width: 480px){
+@media screen and (max-width: 480px) {
     .container {
         flex-direction: column;
     }
@@ -92,8 +92,10 @@ input[name='confirm_password'] {
     form > input, div > input, .submit, .inside {
         width: 80%;
     }
+}
 
+/*
 #shortcuts {
     padding: 5em;
 
-}
+}*/
