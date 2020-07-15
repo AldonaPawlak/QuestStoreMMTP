@@ -14,15 +14,15 @@
     <script src="Public/script.js" defer></script>
 </head>
 <body>
+<div class="container">
 <img class="image" src="Public/images/logo.png">
-<section>
-    <input type="text" name="e-mail" value="E-mail address">
-    <input type="text" name="password" value="Password">
-    <div class="container">
-        <input class="inside" class="hide" type="text" name="confirm password" value="Confirm password">
-        <button class="inside" class="submit" class="login">Sign in</button>
-    </div>
-    <button class="submit">Sign Up<!-- onclick="myFunction()">Sign up--></button>
-</section>
+<form>
+    <input type="text" name="e-mail" placeholder="E-mail address" data-my="x">
+    <input type="text" name="password" placeholder="Password">
+    <input class="inside" class="hide" type="text" name="confirm_password" value="Confirm password">
+    <button class="inside" class="submit" class="login">Sign in</button>
+    <button class="submit">Sign Up</button>
+</form>
+</div>
 </body>
 </html>

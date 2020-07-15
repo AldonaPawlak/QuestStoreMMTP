@@ -4,17 +4,22 @@ function myFunction() {
 }
 */
 
+const form = document.querySelector('form');
+
 function showSignInForm() {
-    const confirmPassword = document.querySelector('.container > input');
-    confirmPassword.style.display = 'block';
+    const confirmPassword = document.querySelector("input[name='confirm_password']");
+    if (confirmPassword.style.display === 'block') {
+        //to do send register form to backend
+    }
+    else {
+        confirmPassword.style.display = 'block';
+    }
 }
 
 function initShowSignInForm() {
-    const signIn = document.querySelector('section > button');
+    const signIn = document.querySelector('form > .submit');
     signIn.addEventListener("click", showSignInForm)
 }
-
-initShowSignInForm();
 
 function openSlideMenu() {
     document.getElementById('menu').style.width = '250px';
@@ -23,3 +28,13 @@ function openSlideMenu() {
 function closeSlideMenu() {
     document.getElementById('menu').style.width = '0';
 }
+
+function main() {
+    initShowSignInForm();
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        /*showSignInForm();*/
+    });
+};
+
+main();
