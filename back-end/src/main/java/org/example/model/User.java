@@ -2,12 +2,12 @@ package org.example.model;
 
 public abstract class User {
 
-    int id;
-    String name;
-    String surname;
-    String email;
-    String password;
-    int roleID;
+    private int id;
+    private String name;
+    private String surname;
+    private String email;
+    private String password;
+    private int roleID;
 
     public User(int id, String name, String surname, String email, String password, int roleID) {
         this.id = id;
