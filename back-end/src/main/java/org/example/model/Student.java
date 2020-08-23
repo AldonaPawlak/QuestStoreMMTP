@@ -12,4 +12,16 @@ public class Student extends User{
         this.userDetailsID = userDetailsID;
         this.coins = coins;
     }
+
+    public int getStudentID() {
+        return studentID;
+    }
+
+    public int getUserDetailsID() {
+        return userDetailsID;
+    }
+
+    public int getCoins() {
+        return coins;
+    }
 }
