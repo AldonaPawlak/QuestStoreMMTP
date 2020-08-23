@@ -8,7 +8,7 @@ public class AddStudentDAOImplementation<Student> implements AddDAO<Student> {
 
     @Override
     public void add(Student student) {
-         dbConnection.ExecuteStatement("INSERT into user_details (name, surname, email, password, role_id, is_active) values (%s, %s ,%s ,%s, %d, %b);", student.getName(); );
+         dbConnection.ExecuteStatement(String.format("INSERT into user_details (name, surname, email, password, role_id, is_active)" + "values (%s, %s ,%s ,%s, %d, %b);", student.getName(),); );
     }
 
 }
