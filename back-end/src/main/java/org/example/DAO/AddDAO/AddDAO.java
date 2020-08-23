@@ -1,4 +1,7 @@
-package org.example.DAO;
+package org.example.DAO.AddDAO;
 
-public interface AddDAO {
+public interface AddDAO<T> {
+
+    void add(T t);
+
 }

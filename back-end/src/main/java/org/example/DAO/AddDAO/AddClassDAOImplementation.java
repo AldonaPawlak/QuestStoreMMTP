@@ -1,4 +1,10 @@
 package org.example.DAO.AddDAO;
 
-public class AddClassDAOImplementation {
+public class AddClassDAOImplementation<Class> implements AddDAO<Class> {
+
+    @Override
+    public void add(Class clas) {
+
+    }
+
 }
