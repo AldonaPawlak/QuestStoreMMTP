@@ -1,13 +1,11 @@
 package org.example;
 
-/**
- * Hello world!
- *
- */
-public class App 
+import org.example.DAO.DBConnection;
+
+public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+
     }
 }
