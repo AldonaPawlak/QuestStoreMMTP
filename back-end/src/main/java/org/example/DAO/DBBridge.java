@@ -23,4 +23,5 @@ public class DBBridge {
     public String getDBPassword() {
         return DBPassword;
     }
+
 }

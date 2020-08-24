@@ -1,25 +1,37 @@
 package org.example.config;
 
-import jdk.nashorn.internal.parser.JSONParser;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class JSONreader {
 
-    public void read() {
+    public Map<String, String> JSONread() {
+        Map<String, String> connectionData = new HashMap<String, String>();
         JSONParser parser = new JSONParser();
         try {
-            Object obj = parser.parse(new FileReader("/Users/User/Desktop/course.json"));
-            JSONObject jsonObject = (JSONObject)obj;
-            String name = (String)jsonObject.get("Name");
-            String course = (String)jsonObject.get("Course");
-            JSONArray subjects = (JSONArray)jsonObject.get("Subjects");
-            System.out.println("Name: " + name);
-            System.out.println("Course: " + course);
-            System.out.println("Subjects:");
-
-        } catch(Exception e) {
+            Object obj = parser.parse(new FileReader("/home/jadwiga.skarbek/CodeCool/WEB/TW/QuestStoreMMTP/back-end/src/main/java/org/example/resources/DBdata.json"));
+            JSONObject jsonObject =  (JSONObject) obj;
+            String connection = (String) jsonObject.get("DBConnection");
+            connectionData.put("connection", connection);
+            String user = (String) jsonObject.get("DBUser");
+            connectionData.put("user", user);
+            String password = (String) jsonObject.get("DBPassword");
+            connectionData.put("password", password);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         }
+        return connectionData;
     }
 
 }

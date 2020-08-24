@@ -1,5 +1,7 @@
 package org.example.DAO;
 
+import org.example.config.JSONreader;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
@@ -8,7 +10,8 @@ public class DBConnection {
 
     Connection connection = null;
     Statement statement = null;
-    DBBridge dbBridge = new DBBridge("jdbc:postgresql://ec2-54-217-236-206.eu-west-1.compute.amazonaws.com/dfqdddasahi8nl?sslmode=require", "lahabwdfwwaevk", "39b2388bcffdfc7917aef79f445a3a97d284e50182b9f8a0e808c9706591964e");
+    JSONreader reader = new JSONreader();
+    DBBridge dbBridge = new DBBridge(reader.JSONread().get("connection"), reader.JSONread().get("user"), reader.JSONread().get("password"));
 
     public void Connection() {
         try {

@@ -1,3 +1,4 @@
+/*
 package org.example.DAO.AddDAO;
 
 import org.example.DAO.DBConnection;
@@ -12,3 +13,4 @@ public class AddStudentDAOImplementation<Student> implements AddDAO<Student> {
     }
 
 }
+*/
