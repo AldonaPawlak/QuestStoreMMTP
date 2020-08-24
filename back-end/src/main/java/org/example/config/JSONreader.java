@@ -11,6 +11,8 @@ import java.util.Map;
 
 public class JSONreader {
 
+    //TODO fix path to file!!!
+
     public Map<String, String> JSONread() {
         Map<String, String> connectionData = new HashMap<String, String>();
         JSONParser parser = new JSONParser();
