@@ -8,8 +8,9 @@ public abstract class User {
     private String email;
     private String password;
     private int roleID;
+    private boolean isActive;
 
-    public User(int id, String name, String surname, String email, String password, int roleID) {
+    public User(int id, String name, String surname, String email, String password, int roleID, boolean isActive) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -41,4 +42,9 @@ public abstract class User {
     public int getRoleID() {
         return roleID;
     }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
 }
