@@ -1,25 +1,28 @@
 package org.example.model;
 
+import java.util.UUID;
+
 public abstract class User {
 
-    private int id;
+    private UUID id;
     private String name;
     private String surname;
     private String email;
     private String password;
-    private int roleID;
+    private UUID roleID;
     private boolean isActive;
 
-    public User(int id, String name, String surname, String email, String password, int roleID, boolean isActive) {
+    public User(UUID id, String name, String surname, String email, String password, UUID roleID, boolean isActive) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.password = password;
         this.roleID = roleID;
+        this.isActive = isActive;
     }
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
@@ -39,7 +42,7 @@ public abstract class User {
         return password;
     }
 
-    public int getRoleID() {
+    public UUID getRoleID() {
         return roleID;
     }
 

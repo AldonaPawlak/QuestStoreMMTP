@@ -1,32 +1,34 @@
 package org.example.model;
 
+import java.util.UUID;
+
 public class StudentQuest {
 
-    private int id;
-    private int questID;
-    private  int statusID;
-    private int studentID;
+    private UUID id;
+    private UUID questID;
+    private  UUID statusID;
+    private UUID studentID;
 
-    public StudentQuest(int id, int questID, int statusID, int studentID) {
+    public StudentQuest(UUID id, UUID questID, UUID statusID, UUID studentID) {
         this.id = id;
         this.questID = questID;
         this.statusID = statusID;
         this.studentID = studentID;
     }
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
-    public int getQuestID() {
+    public UUID getQuestID() {
         return questID;
     }
 
-    public int getStatusID() {
+    public UUID getStatusID() {
         return statusID;
     }
 
-    public int getStudentID() {
+    public UUID getStudentID() {
         return studentID;
     }
 }

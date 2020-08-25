@@ -1,15 +1,17 @@
 package org.example.model;
 
+import java.util.UUID;
+
 public class Artifact {
 
-    private int id;
+    private UUID id;
     private String name;
     private int price;
-    private  int categoryID;
+    private  UUID categoryID;
     private  String description;
-    private  int artifactTypeID;
+    private  UUID artifactTypeID;
 
-    public Artifact(int id, String name, int price, int categoryID, String description, int artifactTypeID) {
+    public Artifact(UUID id, String name, int price, UUID categoryID, String description, UUID artifactTypeID) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -18,7 +20,7 @@ public class Artifact {
         this.artifactTypeID = artifactTypeID;
     }
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
@@ -30,7 +32,7 @@ public class Artifact {
         return price;
     }
 
-    public int getCategoryID() {
+    public UUID getCategoryID() {
         return categoryID;
     }
 
@@ -38,7 +40,7 @@ public class Artifact {
         return description;
     }
 
-    public int getArtifactTypeID() {
+    public UUID getArtifactTypeID() {
         return artifactTypeID;
     }
 }

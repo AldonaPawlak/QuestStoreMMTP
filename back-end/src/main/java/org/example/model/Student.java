@@ -1,23 +1,25 @@
 package org.example.model;
 
+import java.util.UUID;
+
 public class Student extends User {
 
-    private int studentID;
-    private int userDetailsID;
+    private UUID studentID;
+    private UUID userDetailsID;
     private int coins;
 
-    public Student(int id, String name, String surname, String email, String password, int roleID, int studentID, int userDetailsID, int coins, boolean isActive) {
+    public Student(UUID id, String name, String surname, String email, String password, UUID roleID, UUID studentID, UUID userDetailsID, int coins, boolean isActive) {
         super(id, name, surname, email, password, roleID, isActive);
         this.studentID = studentID;
         this.userDetailsID = userDetailsID;
         this.coins = coins;
     }
 
-    public int getStudentID() {
+    public UUID getStudentID() {
         return studentID;
     }
 
-    public int getUserDetailsID() {
+    public UUID getUserDetailsID() {
         return userDetailsID;
     }
 
