@@ -3,7 +3,7 @@ package org.example.DAO.AddDAO;
 import org.example.DAO.DBConnection;
 import org.example.model.Artifact;
 
-public class AddArtifactDAOImplementation implements AddDAO<org.example.model.Artifact> {
+public class AddArtifactDAOImplementation implements AddDAO<Artifact> {
 
     DBConnection dbConnection = new DBConnection();
 
