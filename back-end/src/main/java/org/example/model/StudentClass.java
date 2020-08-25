@@ -1,20 +1,22 @@
 package org.example.model;
 
+import java.util.UUID;
+
 public class StudentClass {
 
-    private int classID;
-    private int studentID;
+    private UUID classID;
+    private UUID studentID;
 
-    public StudentClass(int classID, int studentID) {
+    public StudentClass(UUID classID, UUID studentID) {
         this.classID = classID;
         this.studentID = studentID;
     }
 
-    public int getClassID() {
+    public UUID getClassID() {
         return classID;
     }
 
-    public int getStudentID() {
+    public UUID getStudentID() {
         return studentID;
     }
 }

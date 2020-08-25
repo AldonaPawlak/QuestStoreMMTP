@@ -1,24 +1,26 @@
 package org.example.model;
 
+import java.util.UUID;
+
 public class StudentArtifact {
 
-    private  int id;
-    private  int artifactID;
+    private UUID id;
+    private  UUID artifactID;
     private boolean status;
-    private  int studentID;
+    private  UUID studentID;
 
-    public StudentArtifact(int id, int artifactID, boolean status, int studentID) {
+    public StudentArtifact(UUID id, UUID artifactID, boolean status, UUID studentID) {
         this.id = id;
         this.artifactID = artifactID;
         this.status = status;
         this.studentID = studentID;
     }
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
-    public int getArtifactID() {
+    public UUID getArtifactID() {
         return artifactID;
     }
 
@@ -26,7 +28,7 @@ public class StudentArtifact {
         return status;
     }
 
-    public int getStudentID() {
+    public UUID getStudentID() {
         return studentID;
     }
 }
