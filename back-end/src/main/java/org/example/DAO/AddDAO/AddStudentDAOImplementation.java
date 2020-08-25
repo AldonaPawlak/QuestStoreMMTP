@@ -2,7 +2,7 @@ package org.example.DAO.AddDAO;
 
 import org.example.DAO.DBConnection;
 
-public class AddStudentDAOImplementation<Student> implements AddDAO<org.example.model.Student> {
+public class AddStudentDAOImplementation implements AddDAO<org.example.model.Student> {
 
     DBConnection dbConnection = new DBConnection();
 
