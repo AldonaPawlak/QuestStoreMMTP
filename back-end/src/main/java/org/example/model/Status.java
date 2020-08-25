@@ -1,16 +1,18 @@
 package org.example.model;
 
+import java.util.UUID;
+
 public class Status {
 
-    private int id;
+    private UUID id;
     private  String name;
 
-    public Status(int id, String name) {
+    public Status(UUID id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 

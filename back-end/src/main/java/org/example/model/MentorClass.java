@@ -1,20 +1,22 @@
 package org.example.model;
 
+import java.util.UUID;
+
 public class MentorClass {
 
-    private  int classID;
-    private  int mentorID;
+    private UUID classID;
+    private  UUID mentorID;
 
-    public MentorClass(int classID, int mentorID) {
+    public MentorClass(UUID classID, UUID mentorID) {
         this.classID = classID;
         this.mentorID = mentorID;
     }
 
-    public int getClassID() {
+    public UUID getClassID() {
         return classID;
     }
 
-    public int getMentorID() {
+    public UUID getMentorID() {
         return mentorID;
     }
 }

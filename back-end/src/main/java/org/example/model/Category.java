@@ -1,16 +1,18 @@
 package org.example.model;
 
+import java.util.UUID;
+
 public class Category {
 
-    private  int id;
+    private UUID id;
     private  String name;
 
-    public Category(int id, String name) {
+    public Category(UUID id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 

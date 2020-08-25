@@ -1,20 +1,22 @@
 package org.example.model;
 
+import java.util.UUID;
+
 public class Quest {
 
-    private  int id;
+    private UUID id;
     private  String name;
     private String description;
     private int value;
 
-    public Quest(int id, String name, String description, int value) {
+    public Quest(UUID id, String name, String description, int value) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.value = value;
     }
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
