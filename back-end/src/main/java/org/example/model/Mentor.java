@@ -11,4 +11,8 @@ public class Mentor extends User {
         this.mentorID = mentorID;
     }
 
+    public UUID getMentorID() {
+        return mentorID;
+    }
+
 }
