@@ -5,7 +5,11 @@ import org.example.model.Class;
 
 public class AddClassDaoImplementation implements AddDAO<Class> {
 
-    DBConnection dbConnection = new DBConnection();
+    DBConnection dbConnection;
+
+    public AddClassDaoImplementation(DBConnection dbConnection) {
+        this.dbConnection = dbConnection;
+    }
 
     @Override
     public void add(Class cclass) {

@@ -5,7 +5,11 @@ import org.example.model.Artifact;
 
 public class AddArtifactDAOImplementation implements AddDAO<Artifact> {
 
-    DBConnection dbConnection = new DBConnection();
+    DBConnection dbConnection;
+
+    public AddArtifactDAOImplementation(DBConnection dbConnection) {
+        this.dbConnection = dbConnection;
+    }
 
     @Override
     public void add(Artifact artifact) {

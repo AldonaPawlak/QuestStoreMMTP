@@ -5,7 +5,11 @@ import org.example.model.Student;
 
 public class AddStudentDAOImplementation implements AddDAO<Student> {
 
-    DBConnection dbConnection = new DBConnection();
+    DBConnection dbConnection;
+
+    public AddStudentDAOImplementation(DBConnection dbConnection) {
+        this.dbConnection = dbConnection;
+    }
 
     @Override
     public void add(Student student) {
