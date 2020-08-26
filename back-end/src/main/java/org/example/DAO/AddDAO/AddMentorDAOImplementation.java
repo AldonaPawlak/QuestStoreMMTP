@@ -5,7 +5,11 @@ import org.example.model.Mentor;
 
 public class AddMentorDAOImplementation implements AddDAO<Mentor> {
 
-    DBConnection dbConnection = new DBConnection();
+    DBConnection dbConnection;
+
+    public AddMentorDAOImplementation(DBConnection dbConnection) {
+        this.dbConnection = dbConnection;
+    }
 
     @Override
     public void add(Mentor mentor) {
