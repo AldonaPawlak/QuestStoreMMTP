@@ -8,8 +8,8 @@ import java.sql.Statement;
 
 public class DBConnection {
 
-    Connection connection = null;
-    Statement statement = null;
+    public Statement statement;
+    public Connection connection;
     JSONreader reader = new JSONreader();
     DBBridge dbBridge = new DBBridge(reader.JSONread().get("connection"), reader.JSONread().get("user"), reader.JSONread().get("password"));
 
