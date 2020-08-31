@@ -3,7 +3,8 @@ package org.example.DAO.AddDAO;
 import org.example.DAO.DBConnection;
 import org.example.model.Class;
 
-public class AddClassDaoImplementation implements AddDAO<Class> {
+public class
+AddClassDaoImplementation implements AddDAO<Class> {
 
     DBConnection dbConnection;
 

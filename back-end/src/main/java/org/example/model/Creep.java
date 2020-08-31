@@ -10,4 +10,8 @@ public class Creep extends User {
         super(id, name, surname, email, password, roleID, isActive);
         this.creepID = creepID;
     }
+
+    public UUID getCreepID() {
+        return creepID;
+    }
 }
