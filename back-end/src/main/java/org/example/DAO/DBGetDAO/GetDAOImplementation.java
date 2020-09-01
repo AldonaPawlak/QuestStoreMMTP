@@ -55,7 +55,7 @@ public class GetDAOImplementation implements GetDAO {
             UUID userDetailsID;
             while (mentorsSet.next()) {
                 mentorID = UUID.fromString(mentorsSet.getString("id"));
-                userDetailsID = UUID.fromString(mentorsSet.getString("user_detaild_id"));
+                userDetailsID = UUID.fromString(mentorsSet.getString("user_details_id"));
                 while (usersSet.next()) {
                     if (userDetailsID.equals(usersSet.getString("id"))) {
                         id = UUID.fromString(usersSet.getString("id"));
@@ -95,7 +95,7 @@ public class GetDAOImplementation implements GetDAO {
             int coins;
             while (studentsSet.next()) {
                 studentID = UUID.fromString(studentsSet.getString("id"));
-                userDetailsID = UUID.fromString(studentsSet.getString("user_detaild_id"));
+                userDetailsID = UUID.fromString(studentsSet.getString("user_details_id"));
                 coins = studentsSet.getInt("coins");
                 while (usersSet.next()) {
                     if (userDetailsID.equals(usersSet.getString("id"))) {
@@ -134,7 +134,7 @@ public class GetDAOImplementation implements GetDAO {
             UUID userDetailsID;
             while (creepsSet.next()) {
                 creepID = UUID.fromString(creepsSet.getString("id"));
-                userDetailsID = UUID.fromString(creepsSet.getString("user_detaild_id"));
+                userDetailsID = UUID.fromString(creepsSet.getString("user_details_id"));
                 while (usersSet.next()) {
                     if (userDetailsID.equals(usersSet.getString("id"))) {
                         id = UUID.fromString(usersSet.getString("id"));
