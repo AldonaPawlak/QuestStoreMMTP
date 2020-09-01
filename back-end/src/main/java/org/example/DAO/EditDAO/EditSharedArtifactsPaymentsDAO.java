@@ -12,6 +12,6 @@ public class EditSharedArtifactsPaymentsDAO implements EditDAO<SharedArtifactPay
 
     @Override
     public void edit(SharedArtifactPayment sharedArtifactPayment) {
-        dbConnection.ExecuteStatement(String.format("UPDATE shared_artifacts_payments SET payment = %d WHERE id = %s;", sharedArtifactPayment.getPayment(), sharedArtifactPayment.getId()));
+        dbConnection.ExecuteStatement(String.format("UPDATE shared_artifacts_payments SET payment = %d WHERE id = '%s';", sharedArtifactPayment.getPayment(), sharedArtifactPayment.getId()));
     }
 }

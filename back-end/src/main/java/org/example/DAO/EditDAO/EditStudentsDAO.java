@@ -12,6 +12,6 @@ public class EditStudentsDAO implements EditDAO<Student> {
 
     @Override
     public void edit(Student student) {
-        dbConnection.ExecuteStatement(String.format("UPDATE students SET coins = %d WHERE id = %s;", student.getCoins(), student.getStudentID()));
+        dbConnection.ExecuteStatement(String.format("UPDATE students SET coins = %d WHERE id = '%s';", student.getCoins(), student.getStudentID()));
     }
 }

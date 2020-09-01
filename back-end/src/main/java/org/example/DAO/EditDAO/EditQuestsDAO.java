@@ -13,6 +13,6 @@ public class EditQuestsDAO implements EditDAO<Quest> {
 
     @Override
     public void edit(Quest quest) {
-        dbConnection.ExecuteStatement(String.format("UPDATE quests SET name = %s, description = %s, value = %d WHERE id = %s;", quest.getName(), quest.getDescription(), quest.getValue(), quest.getId()));
+        dbConnection.ExecuteStatement(String.format("UPDATE quests SET name = '%s', description = '%s', value = %d WHERE id = '%s';", quest.getName(), quest.getDescription(), quest.getValue(), quest.getId()));
     }
 }

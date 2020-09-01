@@ -14,7 +14,7 @@ AddClassDaoImplementation implements AddDAO<Class> {
 
     @Override
     public void add(Class cclass) {
-        dbConnection.ExecuteStatement(String.format("INSERT INTO classes (id, name) VALUES (%s, %s);", cclass.getId(), cclass.getName()));
+        dbConnection.ExecuteStatement(String.format("INSERT INTO classes (id, name) VALUES ('%s', '%s');", cclass.getId(), cclass.getName()));
     }
 
 }

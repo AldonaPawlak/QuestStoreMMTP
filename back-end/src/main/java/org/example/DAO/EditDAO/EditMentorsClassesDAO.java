@@ -13,6 +13,6 @@ public class EditMentorsClassesDAO implements EditDAO<MentorClass> {
 
     @Override
     public void edit(MentorClass mentorClass) {
-        dbConnection.ExecuteStatement(String.format("UPDATE mentors_classes SET mentors_id = %s WHERE classes_id = %s;", mentorClass.getMentorID(), mentorClass.getClassID()));
+        dbConnection.ExecuteStatement(String.format("UPDATE mentors_classes SET mentors_id = '%s' WHERE classes_id = '%s';", mentorClass.getMentorID(), mentorClass.getClassID()));
     }
 }

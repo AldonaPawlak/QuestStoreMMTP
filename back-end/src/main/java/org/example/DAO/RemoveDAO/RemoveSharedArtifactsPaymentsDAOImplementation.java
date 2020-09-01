@@ -13,6 +13,6 @@ public class RemoveSharedArtifactsPaymentsDAOImplementation implements RemoveDAO
 
     @Override
     public void remove(SharedArtifactPayment sharedArtifactPayment) {
-        dbConnection.ExecuteStatement(String.format("REMOVE FROM shared_artifacts_payments %s;", sharedArtifactPayment.getId()));
+        dbConnection.ExecuteStatement(String.format("REMOVE FROM shared_artifacts_payments '%s';", sharedArtifactPayment.getId()));
     }
 }

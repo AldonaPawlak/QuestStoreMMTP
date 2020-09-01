@@ -14,6 +14,6 @@ public class RemoveMentorClassDAOImplementation implements RemoveDAO<MentorClass
 
     @Override
     public void remove(MentorClass mentorClass) {
-        dbConnection.ExecuteStatement(String.format("DELETE FROM mentors_classes %s", mentorClass.getClassID()));
+        dbConnection.ExecuteStatement(String.format("DELETE FROM mentors_classes '%s';", mentorClass.getClassID()));
     }
 }

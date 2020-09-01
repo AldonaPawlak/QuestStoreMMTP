@@ -12,7 +12,7 @@ public class AddQuestDAOImplementation implements AddDAO<Quest> {
 
     @Override
     public void add(Quest quest) {
-        dbConnection.ExecuteStatement(String.format("INSERT INTO quests (id, name, description, value) VALUES (%s, %s ,%s ,%d);", quest.getId(), quest.getName(), quest.getDescription(), quest.getValue()));
+        dbConnection.ExecuteStatement(String.format("INSERT INTO quests (id, name, description, value) VALUES ('%s', '%s' ,'%s' ,'%d');", quest.getId(), quest.getName(), quest.getDescription(), quest.getValue()));
     }
 
 

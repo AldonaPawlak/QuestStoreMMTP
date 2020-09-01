@@ -13,6 +13,6 @@ public class EditArtifactDAO implements EditDAO<Artifact> {
 
     @Override
     public void edit(Artifact artifact) {
-        dbConnection.ExecuteStatement(String.format("UPDATE artifacts SET name = %s, price = %d, category_id = %s, description = %s, artifact_type_id = %s WHERE id = %s;", artifact.getName(), artifact.getPrice(), artifact.getCategoryID(), artifact.getDescription(), artifact.getArtifactTypeID(), artifact.getId()));
+        dbConnection.ExecuteStatement(String.format("UPDATE artifacts SET name = '%s', price = %d, category_id = '%s', description = '%s', artifact_type_id = '%s' WHERE id = '%s';", artifact.getName(), artifact.getPrice(), artifact.getCategoryID(), artifact.getDescription(), artifact.getArtifactTypeID(), artifact.getId()));
     }
 }

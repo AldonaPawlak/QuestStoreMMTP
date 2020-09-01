@@ -12,6 +12,6 @@ public class EditUserDetailsDAO implements EditDAO<User> {
 
     @Override
     public void edit(User user) {
-        dbConnection.ExecuteStatement(String.format("UPDATE user_details SET name = %s, surname = %s, email = %s, password = %s, role_id = %s, is_active = %b WHERE id = %s;", user.getName(), user.getSurname(), user.getEmail(), user.getPassword(), user.getRoleID(), user.isActive(), user.getId()));
+        dbConnection.ExecuteStatement(String.format("UPDATE user_details SET name = '%s', surname = '%s', email = '%s', password = '%s', role_id = '%s', is_active = '%b' WHERE id = '%s;'", user.getName(), user.getSurname(), user.getEmail(), user.getPassword(), user.getRoleID(), user.isActive(), user.getId()));
     }
 }

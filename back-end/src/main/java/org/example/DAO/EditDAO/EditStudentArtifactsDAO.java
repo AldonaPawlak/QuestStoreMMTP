@@ -12,6 +12,6 @@ public class EditStudentArtifactsDAO implements EditDAO<StudentArtifact> {
 
     @Override
     public void edit(StudentArtifact studentArtifact) {
-        dbConnection.ExecuteStatement(String.format("UPDATE student_artifacts SET status = % WHERE id = %s;", studentArtifact.isStatus(), studentArtifact.getId()));
+        dbConnection.ExecuteStatement(String.format("UPDATE student_artifacts SET status = '%b' WHERE id = '%s';", studentArtifact.isStatus(), studentArtifact.getId()));
     }
 }
