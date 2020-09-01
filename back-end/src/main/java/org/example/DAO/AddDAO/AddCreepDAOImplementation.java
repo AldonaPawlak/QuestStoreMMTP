@@ -15,7 +15,7 @@ public class AddCreepDAOImplementation implements AddDAO<Creep>{
 
     @Override
     public void add(Creep creep) {
-        dbConnection.ExecuteStatement(String.format("INSERT INTO user_details(id, name, surname, email, password, role_id, is_active) VALUES (%s, %s ,%s ,%s, %s, 1, true);", creep.getId(), creep.getName(), creep.getSurname(), creep.getEmail(), creep.getPassword()));
-        dbConnection.ExecuteStatement(String.format("INSERT INTO creep(id, user_details_id) VALUES (%s, %s)", creep.getId(), creep.getCreepID()));
+        dbConnection.ExecuteStatement(String.format("INSERT INTO user_details(id, name, surname, email, password, role_id, is_active) VALUES (%s, %s ,%s ,%s, %s, 1, true);", creep.getUserDetailsID(), creep.getName(), creep.getSurname(), creep.getEmail(), creep.getPassword()));
+        dbConnection.ExecuteStatement(String.format("INSERT INTO creep(id, user_details_id) VALUES (%s, %s)", creep.getCreepID(), creep.getUserDetailsID()));
     }
 }
