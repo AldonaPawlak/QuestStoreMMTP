@@ -1,7 +1,6 @@
 package org.example.DAO.DBGetDAO;
 
 import org.example.DAO.DBConnection;
-import org.example.DAO.GetDAO;
 import org.example.model.Student;
 
 import java.sql.ResultSet;
@@ -31,21 +30,27 @@ public class GetDAOImplementation implements GetDAO {
     }
 
     @Override
-    public List<Student> getAllEntries(String query) {
+    public List<?> getAll(String query) {
+        return null;
+    }
+
+/*    @Override
+    public List<Student> getAll(String query, String secondQuery) {
         List<Student> allStudents = new ArrayList<>();
-   /*     try {
-            ResultSet dataSet = getDataSet(query);
+        try {
+            ResultSet usersSet = getDataSet(secondQuery);
+            ResultSet studentsSet = getDataSet(query);
             System.out.println("Got record succesfully.\n");
             while (dataSet.next()) {
                 final String oneEntry = dataSet.getString("entry");
                 final String name = dataSet.getString("name");
                 final String date = dataSet.getString("date");
-                Entry entry = new Entry(oneEntry, name, date);
-                allEntries.add(entry);
+                Student student = new Student(UUID id, String name, String surname, String email, String password, UUID roleID, UUID studentID, UUID userDetailsID, int coins, boolean isActive);
+                allStudents.add(student);
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }*/
+        }
         return allStudents;
-    }
+    }*/
 }

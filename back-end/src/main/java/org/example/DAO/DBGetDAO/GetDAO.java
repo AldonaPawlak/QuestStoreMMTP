@@ -1,6 +1,4 @@
-package org.example.DAO;
-
-import org.example.model.Student;
+package org.example.DAO.DBGetDAO;
 
 import java.sql.ResultSet;
 import java.util.List;
@@ -8,6 +6,7 @@ import java.util.List;
 public interface GetDAO {
 
     ResultSet getDataSet(String query);
-    public List<Student> getAllEntries(String query);
+    List<?> getAll(String query);
+    List<?> getAll(String query, String secondQuery);
 
 }
