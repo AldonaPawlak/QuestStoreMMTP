@@ -13,7 +13,7 @@ public class RemoveCreepDAOImplementation implements RemoveDAO<Creep> {
 
     @Override
     public void remove(Creep creep) {
-        dbConnection.ExecuteStatement(String.format("DELETE FROM user_details WHERE id = %s;", creep.getId()));
-        dbConnection.ExecuteStatement(String.format("DELETE FROM creep WHERE id = %s", creep.getId()));
+        dbConnection.ExecuteStatement(String.format("DELETE FROM user_details WHERE id = %s;", creep.getUserDetailsID()));
+        dbConnection.ExecuteStatement(String.format("DELETE FROM creep WHERE id = %s", creep.getUserDetailsID()));
     }
 }

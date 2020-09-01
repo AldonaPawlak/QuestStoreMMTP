@@ -13,7 +13,7 @@ public class RemoveMentorDAOImplementation implements RemoveDAO<Mentor> {
 
     @Override
     public void remove(Mentor mentor) {
-        dbConnection.ExecuteStatement(String.format("DELETE FROM user_details WHERE id = %s;", mentor.getId()));
+        dbConnection.ExecuteStatement(String.format("DELETE FROM user_details WHERE id = %s;", mentor.getUserDetailsID()));
         dbConnection.ExecuteStatement(String.format("DELETE FROM mentors %s;", mentor.getMentorID()));
     }
 

@@ -13,7 +13,7 @@ public class RemoveStudentDAOImplementation implements RemoveDAO<Student> {
     
     @Override
     public void remove(Student student) {
-        dbConnection.ExecuteStatement(String.format("REMOVE FROM user_details %s;", student.getId()));
+        dbConnection.ExecuteStatement(String.format("REMOVE FROM user_details %s;", student.getUserDetailsID()));
         dbConnection.ExecuteStatement(String.format("REMOVE FROM students %s;", student.getStudentID()));
     }
 }
