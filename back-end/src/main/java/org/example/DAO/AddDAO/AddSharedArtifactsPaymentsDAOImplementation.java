@@ -14,7 +14,7 @@ public class AddSharedArtifactsPaymentsDAOImplementation implements AddDAO<Share
 
     @Override
     public void add(SharedArtifactPayment sharedArtifactPayment) {
-        dbConnection.ExecuteStatement(String.format("INSERT INTO shared_artifacts_payments(id, student_id, student_artifacts_id, payment) VALUES (%s, %s, %s, %d);", sharedArtifactPayment.getId(), sharedArtifactPayment.getStudentID(), sharedArtifactPayment.getStudentArtifactID(), sharedArtifactPayment.getPayment()));
+        dbConnection.ExecuteStatement(String.format("INSERT INTO shared_artifacts_payments(id, student_id, student_artifacts_id, payment) VALUES ('%s', '%s', '%s', '%d');", sharedArtifactPayment.getId(), sharedArtifactPayment.getStudentID(), sharedArtifactPayment.getStudentArtifactID(), sharedArtifactPayment.getPayment()));
 
     }
 }

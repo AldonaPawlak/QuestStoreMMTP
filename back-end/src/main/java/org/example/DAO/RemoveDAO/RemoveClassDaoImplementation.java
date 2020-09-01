@@ -13,7 +13,7 @@ public class RemoveClassDaoImplementation implements RemoveDAO<Class> {
 
     @Override
     public void remove(Class cclass) {
-        dbConnection.ExecuteStatement(String.format("DELETE FROM classes WHERE id = %s;", cclass.getId()));
+        dbConnection.ExecuteStatement(String.format("DELETE FROM classes WHERE id = '%s';", cclass.getId()));
     }
 
 }

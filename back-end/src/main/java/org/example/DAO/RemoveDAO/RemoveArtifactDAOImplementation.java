@@ -13,7 +13,7 @@ public class RemoveArtifactDAOImplementation implements RemoveDAO<Artifact> {
 
     @Override
     public void remove(Artifact artifact) {
-        dbConnection.ExecuteStatement(String.format("DELETE FROM artifacts WHERE id = %s;", artifact.getId()));
+        dbConnection.ExecuteStatement(String.format("DELETE FROM artifacts WHERE id = '%s';", artifact.getId()));
     }
 
 }

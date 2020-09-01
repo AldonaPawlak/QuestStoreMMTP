@@ -14,7 +14,7 @@ public class AddMentorClassDAOImplementation implements AddDAO<MentorClass> {
 
     @Override
     public void add(MentorClass mentorClass) {
-        dbConnection.ExecuteStatement(String.format("INSERT INTO mentors_classes(classes_id, mentors_id) VALUES(%s, %s)", mentorClass.getClassID(),mentorClass.getMentorID()));
+        dbConnection.ExecuteStatement(String.format("INSERT INTO mentors_classes(classes_id, mentors_id) VALUES('%s', '%s')", mentorClass.getClassID(),mentorClass.getMentorID()));
 
     }
 }

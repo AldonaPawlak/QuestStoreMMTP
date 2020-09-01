@@ -13,7 +13,7 @@ public class AddArtifactDAOImplementation implements AddDAO<Artifact> {
 
     @Override
     public void add(Artifact artifact) {
-        dbConnection.ExecuteStatement(String.format("INSERT INTO artifacts (id, name, price, category_id, description, artifact_type_id) VALUES(%s, %s, %d, %s, %s, %s);", artifact.getId(), artifact.getName(), artifact.getCategoryID(), artifact.getDescription(), artifact.getArtifactTypeID()));
+        dbConnection.ExecuteStatement(String.format("INSERT INTO artifacts (id, name, price, category_id, description, artifact_type_id) VALUES('%s', '%s', '%d', '%s', '%s', '%s');", artifact.getId(), artifact.getName(), artifact.getCategoryID(), artifact.getDescription(), artifact.getArtifactTypeID()));
     }
 
 }

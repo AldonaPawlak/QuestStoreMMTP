@@ -12,7 +12,7 @@ public class RemoveQuestDAOImplementation implements RemoveDAO<Quest> {
 
     @Override
     public void remove(Quest quest) {
-        dbConnection.ExecuteStatement(String.format("REMOVE FROM quests %s;", quest.getId()));
+        dbConnection.ExecuteStatement(String.format("REMOVE FROM quests '%s';", quest.getId()));
     }
 
 
