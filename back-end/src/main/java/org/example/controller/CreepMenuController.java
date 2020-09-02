@@ -1,10 +1,21 @@
 package org.example.controller;
 
-public class CreepMenuController {
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+
+import java.io.IOException;
+import java.io.OutputStream;
+
+public class CreepMenuController implements HttpHandler {
 
 
-    public void createMentor(){
 
+    @Override
+    public void handle(HttpExchange exchange) throws IOException {
+        String response = "works";
+        exchange.sendResponseHeaders(200, response.length());
+        OutputStream os = exchange.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
     }
-
 }
