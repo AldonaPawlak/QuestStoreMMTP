@@ -62,17 +62,25 @@ public class MentorDAOImplementation implements DAO<Mentor> {
 
     @Override
     public Mentor get(UUID id) {
-        ResultSet result = daoGetSet.getDataSet(String.format("SELECT * FROM user_details, mentors WHERE user_details.id = mentors.user_details_id AND id='%s';", id));
-        final UUID userDetailsID = id;
-        final String name = result.getString("name");
-        final String surname = result.getString("surname");
-        final String email = result.getString("email");
-        final String password = result.getString("password");
-        final UUID roleID = UUID.fromString(result.getString("role_id"));
-        final UUID mentorID = UUID.fromString(result.getString("student_id"));
-        final boolean isActive = result.getBoolean("is_active");
-        Mentor mentor = new Mentor(userDetailsID, name, surname, email, password, roleID, isActive, mentorID);
-        return mentor;
+        List<Mentor> mentors = new ArrayList<>();
+        try {
+            ResultSet allMentors = daoGetSet.getDataSet(String.format("SELECT * FROM user_details, mentors WHERE user_details.id = mentors.user_details_id AND user_details_id='%s';", id));
+            while (allMentors.next()) {
+                final UUID userDetailsID = UUID.fromString(allMentors.getString("id"));
+                final String name = allMentors.getString("name");
+                final String surname = allMentors.getString("surname");
+                final String email = allMentors.getString("email");
+                final String password = allMentors.getString("password");
+                final UUID roleID = UUID.fromString(allMentors.getString("role_id"));
+                final UUID mentorID = UUID.fromString(allMentors.getString("mentor_id"));
+                final boolean isActive = allMentors.getBoolean("is_active");
+                Mentor mentor = new Mentor(userDetailsID, name, surname, email, password, roleID, isActive, mentorID);
+                mentors.add(mentor);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return mentors.get(0);
     }
 
 }

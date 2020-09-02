@@ -32,12 +32,12 @@ public class ClassDAOImplementation implements DAO<Class>{
     }
 
     @Override
-    public List<Class> getAll() throws SQLException {
+    public List<Class> getAll() {
         return null;
     }
 
     @Override
-    public Class get(UUID id) {
+    public Class get(UUID id) throws  SQLException {
         return null;
     }
 
