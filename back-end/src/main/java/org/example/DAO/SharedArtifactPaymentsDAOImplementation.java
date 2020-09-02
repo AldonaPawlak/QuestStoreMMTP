@@ -54,7 +54,21 @@ public class SharedArtifactPaymentsDAOImplementation implements DAO<SharedArtifa
 
     @Override
     public SharedArtifactPayment get(UUID id) {
-        return null;
+        List<SharedArtifactPayment> sharedArtifactPayments = new ArrayList<>();
+        try {
+            ResultSet allArtifactPayments = daoGetSet.getDataSet(String.format("SELECT * FROM shared_artifacts_payments WHERE id ='%s';", id));
+            while (allArtifactPayments.next()) {
+                final UUID artifactID = UUID.fromString(allArtifactPayments.getString("id"));
+                final UUID studentID = UUID.fromString(allArtifactPayments.getString("student_id"));
+                final UUID studentArtifactID = UUID.fromString(allArtifactPayments.getString("student_artifact_id"));
+                final int payment = allArtifactPayments.getInt("payment");
+                SharedArtifactPayment sharedArtifactPayment = new SharedArtifactPayment(artifactID, studentID, studentArtifactID, payment);
+                sharedArtifactPayments.add(sharedArtifactPayment);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sharedArtifactPayments.get(0);
     }
 
 }
