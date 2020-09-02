@@ -10,6 +10,6 @@ public interface DAO<T> {
     void remove(T t);
     void edit(T t);
     List<T> getAll() throws SQLException;
-    T get(UUID id);
+    T get(UUID id) throws SQLException;
 
 }
