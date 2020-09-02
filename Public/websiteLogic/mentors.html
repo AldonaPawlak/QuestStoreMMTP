@@ -13,11 +13,30 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/creep.css">
     <script src="https://kit.fontawesome.com/bd5d5911de.js" crossorigin="anonymous"></script>
-    <script src="../script.js" defer></script>
+<!--    <script src="../script.js" defer></script>-->
+    <script src="../mentorsScript.js" defer></script>
 
 </head>
 
 <body>
+
+<template id="mentor-template">
+    <tr>
+          <td class="name"></td>
+          <td class="surname"></td>
+          <td class="email">adrian.widlak@gmail.com</td>
+          <td class="phone">123456789</td>
+          <td>
+            <span class="profile"><a href="#!"><i class="far fa-user"></i></a></span>
+          </td>
+          <td>
+            <span class="edit-row"><a href="#!"><i class="far fa-edit"></i></a></span>
+          </td>
+          <td>
+            <button type="button">Remove</button>
+          </td>
+    </tr>
+</template>
 
   <header>
     <a id="hamburgerMenu" href="#" onclick="openSlideMenu()">
@@ -63,38 +82,8 @@
               <th>Edit</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>Adrian</td>
-              <td>Widlak</td>
-              <td>adrian.widlak@gmail.com</td>
-              <td>123456789</td>
-              <td>
-                <span class="profile"><a href="#!"><i class="far fa-user"></i></a></span>
-              </td>
-              <td>
-                <span class="edit-row"><a href="#!"><i class="far fa-edit"></i></a></span>
-              </td>
-              <td>
-                <button type="button">Remove</button>
-              </td>
-            </tr>
-            <tr>
-              <td>Wojciech</td>
-              <td>Makiela</td>
-              <td>wojciech.makiela@gmail.com</td>
-              <td>987654321</td>
-              <td>
-                <span class="profile"><a href="#!"><i class="far fa-user"></i></a></span>
-              </td>
-              <td>
-                <span class="edit-row"><a href="#!"><i class="far fa-edit"></i></a></span>
-              </td>
-              <td>
-                <button type="button">Remove</button>
-              </td>
-            </tr>
-            </tr>
+          <tbody class="mentors-container">
+
           </tbody>
         </table>
         <button id="add" type="button">Add mentor</button>
