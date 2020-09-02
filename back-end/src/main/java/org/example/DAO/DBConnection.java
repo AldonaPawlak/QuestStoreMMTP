@@ -13,7 +13,7 @@ public class DBConnection {
     JSONreader reader = new JSONreader();
     DBBridge dbBridge = new DBBridge(reader.JSONread().get("connection"), reader.JSONread().get("user"), reader.JSONread().get("password"));
 
-    public void Connection() {
+    public void connection() {
         try {
             Class.forName("org.postgresql.Driver");
             connection = DriverManager
@@ -26,8 +26,8 @@ public class DBConnection {
         }
     }
 
-    public void ExecuteStatement(String sql) {
-        Connection();
+    public void executeStatement(String sql) {
+        connection();
         try {
             statement = connection.createStatement();
             statement.executeUpdate(sql);
