@@ -32,10 +32,11 @@ public class StudentDAOImplementation implements DAO<Student> {
     @Override
     public void edit(Student student) {
         dbConnection.ExecuteStatement(String.format("UPDATE students SET coins = %d WHERE id = '%s';", student.getCoins(), student.getStudentID()));
+        dbConnection.ExecuteStatement(String.format("UPDATE user_details SET name = '%s', surname = '%s', email = '%s', password = '%s', role_id = '%s', is_active = '%b' WHERE id = '%s;'", student.getName(), student.getSurname(), student.getEmail(), student.getPassword(), student.getRoleID(), student.isActive(), student.getUserDetailsID()));
     }
 
     @Override
-    public List<Student> getAll() throws SQLException {
+    public List<Student> getAll() {
         List<Student> students = new ArrayList<>();
         try {
             ResultSet allStudents = daoGetSet.getDataSet("SELECT * FROM user_details, students WHERE user_details.id = students.user_details_id;");
@@ -59,18 +60,19 @@ public class StudentDAOImplementation implements DAO<Student> {
     }
 
     @Override
-    public Student get(UUID id) {
-        Student student;
-        try {
-            List<Student> students = getAll();
-            for (Student person : students) {
-                if (person.getStudentID().compareTo(id)) {
-
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public Student get(UUID id) throws SQLException {
+        ResultSet result = daoGetSet.getDataSet(String.format("SELECT * FROM user_details, students WHERE user_details.id = students.user_details_id AND id='%s';", id));
+        final UUID userDetailsID = id;
+        final String name = result.getString("name");
+        final String surname = result.getString("surname");
+        final String email = result.getString("email");
+        final String password = result.getString("password");
+        final UUID roleID = UUID.fromString(result.getString("role_id"));
+        final UUID studentID = UUID.fromString(result.getString("student_id"));
+        final int coins = result.getInt("coins");
+        final boolean isActive = result.getBoolean("is_active");
+        Student student = new Student(userDetailsID, name, surname, email, password, roleID, studentID, coins, isActive);
+        return student;
     }
 
 }
