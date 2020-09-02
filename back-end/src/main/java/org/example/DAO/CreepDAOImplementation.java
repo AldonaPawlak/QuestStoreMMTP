@@ -1,8 +1,11 @@
 package org.example.DAO;
 
 import org.example.model.Creep;
+import org.example.model.Mentor;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,13 +38,41 @@ public class CreepDAOImplementation implements  DAO<Creep> {
     }
 
     @Override
-    public List<Creep> getAll() throws SQLException {
-        return null;
+    public List<Creep> getAll() {
+        List<Creep> mentors = new ArrayList<>();
+        try {
+            ResultSet allMentors = daoGetSet.getDataSet("SELECT * FROM user_details, creeps WHERE user_details.id = creeps.user_details_id;");
+            while (allMentors.next()) {
+                final UUID userDetailsID = UUID.fromString(allMentors.getString("id"));
+                final String name = allMentors.getString("name");
+                final String surname = allMentors.getString("surname");
+                final String email = allMentors.getString("email");
+                final String password = allMentors.getString("password");
+                final UUID roleID = UUID.fromString(allMentors.getString("role_id"));
+                final UUID creepID = UUID.fromString(allMentors.getString("creep_id"));
+                final boolean isActive = allMentors.getBoolean("is_active");
+                Creep creep = new Creep(userDetailsID, name, surname, email, password, roleID, creepID, isActive);
+                mentors.add(creep);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return mentors;
     }
 
     @Override
-    public Creep get(UUID id) {
-        return null;
+    public Creep get(UUID id) throws  SQLException{
+        ResultSet result = daoGetSet.getDataSet(String.format("SELECT * FROM user_details, mentors WHERE user_details.id = mentors.user_details_id AND id='%s';", id));
+        final UUID userDetailsID = id;
+        final String name = result.getString("name");
+        final String surname = result.getString("surname");
+        final String email = result.getString("email");
+        final String password = result.getString("password");
+        final UUID roleID = UUID.fromString(result.getString("role_id"));
+        final UUID creepID = UUID.fromString(result.getString("student_id"));
+        final boolean isActive = result.getBoolean("is_active");
+        Creep creep = new Creep(userDetailsID, name, surname, email, password, roleID, creepID, isActive);
+        return creep;
     }
 
 }

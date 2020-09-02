@@ -61,7 +61,7 @@ public class MentorDAOImplementation implements DAO<Mentor> {
     }
 
     @Override
-    public Mentor get(UUID id) {
+    public Mentor get(UUID id) throws SQLException {
         ResultSet result = daoGetSet.getDataSet(String.format("SELECT * FROM user_details, mentors WHERE user_details.id = mentors.user_details_id AND id='%s';", id));
         final UUID userDetailsID = id;
         final String name = result.getString("name");
