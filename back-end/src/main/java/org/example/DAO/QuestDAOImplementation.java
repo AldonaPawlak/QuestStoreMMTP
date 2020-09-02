@@ -1,8 +1,11 @@
 package org.example.DAO;
 
+import org.example.model.MentorClass;
 import org.example.model.Quest;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,11 +37,39 @@ public class QuestDAOImplementation implements DAO<Quest> {
 
     @Override
     public List<Quest> getAll()  {
-        return null;
+        List<Quest> quests = new ArrayList<>();
+        try {
+            ResultSet questsSet = daoGetSet.getDataSet("SELECT * FROM quests;");
+            while (questsSet.next()) {
+                final UUID id = UUID.fromString(questsSet.getString("id"));
+                final String name = questsSet.getString("name");
+                final String description = questsSet.getString("description");
+                final int value = questsSet.getInt("value");
+                Quest quest = new Quest(id, name, description, value);
+                quests.add(quest);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return quests;
     }
 
     @Override
-    public Quest get(UUID id) throws SQLException {
-        return null;
+    public Quest get(UUID id) {
+        List<Quest> quests = new ArrayList<>();
+        try {
+            ResultSet questsSet = daoGetSet.getDataSet("SELECT * FROM quests;");
+            while (questsSet.next()) {
+                final UUID questID = UUID.fromString(questsSet.getString("id"));
+                final String name = questsSet.getString("name");
+                final String description = questsSet.getString("description");
+                final int value = questsSet.getInt("value");
+                Quest quest = new Quest(questID, name, description, value);
+                quests.add(quest);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return quests.get(0);
     }
 }
