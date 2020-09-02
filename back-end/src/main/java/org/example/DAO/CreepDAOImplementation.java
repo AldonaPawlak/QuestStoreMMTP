@@ -51,7 +51,8 @@ public class CreepDAOImplementation implements  DAO<Creep> {
                 final UUID roleID = UUID.fromString(allMentors.getString("role_id"));
                 final UUID creepID = UUID.fromString(allMentors.getString("creep_id"));
                 final boolean isActive = allMentors.getBoolean("is_active");
-                Creep creep = new Creep(userDetailsID, name, surname, email, password, roleID, creepID, isActive);
+                final String phoneNumber = allMentors.getString("phone_number");
+                Creep creep = new Creep(userDetailsID, name, surname, email, password, roleID, isActive, phoneNumber, creepID);
                 mentors.add(creep);
             }
         } catch (SQLException e) {
@@ -71,7 +72,8 @@ public class CreepDAOImplementation implements  DAO<Creep> {
         final UUID roleID = UUID.fromString(result.getString("role_id"));
         final UUID creepID = UUID.fromString(result.getString("student_id"));
         final boolean isActive = result.getBoolean("is_active");
-        Creep creep = new Creep(userDetailsID, name, surname, email, password, roleID, creepID, isActive);
+        final String phoneNumber = result.getString("phone_number");
+        Creep creep = new Creep(userDetailsID, name, surname, email, password, roleID, isActive, phoneNumber, creepID);
         return creep;
     }
 

@@ -50,7 +50,8 @@ public class StudentDAOImplementation implements DAO<Student> {
                 final UUID studentID = UUID.fromString(allStudents.getString("student_id"));
                 final int coins = allStudents.getInt("coins");
                 final boolean isActive = allStudents.getBoolean("is_active");
-                Student student = new Student(userDetailsID, name, surname, email, password, roleID, studentID, coins, isActive);
+                final String phoneNumber = allStudents.getString("phone_number");
+                Student student = new Student(userDetailsID, name, surname, email, password, roleID, isActive, phoneNumber, studentID, coins);
                 students.add(student);
             }
         } catch (SQLException e) {
@@ -71,7 +72,8 @@ public class StudentDAOImplementation implements DAO<Student> {
         final UUID studentID = UUID.fromString(result.getString("student_id"));
         final int coins = result.getInt("coins");
         final boolean isActive = result.getBoolean("is_active");
-        Student student = new Student(userDetailsID, name, surname, email, password, roleID, studentID, coins, isActive);
+        final String phoneNumber = result.getString("phone_number");
+        Student student = new Student(userDetailsID, name, surname, email, password, roleID, isActive, phoneNumber, studentID, coins);
         return student;
     }
 

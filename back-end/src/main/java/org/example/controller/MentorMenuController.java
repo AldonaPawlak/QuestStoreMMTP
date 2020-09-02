@@ -37,7 +37,7 @@ public class MentorMenuController implements HttpHandler {
 
     private List<Mentor> getMentors() {
         UUID uid = UUID.fromString("38400000-8cf0-11bd-b23e-10b96e4ef00d");
-        Mentor jan = new Mentor(uid,"Jan", "Kowalski", "malpa@com.pl", "asdf", uid, true, uid);
+        Mentor jan = new Mentor(uid,"Jan", "Kowalski", "malpa@com.pl", "asdf", uid, true, "123 456 789", uid);
         Mentor[] mentors = {jan};
         return Arrays.asList(mentors);
     }
