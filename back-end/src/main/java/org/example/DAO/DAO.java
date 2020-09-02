@@ -9,7 +9,7 @@ public interface DAO<T> {
     void add(T t);
     void remove(T t);
     void edit(T t);
-    List<T> getAll() throws SQLException;
+    List<T> getAll();
     T get(UUID id) throws SQLException;
 
 }

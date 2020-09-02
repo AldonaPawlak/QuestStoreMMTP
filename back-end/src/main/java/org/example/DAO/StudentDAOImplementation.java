@@ -19,20 +19,20 @@ public class StudentDAOImplementation implements DAO<Student> {
 
     @Override
     public void add(Student student) {
-        dbConnection.ExecuteStatement(String.format("'INSERT INTO user_details (id, name, surname, email, password, role_id, is_active) VALUES ('%s', '%s' ,'%s' ,'%s', '%s', 3, true);'", student.getUserDetailsID(), student.getName(), student.getSurname(), student.getEmail(), student.getPassword()));
-        dbConnection.ExecuteStatement(String.format("INSERT INTO students (student_id, user_details_id, coins) VALUES ('%s', '%s', 0);", student.getStudentID(), student.getUserDetailsID()));
+        dbConnection.executeStatement(String.format("'INSERT INTO user_details (id, name, surname, email, password, role_id, is_active) VALUES ('%s', '%s' ,'%s' ,'%s', '%s', 3, true);'", student.getUserDetailsID(), student.getName(), student.getSurname(), student.getEmail(), student.getPassword()));
+        dbConnection.executeStatement(String.format("INSERT INTO students (student_id, user_details_id, coins) VALUES ('%s', '%s', 0);", student.getStudentID(), student.getUserDetailsID()));
     }
 
     @Override
     public void remove(Student student) {
-        dbConnection.ExecuteStatement(String.format("REMOVE FROM students '%s';", student.getStudentID()));
-        dbConnection.ExecuteStatement(String.format("REMOVE FROM user_details '%s';", student.getUserDetailsID()));
+        dbConnection.executeStatement(String.format("REMOVE FROM students '%s';", student.getStudentID()));
+        dbConnection.executeStatement(String.format("REMOVE FROM user_details '%s';", student.getUserDetailsID()));
     }
 
     @Override
     public void edit(Student student) {
-        dbConnection.ExecuteStatement(String.format("UPDATE students SET coins = %d WHERE id = '%s';", student.getCoins(), student.getStudentID()));
-        dbConnection.ExecuteStatement(String.format("UPDATE user_details SET name = '%s', surname = '%s', email = '%s', password = '%s', role_id = '%s', is_active = '%b' WHERE id = '%s;'", student.getName(), student.getSurname(), student.getEmail(), student.getPassword(), student.getRoleID(), student.isActive(), student.getUserDetailsID()));
+        dbConnection.executeStatement(String.format("UPDATE students SET coins = %d WHERE id = '%s';", student.getCoins(), student.getStudentID()));
+        dbConnection.executeStatement(String.format("UPDATE user_details SET name = '%s', surname = '%s', email = '%s', password = '%s', role_id = '%s', is_active = '%b' WHERE id = '%s;'", student.getName(), student.getSurname(), student.getEmail(), student.getPassword(), student.getRoleID(), student.isActive(), student.getUserDetailsID()));
     }
 
     @Override

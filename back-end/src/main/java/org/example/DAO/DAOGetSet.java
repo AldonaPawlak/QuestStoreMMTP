@@ -1,7 +1,5 @@
 package org.example.DAO;
 
-import org.example.DAO.DBConnection;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -14,7 +12,7 @@ public class DAOGetSet {
     }
 
     public ResultSet getDataSet(String query) {
-        dbConnection.Connection();
+        dbConnection.connection();
         try {
             dbConnection.statement = dbConnection.connection.createStatement();
             ResultSet results = dbConnection.statement.executeQuery(query);

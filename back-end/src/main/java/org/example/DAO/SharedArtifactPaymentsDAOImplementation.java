@@ -20,17 +20,17 @@ public class SharedArtifactPaymentsDAOImplementation implements DAO<SharedArtifa
 
     @Override
     public void add(SharedArtifactPayment sharedArtifactPayment) {
-        dbConnection.ExecuteStatement(String.format("INSERT INTO shared_artifacts_payments(id, student_id, student_artifacts_id, payment) VALUES ('%s', '%s', '%s', '%d');", sharedArtifactPayment.getId(), sharedArtifactPayment.getStudentID(), sharedArtifactPayment.getStudentArtifactID(), sharedArtifactPayment.getPayment()));
+        dbConnection.executeStatement(String.format("INSERT INTO shared_artifacts_payments(id, student_id, student_artifacts_id, payment) VALUES ('%s', '%s', '%s', '%d');", sharedArtifactPayment.getId(), sharedArtifactPayment.getStudentID(), sharedArtifactPayment.getStudentArtifactID(), sharedArtifactPayment.getPayment()));
     }
 
     @Override
     public void remove(SharedArtifactPayment sharedArtifactPayment) {
-        dbConnection.ExecuteStatement(String.format("REMOVE FROM shared_artifacts_payments '%s';", sharedArtifactPayment.getId()));
+        dbConnection.executeStatement(String.format("REMOVE FROM shared_artifacts_payments '%s';", sharedArtifactPayment.getId()));
     }
 
     @Override
     public void edit(SharedArtifactPayment sharedArtifactPayment) {
-        dbConnection.ExecuteStatement(String.format("UPDATE shared_artifacts_payments SET payment = %d WHERE id = '%s';", sharedArtifactPayment.getPayment(), sharedArtifactPayment.getId()));
+        dbConnection.executeStatement(String.format("UPDATE shared_artifacts_payments SET payment = %d WHERE id = '%s';", sharedArtifactPayment.getPayment(), sharedArtifactPayment.getId()));
     }
 
     @Override
