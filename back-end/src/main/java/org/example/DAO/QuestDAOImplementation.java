@@ -72,4 +72,5 @@ public class QuestDAOImplementation implements DAO<Quest> {
         }
         return quests.get(0);
     }
+
 }
