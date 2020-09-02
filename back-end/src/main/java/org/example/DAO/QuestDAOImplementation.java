@@ -33,12 +33,12 @@ public class QuestDAOImplementation implements DAO<Quest> {
     }
 
     @Override
-    public List<Quest> getAll() throws SQLException {
+    public List<Quest> getAll()  {
         return null;
     }
 
     @Override
-    public Quest get(UUID id) {
+    public Quest get(UUID id) throws SQLException {
         return null;
     }
 }
