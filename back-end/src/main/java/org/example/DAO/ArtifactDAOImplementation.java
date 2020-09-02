@@ -55,9 +55,9 @@ public class ArtifactDAOImplementation implements DAO<Artifact>{
 
     @Override
     public Artifact get(UUID id) {
-        Artifact artifact;
+        List<Artifact> artifacts = new ArrayList<>();
         try {
-            ResultSet allArtifacts = daoGetSet.getDataSet(String.format("SELECT * FROM artifacts WHERE id='%s';", id.toString()));
+            ResultSet allArtifacts = daoGetSet.getDataSet("SELECT * FROM artifacts;");
             while (allArtifacts.next()) {
                 final UUID artifactID = UUID.fromString(allArtifacts.getString("id"));
                 final String name = allArtifacts.getString("name");
@@ -65,13 +65,13 @@ public class ArtifactDAOImplementation implements DAO<Artifact>{
                 final UUID categoryID = UUID.fromString(allArtifacts.getString("category_id"));
                 final String description = allArtifacts.getString("description");
                 final UUID artifactTypeID = UUID.fromString(allArtifacts.getString("artifact_type_id"));
-                artifact = new Artifact(artifactID, name, price, categoryID, description, artifactTypeID);
-                return artifact;
+                Artifact artifact = new Artifact(artifactID, name, price, categoryID, description, artifactTypeID);
+                artifacts.add(artifact);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return artifacts.get(0);
     }
 
 }
