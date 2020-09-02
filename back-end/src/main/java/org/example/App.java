@@ -13,7 +13,7 @@ public class App
 {
     public static void main( String[] args ) throws IOException {
         HttpServer server = HttpServer.create(new InetSocketAddress(8050), 0);
-        server.createContext("/creep", new CreepMenuController());
+        server.createContext("/mentor", new MentorMenuController());
 //        server.createContext("/student", new StudentMenuController());
 //        server.createContext("/mentor", new MentorMenuController());
 //        server.createContext("/login", new LoginController());

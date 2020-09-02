@@ -13,6 +13,6 @@ public class EditCreepsDAO implements EditDAO<Creep> {
 
     @Override
     public void edit(Creep creep) {
-        dbConnection.ExecuteStatement(String.format("UPDATE creeps SET user_details_id = '%s' WHERE id = '%s';", creep.getId(), creep.getCreepID()));
+        dbConnection.ExecuteStatement(String.format("UPDATE creeps SET user_details_id = '%s' WHERE id = '%s';", creep.getUserDetailsID(), creep.getCreepID()));
     }
 }
