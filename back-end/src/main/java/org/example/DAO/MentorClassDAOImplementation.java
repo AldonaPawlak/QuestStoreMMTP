@@ -52,6 +52,21 @@ public class MentorClassDAOImplementation implements DAO<MentorClass> {
 
     @Override
     public MentorClass get(UUID id) {
-        return null;
+        List<MentorClass> mentorClasses = new ArrayList<>();
+        try {
+            ResultSet mentorClassesSet = daoGetSet.getDataSet(String.format("SELECT * FROM mentors_classes WHERE id='%s';", id));
+            while (mentorClassesSet.next()) {
+                final UUID classID = UUID.fromString(mentorClassesSet.getString("classes_id"));
+                final UUID mentorID = UUID.fromString(mentorClassesSet.getString("mentors_id"));
+                MentorClass mentorClass = new MentorClass(classID, mentorID);
+                mentorClasses.add(mentorClass);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return mentorClasses.get(0);
     }
+
+    //TODO ask boys what they think
+
 }
