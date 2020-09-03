@@ -6,12 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-public class ArtifactDAOImplementation implements DAO<Artifact>{
+public class ArtifactDAO implements DAO<Artifact>{
 
     DBConnection dbConnection;
     DAOGetSet daoGetSet;
 
-    public ArtifactDAOImplementation(DBConnection dbConnection, DAOGetSet daoGetSet) {
+    public ArtifactDAO(DBConnection dbConnection, DAOGetSet daoGetSet) {
         this.dbConnection = dbConnection;
         this.daoGetSet = daoGetSet;
     }

@@ -9,12 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class MentorDAOImplementation implements DAO<Mentor> {
+public class MentorDAOI implements DAO<Mentor> {
 
     DBConnection dbConnection;
     DAOGetSet daoGetSet;
 
-    public MentorDAOImplementation(DBConnection dbConnection, DAOGetSet daoGetSet) {
+    public MentorDAOI(DBConnection dbConnection, DAOGetSet daoGetSet) {
         this.dbConnection = dbConnection;
         this.daoGetSet = daoGetSet;
     }
