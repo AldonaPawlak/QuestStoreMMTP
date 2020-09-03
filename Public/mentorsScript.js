@@ -20,7 +20,7 @@ function innerMentors(mentors){
             clone.querySelector('.name').textContent = mentor.name;
             clone.querySelector('.surname').textContent = mentor.surname;
             clone.querySelector('.email').textContent = mentor.email;
-            clone.querySelector('.phone').textContent = "123123123";
+            clone.querySelector('.phone').textContent = mentor.phoneNumber;
             container.appendChild(clone);
         })
 
