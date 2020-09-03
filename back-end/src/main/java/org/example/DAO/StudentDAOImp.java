@@ -25,8 +25,8 @@ public class StudentDAOImp implements DAO<Student> {
 
     @Override
     public void remove(Student student) {
-        dbConnection.executeStatement(String.format("REMOVE FROM students '%s';", student.getStudentID()));
-        dbConnection.executeStatement(String.format("REMOVE FROM user_details '%s';", student.getUserDetailsID()));
+        dbConnection.executeStatement(String.format("REMOVE FROM students WHERE id ='%s';", student.getStudentID()));
+        dbConnection.executeStatement(String.format("REMOVE FROM user_details WHERE id='%s';", student.getUserDetailsID()));
     }
 
     @Override
