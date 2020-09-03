@@ -51,7 +51,8 @@ public class MentorDAOImplementation implements DAO<Mentor> {
                 final UUID roleID = UUID.fromString(allMentors.getString("role_id"));
                 final UUID mentorID = UUID.fromString(allMentors.getString("mentor_id"));
                 final boolean isActive = allMentors.getBoolean("is_active");
-                Mentor mentor = new Mentor(userDetailsID, name, surname, email, password, roleID, isActive, mentorID);
+                final  String phoneNumber = allMentors.getString("phone_number");
+                Mentor mentor = new Mentor(userDetailsID, name, surname, email, password, roleID, isActive, phoneNumber, mentorID);
                 mentors.add(mentor);
             }
         } catch (SQLException e) {
@@ -61,7 +62,7 @@ public class MentorDAOImplementation implements DAO<Mentor> {
     }
 
     @Override
-    public Mentor get(UUID id) throws SQLException {
+    public Mentor get(UUID id) {
         List<Mentor> mentors = new ArrayList<>();
         try {
             ResultSet allMentors = daoGetSet.getDataSet(String.format("SELECT * FROM user_details, mentors WHERE user_details.id = mentors.user_details_id AND user_details_id='%s';", id));
@@ -74,7 +75,8 @@ public class MentorDAOImplementation implements DAO<Mentor> {
                 final UUID roleID = UUID.fromString(allMentors.getString("role_id"));
                 final UUID mentorID = UUID.fromString(allMentors.getString("mentor_id"));
                 final boolean isActive = allMentors.getBoolean("is_active");
-                Mentor mentor = new Mentor(userDetailsID, name, surname, email, password, roleID, isActive, mentorID);
+                final  String phoneNumber = allMentors.getString("phone_number");
+                Mentor mentor = new Mentor(userDetailsID, name, surname, email, password, roleID, isActive, phoneNumber, mentorID);
                 mentors.add(mentor);
             }
         } catch (SQLException e) {

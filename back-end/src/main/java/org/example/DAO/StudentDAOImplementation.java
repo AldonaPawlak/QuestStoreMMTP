@@ -50,7 +50,8 @@ public class StudentDAOImplementation implements DAO<Student> {
                 final UUID studentID = UUID.fromString(allStudents.getString("student_id"));
                 final int coins = allStudents.getInt("coins");
                 final boolean isActive = allStudents.getBoolean("is_active");
-                Student student = new Student(userDetailsID, name, surname, email, password, roleID, studentID, coins, isActive);
+                final String phoneNumber = allStudents.getString("phone_number");
+                Student student = new Student(userDetailsID, name, surname, email, password, roleID, isActive, phoneNumber, studentID, coins);
                 students.add(student);
             }
         } catch (SQLException e) {
@@ -60,19 +61,28 @@ public class StudentDAOImplementation implements DAO<Student> {
     }
 
     @Override
-    public Student get(UUID id) throws SQLException {
-        ResultSet result = daoGetSet.getDataSet(String.format("SELECT * FROM user_details, students WHERE user_details.id = students.user_details_id AND id='%s';", id));
-        final UUID userDetailsID = id;
-        final String name = result.getString("name");
-        final String surname = result.getString("surname");
-        final String email = result.getString("email");
-        final String password = result.getString("password");
-        final UUID roleID = UUID.fromString(result.getString("role_id"));
-        final UUID studentID = UUID.fromString(result.getString("student_id"));
-        final int coins = result.getInt("coins");
-        final boolean isActive = result.getBoolean("is_active");
-        Student student = new Student(userDetailsID, name, surname, email, password, roleID, studentID, coins, isActive);
-        return student;
+    public Student get(UUID id) {
+        List<Student> students = new ArrayList<>();
+        try {
+            ResultSet allStudents = daoGetSet.getDataSet(String.format("SELECT * FROM user_details, students WHERE user_details.id = students.user_details_id AND id ='%s';", id));
+            while (allStudents.next()) {
+                final UUID userDetailsID = UUID.fromString(allStudents.getString("id"));
+                final String name = allStudents.getString("name");
+                final String surname = allStudents.getString("surname");
+                final String email = allStudents.getString("email");
+                final String password = allStudents.getString("password");
+                final UUID roleID = UUID.fromString(allStudents.getString("role_id"));
+                final UUID studentID = UUID.fromString(allStudents.getString("student_id"));
+                final int coins = allStudents.getInt("coins");
+                final boolean isActive = allStudents.getBoolean("is_active");
+                final String phoneNumber = allStudents.getString("phone_number");
+                Student student = new Student(userDetailsID, name, surname, email, password, roleID, isActive, phoneNumber, studentID, coins);
+                students.add(student);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return students.get(0);
     }
 
 }
