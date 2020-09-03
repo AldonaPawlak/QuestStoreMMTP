@@ -28,7 +28,7 @@ public class MentorDAO implements DAO<Mentor> {
 
     @Override
     public void remove(Mentor mentor) {
-        dbConnection.executeStatement(String.format("DELETE FROM mentors WHERE id='%s';", mentor.getMentorID()));
+        dbConnection.executeStatement(String.format("DELETE FROM mentors WHERE mentor_id = '%s';", mentor.getMentorID()));
         dbConnection.executeStatement(String.format("DELETE FROM user_details WHERE id = '%s';", mentor.getUserDetailsID()));
     }
 
@@ -63,7 +63,7 @@ public class MentorDAO implements DAO<Mentor> {
     }
 
     @Override
-    public Mentor get(UUID id) throws Exception {
+    public Mentor get(UUID id) throws Exception{
         try {
             ResultSet result = daoGetSet.getDataSet(String.format("SELECT * FROM user_details, mentors WHERE user_details.id = mentors.user_details_id AND user_details_id='%s';", id));
             while (result.next()) {
