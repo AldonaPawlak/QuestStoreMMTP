@@ -27,7 +27,7 @@ public class MentorDAOImplementation implements DAO<Mentor> {
 
     @Override
     public void remove(Mentor mentor) {
-        dbConnection.executeStatement(String.format("DELETE FROM mentors '%s';", mentor.getMentorID()));
+        dbConnection.executeStatement(String.format("DELETE FROM mentors WHERE mentor_id = '%s';", mentor.getMentorID()));
         dbConnection.executeStatement(String.format("DELETE FROM user_details WHERE id = '%s';", mentor.getUserDetailsID()));
     }
 
@@ -63,6 +63,7 @@ public class MentorDAOImplementation implements DAO<Mentor> {
 
     @Override
     public Mentor get(UUID id) {
+        System.out.println("mentor.get");
         List<Mentor> mentors = new ArrayList<>();
         try {
             ResultSet allMentors = daoGetSet.getDataSet(String.format("SELECT * FROM user_details, mentors WHERE user_details.id = mentors.user_details_id AND user_details_id='%s';", id));
