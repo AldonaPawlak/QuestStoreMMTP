@@ -48,8 +48,8 @@ public class MentorController implements HttpHandler {
                 removeMentor(userDetailsID);
                 response = getMentors();
                 exchange.getResponseHeaders().put("Content-type", Collections.singletonList("application/json"));
-
-                exchange.sendResponseHeaders(200, response.length());
+                System.out.println("New respones: " + response);
+                exchange.sendResponseHeaders(200, response.getBytes().length);
             }
 
 
