@@ -9,12 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class MentorDAOI implements DAO<Mentor> {
+public class MentorDAO implements DAO<Mentor> {
 
     DBConnection dbConnection;
     DAOGetSet daoGetSet;
 
-    public MentorDAOI(DBConnection dbConnection, DAOGetSet daoGetSet) {
+    public MentorDAO(DBConnection dbConnection, DAOGetSet daoGetSet) {
         this.dbConnection = dbConnection;
         this.daoGetSet = daoGetSet;
     }
@@ -27,7 +27,7 @@ public class MentorDAOI implements DAO<Mentor> {
 
     @Override
     public void remove(Mentor mentor) {
-        dbConnection.executeStatement(String.format("DELETE FROM mentors '%s';", mentor.getMentorID()));
+        dbConnection.executeStatement(String.format("DELETE FROM mentors WHERE id='%s';", mentor.getMentorID()));
         dbConnection.executeStatement(String.format("DELETE FROM user_details WHERE id = '%s';", mentor.getUserDetailsID()));
     }
 

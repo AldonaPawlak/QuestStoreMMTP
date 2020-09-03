@@ -25,7 +25,7 @@ public class MentorClassDAO implements DAO<MentorClass> {
 
     @Override
     public void remove(MentorClass mentorClass) {
-        dbConnection.executeStatement(String.format("DELETE FROM mentors_classes '%s';", mentorClass.getClassID()));
+        dbConnection.executeStatement(String.format("DELETE FROM mentors_classes WHERE id='%s';", mentorClass.getClassID()));
     }
 
     @Override
