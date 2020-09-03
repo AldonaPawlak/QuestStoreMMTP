@@ -6,12 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-public class StudentDAOImplementation implements DAO<Student> {
+public class StudentDAOImp implements DAO<Student> {
 
     DBConnection dbConnection;
     DAOGetSet daoGetSet;
 
-    public StudentDAOImplementation(DBConnection dbConnection, DAOGetSet daoGetSet) {
+    public StudentDAOImp(DBConnection dbConnection, DAOGetSet daoGetSet) {
         this.dbConnection = dbConnection;
         this.daoGetSet = daoGetSet;
     }

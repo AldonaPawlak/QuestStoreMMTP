@@ -9,12 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class QuestDAOImplementation implements DAO<Quest> {
+public class QuestDAO implements DAO<Quest> {
 
     DBConnection dbConnection;
     DAOGetSet daoGetSet;
 
-    public QuestDAOImplementation(DBConnection dbConnection, DAOGetSet daoGetSet) {
+    public QuestDAO(DBConnection dbConnection, DAOGetSet daoGetSet) {
         this.dbConnection = dbConnection;
         this.daoGetSet = daoGetSet;
     }
