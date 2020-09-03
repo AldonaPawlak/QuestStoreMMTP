@@ -6,7 +6,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import org.example.DAO.DAOGetSet;
 import org.example.DAO.DBConnection;
-import org.example.DAO.MentorDAOImplementation;
+import org.example.DAO.MentorDAO;
 import org.example.model.Mentor;
 
 import java.io.IOException;
@@ -71,7 +71,7 @@ public class MentorController implements HttpHandler {
         DBConnection dbConnection = new DBConnection();
         DAOGetSet daoGetSet = new DAOGetSet(dbConnection);
 
-        MentorDAOImplementation mentorDAO = new MentorDAOImplementation(dbConnection, daoGetSet);
+        MentorDAO mentorDAO = new MentorDAO(dbConnection, daoGetSet);
 
         List<Mentor> mentors = mentorDAO.getAll();
 
@@ -81,11 +81,11 @@ public class MentorController implements HttpHandler {
         return mapper.writeValueAsString(mentors);
     }
 
-    private void removeMentor(String userDetailsID) {
+    private void removeMentor(String userDetailsID) throws Exception {
         DBConnection dbConnection = new DBConnection();
         DAOGetSet daoGetSet = new DAOGetSet(dbConnection);
 
-        MentorDAOImplementation mentorDAO = new MentorDAOImplementation(dbConnection, daoGetSet);
+        MentorDAO mentorDAO = new MentorDAO(dbConnection, daoGetSet);
 
         Mentor mentor = mentorDAO.get(UUID.fromString(userDetailsID));
 
