@@ -27,7 +27,7 @@ public class QuestDAO implements DAO<Quest> {
 
     @Override
     public void remove(Quest quest) {
-        dbConnection.executeStatement(String.format("REMOVE FROM quests '%s';", quest.getId()));
+        dbConnection.executeStatement(String.format("REMOVE FROM quests WHERE id='%s';", quest.getId()));
     }
 
     @Override
