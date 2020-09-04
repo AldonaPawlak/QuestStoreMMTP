@@ -18,11 +18,11 @@ public class LoginController implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         // retrieve data
-        InputStreamReader isr = new InputStreamReader(exchange.getRequestBody(), "utf-8");
+   /*     InputStreamReader isr = new InputStreamReader(exchange.getRequestBody(), "utf-8");
         BufferedReader br = new BufferedReader(isr);
 
         Map<String, String> data = parseFormData(br.readLine());
-        String email = data.get("email"));
+        String email = data.get("email");
         String password = data.get("password");
 
         //TODO zrób sobie w DAO taka metodę, która zwróci Ci użytkownika na podstawie
@@ -38,7 +38,7 @@ public class LoginController implements HttpHandler {
         exchange.sendResponseHeaders(200, response.length());
         OutputStream os = exchange.getResponseBody();
         os.write(response.getBytes());
-        os.close();
+        os.close();*/
     }
 
 }
