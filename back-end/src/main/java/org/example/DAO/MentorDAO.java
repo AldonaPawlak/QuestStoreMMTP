@@ -4,6 +4,7 @@ import org.example.config.IDgenerator;
 import org.example.model.Mentor;
 import org.example.model.Student;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,9 +20,11 @@ public class MentorDAO implements DAO<Mentor> {
         this.dbConnection = dbConnection;
         this.daoGetSet = daoGetSet;
     }
-
+    // SQLInjection
     @Override
     public void add(Mentor mentor) {
+//        PreparedStatement preparedStatement = dbConnection.connection.prepareStatement("INSERT INTO user_details () VALUES ? ?");
+//        preparedStatement.setString(1, mentor.getEmail());
         dbConnection.executeStatement(String.format("INSERT INTO user_details (id, name, surname, email, password, role_id, is_active, phone_number) VALUES ('%s', '%s' ,'%s' ,'%s', '%s', '%s', true, '%s');", mentor.getUserDetailsID(), mentor.getName(), mentor.getSurname(), mentor.getEmail(), mentor.getPassword(), mentor.getRoleID(), mentor.getPhoneNumber()));
         dbConnection.executeStatement(String.format("INSERT INTO mentors (mentor_id, user_details_id) VALUES ('%s', '%s');", mentor.getMentorID(), mentor.getUserDetailsID()));
     }
