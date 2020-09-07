@@ -7,6 +7,7 @@ import org.example.DAO.DBConnection;
 import org.example.DAO.MentorDAO;
 import org.example.config.IDgenerator;
 import org.example.config.PasswordCrypter;
+import org.example.controller.LoginController;
 import org.example.controller.MentorController;
 import org.example.model.Mentor;
 
@@ -21,7 +22,7 @@ public class App
         server.createContext("/mentor", new MentorController());
 //        server.createContext("/student", new StudentMenuController());
 //        server.createContext("/mentor", new MentorMenuController());
-//        server.createContext("/login", new LoginController());
+       server.createContext("/login", new LoginController());
 
         server.setExecutor(null);
         server.start();

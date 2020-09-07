@@ -15,11 +15,11 @@ function showSignInForm() {
         confirmPassword.style.display = 'block';
     }
 }
-
+/*
 function initShowSignInForm() {
     const signIn = document.querySelector('form > .submit');
-    signIn.addEventListener("click", showSignInForm)
-}
+/!*    signIn.addEventListener("click", showSignInForm)*!/
+}*/
 
 function openSlideMenu() {
     document.getElementById('menu').style.width = '250px';
@@ -30,11 +30,11 @@ function closeSlideMenu() {
 }
 
 function main() {
-    initShowSignInForm();
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        /*showSignInForm();*/
-    });
+/*    initShowSignInForm();*/
+/*    form.addEventListener('submit', function(e) {
+        e.preventDefault();*/
+ /*       showSignInForm();*/
+/*    });*/
 };
 
 main();

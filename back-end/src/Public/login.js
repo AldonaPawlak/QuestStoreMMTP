@@ -1,22 +1,25 @@
+const loginForm = document.querySelector("#login-form");
 
-const form = document.querySelector("#login-form");
-
-form.addEventListener('submit', function (e) {
+loginForm.addEventListener('submit', function (e) {
     e.preventDefault();
     //name=Agnieszka&surname=Kowalska&email=a.kowalska%40codecool.com
-    const data = `name=${this.name.value}&email=${this.email.value}`;
+    const data = `email=${this.email.value}&password=${this.password.value}`;
     console.log(data);
-    setStudent(data);
+    login(data);
 });
 
-function setStudent(data) {
-    fetch("http://localhost:8050/register",
+function login(data) {
+    fetch("http://localhost:8050/login",
         {
             mode: 'no-cors',
             method: "POST",
             body: data
         })
         .then(function (response) {
+            console.log(response.status);
+            if (response.status === 404) {
+                alert(response.text());
+            }
             console.log(response);
         });
 }
