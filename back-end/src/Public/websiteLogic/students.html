@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="eng">
+
+<head>
+    <title>Manage mentors</title>
+
+    <meta charset="UTF-8">
+    <meta name="description" content="Manage Accounts">
+    <meta name="keywords" content="Codecool, Quest Store">
+    <meta name="author" content="John Doe">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poiret+One&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/creep.css">
+    <script src="https://kit.fontawesome.com/bd5d5911de.js" crossorigin="anonymous"></script>
+    <script src="../script.js" defer></script>
+</head>
+
+<body>
+
+  <header>
+    <a id="hamburgerMenu" href="#" onclick="openSlideMenu()">
+        <i class="fas fa-bars"></i>
+    </a>
+    <a href="index.html">
+        <img id="Public/image" src="../images/logo.png">
+    </a>
+    <div class="topBarButtons" id="topBarButton">
+        <a id="user" href="userView.html">
+            <i class="far fa-user-circle"></i>
+            Codecooler
+        </a>
+        <a id="signOut" href="login.html">
+            <i class="fas fa-sign-out-alt"></i>
+            Log out
+        </a>
+    </div>
+</header>
+
+<div id="content">
+    <div id="menu" class="nav">
+        <a href="#" class="close" onclick="closeSlideMenu()">
+            <i class="fas fa-times"></i>
+        </a>
+        <a href="manageAccounts.html">Manage accounts</a>
+        <a href="classes.html">Classes</a>
+    </div>
+</div>
+<a href="mentors.html" class="button">Mentors -></a>
+
+<br><div class="card">
+    <h3><strong>Students</strong></h3>
+    <div class="card-body">
+      <div id="table" class="table-editable">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Surname</th>
+              <th>Email</th>
+              <th>Phone number</th>
+              <th>Class</th>
+              <th>Profile</th>
+              <th>Edit</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Tomek</td>
+              <td>Krogulec</td>
+              <td>tomek.krogulec@gmail.com</td>
+              <td>123456789</td>
+              <td>WEB/CSS/JS</td>
+              <td>
+                <span class="profile"><a href="#!"><i class="far fa-user"></i></a></span>
+              </td>
+              <td>
+                <span class="edit-row"><a href="#!"><i class="far fa-edit"></i></a></span>
+              </td>
+              <td>
+                <button type="button">Remove</button>
+              </td>
+            </tr>
+            <tr>
+              <td>Patryk</td>
+              <td>Krol</td>
+              <td>patryk.krol@gmail.com</td>
+              <td>987654321</td>
+              <td>WEB/CSS/JS</td>
+              <td>
+                <span class="profile"><a href="#!"><i class="far fa-user"></i></a></span>
+              </td>
+              <td>
+                <span class="edit-row"><a href="#!"><i class="far fa-edit"></i></a></span>
+              </td>
+              <td>
+                <button type="button">Remove</button>
+              </td>
+            </tr>
+            </tr>
+          </tbody>
+        </table>
+        <button id="add" type="button">Add student</button>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
