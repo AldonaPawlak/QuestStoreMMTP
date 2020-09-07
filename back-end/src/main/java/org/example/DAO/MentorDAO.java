@@ -1,5 +1,6 @@
 package org.example.DAO;
 
+import org.example.config.IDgenerator;
 import org.example.model.Mentor;
 import org.example.model.Student;
 
@@ -21,13 +22,13 @@ public class MentorDAO implements DAO<Mentor> {
 
     @Override
     public void add(Mentor mentor) {
-        dbConnection.executeStatement(String.format("INSERT INTO user_details (id, name, surname, email, password, role_id, is_active) VALUES ('%s', '%s' ,'%s' ,'%s', '%s', 2, true);", mentor.getUserDetailsID(), mentor.getName(), mentor.getSurname(), mentor.getEmail(), mentor.getPassword()));
-        dbConnection.executeStatement(String.format("INSERT INTO mentors (id, user_details_id) VALUES ('%s', '%s');", mentor.getMentorID(), mentor.getUserDetailsID()));
+        dbConnection.executeStatement(String.format("INSERT INTO user_details (id, name, surname, email, password, role_id, is_active, phone_number) VALUES ('%s', '%s' ,'%s' ,'%s', '%s', '%s', true, '%s');", mentor.getUserDetailsID(), mentor.getName(), mentor.getSurname(), mentor.getEmail(), mentor.getPassword(), mentor.getRoleID(), mentor.getPhoneNumber()));
+        dbConnection.executeStatement(String.format("INSERT INTO mentors (mentor_id, user_details_id) VALUES ('%s', '%s');", mentor.getMentorID(), mentor.getUserDetailsID()));
     }
 
     @Override
     public void remove(Mentor mentor) {
-        dbConnection.executeStatement(String.format("DELETE FROM mentors WHERE id='%s';", mentor.getMentorID()));
+        dbConnection.executeStatement(String.format("DELETE FROM mentors WHERE mentor_id = '%s';", mentor.getMentorID()));
         dbConnection.executeStatement(String.format("DELETE FROM user_details WHERE id = '%s';", mentor.getUserDetailsID()));
     }
 
@@ -62,27 +63,25 @@ public class MentorDAO implements DAO<Mentor> {
     }
 
     @Override
-    public Mentor get(UUID id) {
-        List<Mentor> mentors = new ArrayList<>();
+    public Mentor get(UUID id) throws Exception{
         try {
-            ResultSet allMentors = daoGetSet.getDataSet(String.format("SELECT * FROM user_details, mentors WHERE user_details.id = mentors.user_details_id AND user_details_id='%s';", id));
-            while (allMentors.next()) {
-                final UUID userDetailsID = UUID.fromString(allMentors.getString("id"));
-                final String name = allMentors.getString("name");
-                final String surname = allMentors.getString("surname");
-                final String email = allMentors.getString("email");
-                final String password = allMentors.getString("password");
-                final UUID roleID = UUID.fromString(allMentors.getString("role_id"));
-                final UUID mentorID = UUID.fromString(allMentors.getString("mentor_id"));
-                final boolean isActive = allMentors.getBoolean("is_active");
-                final  String phoneNumber = allMentors.getString("phone_number");
-                Mentor mentor = new Mentor(userDetailsID, name, surname, email, password, roleID, isActive, phoneNumber, mentorID);
-                mentors.add(mentor);
+            ResultSet result = daoGetSet.getDataSet(String.format("SELECT * FROM user_details, mentors WHERE user_details.id = mentors.user_details_id AND user_details_id='%s';", id));
+            while (result.next()) {
+                final String name = result.getString("name");
+                final String surname = result.getString("surname");
+                final String email = result.getString("email");
+                final String password = result.getString("password");
+                final UUID roleID = UUID.fromString(result.getString("role_id"));
+                final UUID mentorID = UUID.fromString(result.getString("mentor_id"));
+                final boolean isActive = result.getBoolean("is_active");
+                final  String phoneNumber = result.getString("phone_number");
+                Mentor mentor = new Mentor(id, name, surname, email, password, roleID, isActive, phoneNumber, mentorID);
+                return mentor;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return mentors.get(0);
+        throw new Exception("User not found");
     }
 
 }
