@@ -2,27 +2,20 @@ package org.example;
 
 import com.sun.net.httpserver.HttpServer;
 
-import org.example.DAO.DAOGetSet;
-import org.example.DAO.DBConnection;
-import org.example.DAO.MentorDAO;
-import org.example.config.IDgenerator;
-import org.example.config.PasswordCrypter;
-import org.example.controller.LoginController;
-import org.example.controller.MentorController;
-import org.example.model.Mentor;
+import org.example.handlers.LoginHandler;
+import org.example.handlers.MentorHandler;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.util.UUID;
 
 public class App
 {
     public static void main( String[] args ) throws IOException {
         HttpServer server = HttpServer.create(new InetSocketAddress(8050), 0);
-        server.createContext("/mentor", new MentorController());
+        server.createContext("/mentor", new MentorHandler());
 //        server.createContext("/student", new StudentMenuController());
 //        server.createContext("/mentor", new MentorMenuController());
-       server.createContext("/login", new LoginController());
+       server.createContext("/login", new LoginHandler());
 
         server.setExecutor(null);
         server.start();

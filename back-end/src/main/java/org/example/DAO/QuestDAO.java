@@ -1,6 +1,5 @@
 package org.example.DAO;
 
-import org.example.model.MentorClass;
 import org.example.model.Quest;
 
 import java.sql.ResultSet;
@@ -18,7 +17,6 @@ public class QuestDAO implements DAO<Quest> {
         this.dbConnection = dbConnection;
         this.daoGetSet = daoGetSet;
     }
-
 
     @Override
     public void add(Quest quest) {

@@ -35,6 +35,8 @@ function main() {
         e.preventDefault();*/
  /*       showSignInForm();*/
 /*    });*/
+    openSlideMenu();
+    closeSlideMenu();
 };
 
 main();

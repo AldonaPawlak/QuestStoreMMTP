@@ -1,4 +1,4 @@
-package org.example.controller;
+package org.example.handlers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
@@ -17,12 +17,12 @@ import java.net.HttpCookie;
 import java.util.Map;
 import java.io.*;
 
-public class LoginController implements HttpHandler {
+public class LoginHandler implements HttpHandler {
 
     private LoginDAO loginDAO;
     private ObjectMapper mapper;
 
-    public LoginController() {
+    public LoginHandler() {
         DBConnection dbConnection = new DBConnection();
         DAOGetSet daoGetSet = new DAOGetSet(dbConnection);
         this.loginDAO = new LoginDAO(dbConnection, daoGetSet);

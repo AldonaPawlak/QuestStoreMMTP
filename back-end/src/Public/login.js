@@ -2,7 +2,6 @@ const loginForm = document.querySelector("#login-form");
 
 loginForm.addEventListener('submit', function (e) {
     e.preventDefault();
-    //name=Agnieszka&surname=Kowalska&email=a.kowalska%40codecool.com
     const data = `email=${this.email.value}&password=${this.password.value}`;
     console.log(data);
     login(data);
