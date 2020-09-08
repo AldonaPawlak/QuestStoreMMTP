@@ -10,7 +10,8 @@ loginForm.addEventListener('submit', function (e) {
 function login(data) {
     fetch("http://localhost:8050/login",
         {
-            mode: 'no-cors',
+/*            mode: 'no-cors',*/
+            credentials: 'same-origin',
             method: "POST",
             body: data
         })
@@ -20,5 +21,7 @@ function login(data) {
                 alert(response.text());
             }
             console.log(response);
-        });
+        }).catch(function (error) {
+        // user NOT authenticated, server return different status than 200-299
+        console.log(error)});
 }

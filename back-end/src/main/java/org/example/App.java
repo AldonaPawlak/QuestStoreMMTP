@@ -2,11 +2,18 @@ package org.example;
 
 import com.sun.net.httpserver.HttpServer;
 
+import org.example.DAO.DAOGetSet;
+import org.example.DAO.DBConnection;
+import org.example.DAO.MentorDAO;
+import org.example.config.IDgenerator;
+import org.example.config.PasswordCrypter;
 import org.example.handlers.LoginHandler;
 import org.example.handlers.MentorHandler;
+import org.example.model.Mentor;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.util.UUID;
 
 public class App
 {
@@ -21,8 +28,8 @@ public class App
         server.start();
         System.out.println("server started");
 
-
-     /*   DBConnection con = new DBConnection();
+/*
+        DBConnection con = new DBConnection();
         DAOGetSet set = new DAOGetSet(con);
         MentorDAO dao = new MentorDAO(con, set);
         IDgenerator idgen = new IDgenerator();
@@ -35,7 +42,7 @@ public class App
         System.out.println(crypted);
         String password = crypter.crypter("mentor");
         UUID roleID = UUID.fromString("745792a7-681b-4efe-abdd-ca027678b397");
-        Mentor mentor = new Mentor(id, "Wojciech","Makieła", "bla@o2.pl",password , roleID, true, "153 764 987", id2);
+        Mentor mentor = new Mentor(id, "Mateusz","Ostafil", "nik@o2.pl",password , roleID, true, "153 764 987", id2);
         dao.add(mentor);*/
 
     }

@@ -14,6 +14,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpCookie;
+import java.util.Collections;
 import java.util.Map;
 import java.io.*;
 
@@ -33,6 +34,7 @@ public class LoginHandler implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
         String response = "";
         try {
+            exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
             InputStreamReader isr = new InputStreamReader(exchange.getRequestBody(), "utf-8");
             BufferedReader br = new BufferedReader(isr);
 
@@ -47,7 +49,7 @@ public class LoginHandler implements HttpHandler {
                     user.getClass().getSimpleName()
             );
 
-            HttpCookie cookie = new HttpCookie("user", mapper.writeValueAsString(loggedUser));
+            HttpCookie cookie = new HttpCookie("user", "Ala ma kota");
             exchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
 
             response = "User authenticated";
