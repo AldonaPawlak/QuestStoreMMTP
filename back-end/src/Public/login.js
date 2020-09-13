@@ -8,11 +8,15 @@ loginForm.addEventListener('submit', function (e) {
 });
 
 function login(data) {
-    fetch("http://localhost:8050/login",
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    fetch("http://localhost:8052/login",
         {
-            mode: 'no-cors',
+/*            mode: 'no-cors',*/
+  /*          credentials: 'same-origin',*/
             method: "POST",
-            body: data
+            body: data,
+            headers: myHeaders
         })
         .then(function (response) {
             console.log(response.status);
@@ -20,5 +24,7 @@ function login(data) {
                 alert(response.text());
             }
             console.log(response);
-        });
+        }).catch(function (error) {
+        // user NOT authenticated, server return different status than 200-299
+        console.log(error)});
 }

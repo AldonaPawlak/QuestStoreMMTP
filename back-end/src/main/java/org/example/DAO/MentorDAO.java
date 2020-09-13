@@ -4,8 +4,10 @@ import org.example.config.IDgenerator;
 import org.example.model.Mentor;
 import org.example.model.Student;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -27,9 +29,14 @@ public class MentorDAO implements DAO<Mentor> {
     }
 
     @Override
-    public void remove(Mentor mentor) {
-        dbConnection.executeStatement(String.format("DELETE FROM mentors WHERE mentor_id = '%s';", mentor.getMentorID()));
-        dbConnection.executeStatement(String.format("DELETE FROM user_details WHERE id = '%s';", mentor.getUserDetailsID()));
+    public void remove(Mentor mentor) throws SQLException {
+        PreparedStatement preparedStatement = dbConnection.connection.prepareStatement("DELETE FROM mentors WHERE mentor_id = ?;");
+        preparedStatement.setObject(1, mentor.getMentorID(), Types.OTHER);
+        preparedStatement.executeUpdate();
+
+        PreparedStatement statement = dbConnection.connection.prepareStatement("DELETE FROM user_details WHERE id = ?;");
+        statement.setObject(1, mentor.getUserDetailsID(), Types.OTHER);
+        statement.executeUpdate();
     }
 
     @Override
