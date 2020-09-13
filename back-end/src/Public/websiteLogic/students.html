@@ -13,30 +13,10 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/creep.css">
     <script src="https://kit.fontawesome.com/bd5d5911de.js" crossorigin="anonymous"></script>
-<!--    <script src="../script.js" defer></script>-->
-    <script src="../mentorsScript.js" defer></script>
-
+    <script src="../script.js" defer></script>
 </head>
 
 <body>
-
-<template id="mentor-template">
-    <tr>
-          <td class="name"></td>
-          <td class="surname"></td>
-          <td class="email"></td>
-          <td class="phone"></td>
-          <td>
-            <span class="profile"><a href="#!"><i class="far fa-user"></i></a></span>
-          </td>
-          <td>
-            <span class="edit-row"><a href="#!"><i class="far fa-edit"></i></a></span>
-          </td>
-          <td>
-            <button type="button" class="removeButton">Remove</button>
-          </td>
-    </tr>
-</template>
 
   <header>
     <a id="hamburgerMenu" href="#" onclick="openSlideMenu()">
@@ -66,9 +46,10 @@
         <a href="classes.html">Classes</a>
     </div>
 </div>
-<a href="students.html" class="button">Students -></a>
+<a href="mentors.html" class="button">Mentors -></a>
+
 <br><div class="card">
-    <h3><strong>Mentors</strong></h3>
+    <h3><strong>Students</strong></h3>
     <div class="card-body">
       <div id="table" class="table-editable">
         <table>
@@ -78,15 +59,48 @@
               <th>Surname</th>
               <th>Email</th>
               <th>Phone number</th>
+              <th>Class</th>
               <th>Profile</th>
               <th>Edit</th>
             </tr>
           </thead>
-          <tbody class="mentors-container">
-
+          <tbody>
+            <tr>
+              <td>Tomek</td>
+              <td>Krogulec</td>
+              <td>tomek.krogulec@gmail.com</td>
+              <td>123456789</td>
+              <td>WEB/CSS/JS</td>
+              <td>
+                <span class="profile"><a href="#!"><i class="far fa-user"></i></a></span>
+              </td>
+              <td>
+                <span class="edit-row"><a href="#!"><i class="far fa-edit"></i></a></span>
+              </td>
+              <td>
+                <button type="button">Remove</button>
+              </td>
+            </tr>
+            <tr>
+              <td>Patryk</td>
+              <td>Krol</td>
+              <td>patryk.krol@gmail.com</td>
+              <td>987654321</td>
+              <td>WEB/CSS/JS</td>
+              <td>
+                <span class="profile"><a href="#!"><i class="far fa-user"></i></a></span>
+              </td>
+              <td>
+                <span class="edit-row"><a href="#!"><i class="far fa-edit"></i></a></span>
+              </td>
+              <td>
+                <button type="button">Remove</button>
+              </td>
+            </tr>
+            </tr>
           </tbody>
         </table>
-        <button id="add" type="button">Add mentor</button>
+        <button id="add" type="button">Add student</button>
       </div>
     </div>
   </div>

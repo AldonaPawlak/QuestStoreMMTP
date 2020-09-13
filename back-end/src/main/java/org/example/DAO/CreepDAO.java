@@ -9,12 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class CreepDAOImplementation implements  DAO<Creep> {
+public class CreepDAO implements  DAO<Creep> {
 
     DBConnection dbConnection;
     DAOGetSet daoGetSet;
 
-    public CreepDAOImplementation(DBConnection dbConnection, DAOGetSet daoGetSet) {
+    public CreepDAO(DBConnection dbConnection, DAOGetSet daoGetSet) {
         this.dbConnection = dbConnection;
         this.daoGetSet = daoGetSet;
     }

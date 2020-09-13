@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class MentorClassDAOImplementation implements DAO<MentorClass> {
+public class MentorClassDAO implements DAO<MentorClass> {
 
     DBConnection dbConnection;
     DAOGetSet daoGetSet;
 
-    public MentorClassDAOImplementation(DBConnection dbConnection, DAOGetSet daoGetSet) {
+    public MentorClassDAO(DBConnection dbConnection, DAOGetSet daoGetSet) {
         this.dbConnection = dbConnection;
         this.daoGetSet = daoGetSet;
     }
@@ -25,7 +25,7 @@ public class MentorClassDAOImplementation implements DAO<MentorClass> {
 
     @Override
     public void remove(MentorClass mentorClass) {
-        dbConnection.executeStatement(String.format("DELETE FROM mentors_classes '%s';", mentorClass.getClassID()));
+        dbConnection.executeStatement(String.format("DELETE FROM mentors_classes WHERE id='%s';", mentorClass.getClassID()));
     }
 
     @Override

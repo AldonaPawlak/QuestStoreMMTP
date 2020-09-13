@@ -6,19 +6,30 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 
-public class DBConnection {
+public class DBConnection implements Connect {
 
+    private String DBConnect;
+    private String DBUser;
+    private String DBPassword;
     public Statement statement;
     public Connection connection;
-    JSONreader reader = new JSONreader();
-    DBBridge dbBridge = new DBBridge(reader.JSONread().get("connection"), reader.JSONread().get("user"), reader.JSONread().get("password"));
+    JSONreader reader;
 
+    public DBConnection() {
+        this.reader = new JSONreader();
+        this.DBConnect = reader.JSONread().get("connection");
+        this.DBUser = reader.JSONread().get("user");
+        this.DBPassword = reader.JSONread().get("password");
+    }
+
+
+    @Override
     public void connection() {
         try {
             Class.forName("org.postgresql.Driver");
             connection = DriverManager
-                    .getConnection(dbBridge.getDBConnection(),
-                            dbBridge.getDBName(), dbBridge.getDBPassword());
+                    .getConnection(DBConnect,
+                            DBUser, DBPassword);
             System.out.println("Opened database successfully");
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName()+": "+ e.getMessage() );

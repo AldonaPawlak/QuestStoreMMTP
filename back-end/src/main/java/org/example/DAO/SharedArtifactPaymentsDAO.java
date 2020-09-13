@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class SharedArtifactPaymentsDAOImplementation implements DAO<SharedArtifactPayment> {
+public class SharedArtifactPaymentsDAO implements DAO<SharedArtifactPayment> {
 
     DBConnection dbConnection;
     DAOGetSet daoGetSet;
 
-    public SharedArtifactPaymentsDAOImplementation(DBConnection dbConnection, DAOGetSet daoGetSet) {
+    public SharedArtifactPaymentsDAO(DBConnection dbConnection, DAOGetSet daoGetSet) {
         this.dbConnection = dbConnection;
         this.daoGetSet = daoGetSet;
     }

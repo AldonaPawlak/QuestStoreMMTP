@@ -6,12 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-public class StudentDAOImplementation implements DAO<Student> {
+public class StudentDAO implements DAO<Student> {
 
     DBConnection dbConnection;
     DAOGetSet daoGetSet;
 
-    public StudentDAOImplementation(DBConnection dbConnection, DAOGetSet daoGetSet) {
+    public StudentDAO(DBConnection dbConnection, DAOGetSet daoGetSet) {
         this.dbConnection = dbConnection;
         this.daoGetSet = daoGetSet;
     }
@@ -25,8 +25,8 @@ public class StudentDAOImplementation implements DAO<Student> {
 
     @Override
     public void remove(Student student) {
-        dbConnection.executeStatement(String.format("REMOVE FROM students '%s';", student.getStudentID()));
-        dbConnection.executeStatement(String.format("REMOVE FROM user_details '%s';", student.getUserDetailsID()));
+        dbConnection.executeStatement(String.format("REMOVE FROM students WHERE id ='%s';", student.getStudentID()));
+        dbConnection.executeStatement(String.format("REMOVE FROM user_details WHERE id='%s';", student.getUserDetailsID()));
     }
 
     @Override

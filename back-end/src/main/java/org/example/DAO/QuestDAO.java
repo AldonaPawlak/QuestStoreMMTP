@@ -1,6 +1,5 @@
 package org.example.DAO;
 
-import org.example.model.MentorClass;
 import org.example.model.Quest;
 
 import java.sql.ResultSet;
@@ -9,16 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class QuestDAOImplementation implements DAO<Quest> {
+public class QuestDAO implements DAO<Quest> {
 
     DBConnection dbConnection;
     DAOGetSet daoGetSet;
 
-    public QuestDAOImplementation(DBConnection dbConnection, DAOGetSet daoGetSet) {
+    public QuestDAO(DBConnection dbConnection, DAOGetSet daoGetSet) {
         this.dbConnection = dbConnection;
         this.daoGetSet = daoGetSet;
     }
-
 
     @Override
     public void add(Quest quest) {
@@ -27,7 +25,7 @@ public class QuestDAOImplementation implements DAO<Quest> {
 
     @Override
     public void remove(Quest quest) {
-        dbConnection.executeStatement(String.format("REMOVE FROM quests '%s';", quest.getId()));
+        dbConnection.executeStatement(String.format("REMOVE FROM quests WHERE id='%s';", quest.getId()));
     }
 
     @Override
