@@ -29,7 +29,7 @@ public class MentorHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-/*        exchange.getResponseHeaders().put("Access-Control-Allow-Methods", Collections.singletonList("*"));*/
+        exchange.getResponseHeaders().put("Access-Control-Allow-Methods", Collections.singletonList("*"));
         exchange.getResponseHeaders().put("Content-type", Collections.singletonList("application/json"));
         exchange.getResponseHeaders().put("Access-Control-Allow-Origin", Collections.singletonList("*"));
         String method = exchange.getRequestMethod();

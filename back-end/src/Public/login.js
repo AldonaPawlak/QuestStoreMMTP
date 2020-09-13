@@ -10,7 +10,7 @@ loginForm.addEventListener('submit', function (e) {
 function login(data) {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-    fetch("http://localhost:8052/login",
+    fetch("http://localhost:8000/login",
         {
 /*            mode: 'no-cors',*/
   /*          credentials: 'same-origin',*/
