@@ -1,6 +1,6 @@
 const template = document.querySelector("#mentor-template");
 const container = document.querySelector(".mentors-container");
-const apiURL = "http://localhost:8050"
+const apiURL = "http://localhost:8000"
 
 function getMentors() {
     fetch(`${apiURL}/mentor`)

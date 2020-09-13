@@ -13,12 +13,13 @@ import org.example.model.Mentor;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.sql.SQLException;
 import java.util.UUID;
 
 public class App
 {
-    public static void main( String[] args ) throws IOException {
-        HttpServer server = HttpServer.create(new InetSocketAddress(8052), 0);
+    public static void main( String[] args ) throws IOException, Exception {
+        HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
         server.createContext("/mentor", new MentorHandler());
 //        server.createContext("/student", new StudentMenuController());
 //        server.createContext("/mentor", new MentorMenuController());
@@ -28,7 +29,7 @@ public class App
         server.start();
         System.out.println("server started");
 
-/*        DBConnection con = new DBConnection();
+   /*     DBConnection con = new DBConnection();
         DAOGetSet set = new DAOGetSet(con);
         MentorDAO dao = new MentorDAO(con, set);
         IDgenerator idgen = new IDgenerator();
