@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public interface DAO<T> {
 
-    void add(T t);
+    void add(T t) throws SQLException;
     void remove(T t) throws SQLException;
     void edit(T t);
     List<T> getAll();
