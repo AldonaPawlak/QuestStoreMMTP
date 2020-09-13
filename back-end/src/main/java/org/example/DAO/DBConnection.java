@@ -6,7 +6,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 
-public class DBConnection {
+public class DBConnection implements Connect {
 
     private String DBConnect;
     private String DBUser;
@@ -22,6 +22,8 @@ public class DBConnection {
         this.DBPassword = reader.JSONread().get("password");
     }
 
+
+    @Override
     public void connection() {
         try {
             Class.forName("org.postgresql.Driver");
