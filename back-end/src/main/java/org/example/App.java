@@ -18,7 +18,7 @@ import java.util.UUID;
 public class App
 {
     public static void main( String[] args ) throws IOException {
-        HttpServer server = HttpServer.create(new InetSocketAddress(8050), 0);
+        HttpServer server = HttpServer.create(new InetSocketAddress(8052), 0);
         server.createContext("/mentor", new MentorHandler());
 //        server.createContext("/student", new StudentMenuController());
 //        server.createContext("/mentor", new MentorMenuController());
@@ -43,7 +43,10 @@ public class App
         String password = crypter.crypter("mentor");
         UUID roleID = UUID.fromString("745792a7-681b-4efe-abdd-ca027678b397");
         Mentor mentor = new Mentor(id, "Mateusz","Ostafil", "nik@o2.pl",password , roleID, true, "153 764 987", id2);
-        dao.add(mentor);*/
+        dao.add(mentor);
+*/
 
-    }
+
+        }
+
 }
