@@ -49,22 +49,26 @@ public class LoginHandler implements HttpHandler {
                     user.getClass().getSimpleName()
             );
 
-            HttpCookie cookie = new HttpCookie("user", "Ala ma kota");
+            HttpCookie cookie = new HttpCookie("user", mapper.writeValueAsString(loggedUser));
             exchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
 
-            response = "User authenticated";
-            exchange.sendResponseHeaders(200, response.length());
-            OutputStream os = exchange.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
+            sendResponse(mapper.writeValueAsString(loggedUser), exchange, 200);
+
         } catch (Exception e) {
             e.printStackTrace();
-            response = e.getMessage();
-            exchange.sendResponseHeaders(404, response.length());
-            OutputStream os = exchange.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
+            sendResponse(e.getMessage(), exchange, 404);
         }
     }
 
+    private void sendResponse(String response, HttpExchange exchange, int status) throws IOException {
+        if (status == 200) {
+            exchange.getResponseHeaders().put("Content-type", Collections.singletonList("application/json"));
+        }
+        exchange.getResponseHeaders().put("Access-Control-Allow-Origin", Collections.singletonList("*"));
+        exchange.sendResponseHeaders(status, response.length());
+
+        OutputStream os = exchange.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
+    }
 }
