@@ -8,15 +8,11 @@ loginForm.addEventListener('submit', function (e) {
 });
 
 function login(data) {
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
     fetch("http://localhost:8000/login",
         {
-/*            mode: 'no-cors',*/
-  /*          credentials: 'same-origin',*/
+            credentials: 'same-origin',
             method: "POST",
-            body: data,
-            headers: myHeaders
+            body: data
         })
         .then(function (response) {
             console.log(response.status);
