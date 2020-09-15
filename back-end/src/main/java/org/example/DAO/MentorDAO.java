@@ -106,6 +106,7 @@ public class MentorDAO implements DAO<Mentor> {
                 mentors.add(mentor);
             }
             dbConnection.disconnect();
+            System.out.println("Selected mentors from data base successfully.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -113,7 +114,7 @@ public class MentorDAO implements DAO<Mentor> {
     }
 
     @Override
-    public Mentor get(UUID id) throws Exception{
+    public Mentor get(UUID id) throws Exception {
         try {
             dbConnection.connect();
             PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement("SELECT * FROM user_details, mentors WHERE user_details.id = mentors.user_details_id AND user_details_id=?;");
@@ -132,6 +133,7 @@ public class MentorDAO implements DAO<Mentor> {
                 return mentor;
             }
             dbConnection.disconnect();
+            System.out.println("Selected mentor from data base successfully.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
