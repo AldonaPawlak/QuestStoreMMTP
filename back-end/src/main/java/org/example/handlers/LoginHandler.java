@@ -13,8 +13,9 @@ import org.example.services.Parser;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.HttpCookie;
+import java.net.*;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.io.*;
 
@@ -50,6 +51,7 @@ public class LoginHandler implements HttpHandler {
             );
 
             HttpCookie cookie = new HttpCookie("user", mapper.writeValueAsString(loggedUser));
+
             exchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
 
             sendResponse(mapper.writeValueAsString(loggedUser), exchange, 200);
@@ -71,4 +73,5 @@ public class LoginHandler implements HttpHandler {
         os.write(response.getBytes());
         os.close();
     }
+
 }

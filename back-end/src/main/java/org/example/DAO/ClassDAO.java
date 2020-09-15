@@ -37,7 +37,7 @@ public class ClassDAO implements DAO<Class>{
     }
 
     @Override
-    public Class get(UUID id) throws  SQLException {
+    public Class get(UUID id) {
         return null;
     }
 
