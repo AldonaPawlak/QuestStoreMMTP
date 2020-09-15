@@ -41,26 +41,27 @@ public class MentorDAO implements DAO<Mentor> {
             statement.executeUpdate();
             System.out.println("Added mentor successfully.");
             dbConnection.disconnect();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Adding mentor failed.");
         }
     }
 
     @Override
-    public void remove(Mentor mentor) throws SQLException {
+    public void remove(Mentor mentor) {
         try {
-        dbConnection.connect();
-        PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement("DELETE FROM mentors WHERE mentor_id = ?;");
-        preparedStatement.setObject(1, mentor.getMentorID(), Types.OTHER);
-        preparedStatement.executeUpdate();
-        System.out.println("Removed mentor successfully.");
+            dbConnection.connect();
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement("DELETE FROM mentors WHERE mentor_id = ?;");
+            preparedStatement.setObject(1, mentor.getMentorID(), Types.OTHER);
+            preparedStatement.executeUpdate();
+            System.out.println("Removed mentor successfully.");
 
-        PreparedStatement statement = dbConnection.getConnection().prepareStatement("DELETE FROM user_details WHERE id = ?;");
-        statement.setObject(1, mentor.getUserDetailsID(), Types.OTHER);
-        statement.executeUpdate();
-        System.out.println("Removed user successfully.");
-        dbConnection.disconnect();} catch (SQLException e) {
+            PreparedStatement statement = dbConnection.getConnection().prepareStatement("DELETE FROM user_details WHERE id = ?;");
+            statement.setObject(1, mentor.getUserDetailsID(), Types.OTHER);
+            statement.executeUpdate();
+            System.out.println("Removed user successfully.");
+            dbConnection.disconnect();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
