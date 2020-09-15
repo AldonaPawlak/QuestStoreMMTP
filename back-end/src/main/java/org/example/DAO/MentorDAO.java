@@ -56,8 +56,8 @@ public class MentorDAO implements DAO<Mentor> {
 
     @Override
     public void edit(Mentor mentor) {
-        dbConnection.executeStatement(String.format("UPDATE mentors SET user_details_id = '%s' WHERE id = '%s';", mentor.getUserDetailsID(), mentor.getMentorID()));
-        dbConnection.executeStatement(String.format("UPDATE user_details SET name = '%s', surname = '%s', email = '%s', password = '%s', role_id = '%s', is_active = '%b' WHERE id = '%s;'", mentor.getName(), mentor.getSurname(), mentor.getEmail(), mentor.getPassword(), mentor.getRoleID(), mentor.isActive(), mentor.getUserDetailsID()));
+        dbConnection.runSqlQuery(String.format("UPDATE mentors SET user_details_id = '%s' WHERE id = '%s';", mentor.getUserDetailsID(), mentor.getMentorID()));
+        dbConnection.runSqlQuery(String.format("UPDATE user_details SET name = '%s', surname = '%s', email = '%s', password = '%s', role_id = '%s', is_active = '%b' WHERE id = '%s;'", mentor.getName(), mentor.getSurname(), mentor.getEmail(), mentor.getPassword(), mentor.getRoleID(), mentor.isActive(), mentor.getUserDetailsID()));
     }
 
     @Override
@@ -103,7 +103,7 @@ public class MentorDAO implements DAO<Mentor> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        throw new Exception("User not found");
+        throw new Exception("User not found.");
     }
 
 }

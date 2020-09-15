@@ -20,17 +20,17 @@ public class QuestDAO implements DAO<Quest> {
 
     @Override
     public void add(Quest quest) {
-        dbConnection.executeStatement(String.format("INSERT INTO quests (id, name, description, value) VALUES ('%s', '%s' ,'%s' ,'%d');", quest.getId(), quest.getName(), quest.getDescription(), quest.getValue()));
+        dbConnection.runSqlQuery(String.format("INSERT INTO quests (id, name, description, value) VALUES ('%s', '%s' ,'%s' ,'%d');", quest.getId(), quest.getName(), quest.getDescription(), quest.getValue()));
     }
 
     @Override
     public void remove(Quest quest) {
-        dbConnection.executeStatement(String.format("REMOVE FROM quests WHERE id='%s';", quest.getId()));
+        dbConnection.runSqlQuery(String.format("REMOVE FROM quests WHERE id='%s';", quest.getId()));
     }
 
     @Override
     public void edit(Quest quest) {
-        dbConnection.executeStatement(String.format("UPDATE quests SET name = '%s', description = '%s', value = %d WHERE id = '%s';", quest.getName(), quest.getDescription(), quest.getValue(), quest.getId()));
+        dbConnection.runSqlQuery(String.format("UPDATE quests SET name = '%s', description = '%s', value = %d WHERE id = '%s';", quest.getName(), quest.getDescription(), quest.getValue(), quest.getId()));
     }
 
     @Override
