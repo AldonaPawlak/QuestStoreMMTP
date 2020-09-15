@@ -58,7 +58,8 @@ public class QuestDAO implements DAO<Quest> {
     public void edit(Quest quest) {
         try {
             dbConnection.connect();
-            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement("UPDATE quests SET name = ?, description = ?, value = ? WHERE id = ?;");
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
+                    "UPDATE quests SET name = ?, description = ?, value = ? WHERE id = ?;");
             preparedStatement.setString(1, quest.getName());
             preparedStatement.setString(2, quest.getDescription());
             preparedStatement.setInt(3, quest.getValue());
@@ -98,7 +99,6 @@ public class QuestDAO implements DAO<Quest> {
 
     @Override
     public Quest get(UUID id) throws AbsenceOfRecordsException {
-        List<Quest> quests = new ArrayList<>();
         try {
             dbConnection.connect();
             PreparedStatement preparedStatement = dbConnection.connect().prepareStatement("SELECT * FROM quests WHERE id = ?;");

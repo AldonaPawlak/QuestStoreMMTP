@@ -25,7 +25,8 @@ public class MentorDAO implements DAO<Mentor> {
     public void add(Mentor mentor) {
         try {
             dbConnection.connect();
-            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement("INSERT INTO user_details (id, name, surname, email, password, role_id, is_active, phone_number) VALUES (?, ?, ?, ?, ?, ?, true, ?);");
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
+                    "INSERT INTO user_details (id, name, surname, email, password, role_id, is_active, phone_number) VALUES (?, ?, ?, ?, ?, ?, true, ?);");
             preparedStatement.setObject(1, mentor.getUserDetailsID(), Types.OTHER);
             preparedStatement.setString(2, mentor.getName());
             preparedStatement.setString(3, mentor.getSurname());
@@ -36,7 +37,8 @@ public class MentorDAO implements DAO<Mentor> {
             preparedStatement.executeUpdate();
             System.out.println("Added user successfully.");
 
-            PreparedStatement statement = dbConnection.getConnection().prepareStatement("INSERT INTO mentors (mentor_id, user_details_id) VALUES (?, ?);");
+            PreparedStatement statement = dbConnection.getConnection().prepareStatement(
+                    "INSERT INTO mentors (mentor_id, user_details_id) VALUES (?, ?);");
             statement.setObject(1, mentor.getMentorID(), Types.OTHER);
             statement.setObject(2, mentor.getUserDetailsID(), Types.OTHER);
             statement.executeUpdate();
@@ -52,12 +54,14 @@ public class MentorDAO implements DAO<Mentor> {
     public void remove(Mentor mentor) {
         try {
             dbConnection.connect();
-            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement("DELETE FROM mentors WHERE mentor_id = ?;");
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
+                    "DELETE FROM mentors WHERE mentor_id = ?;");
             preparedStatement.setObject(1, mentor.getMentorID(), Types.OTHER);
             preparedStatement.executeUpdate();
             System.out.println("Removed mentor successfully.");
 
-            PreparedStatement statement = dbConnection.getConnection().prepareStatement("DELETE FROM user_details WHERE id = ?;");
+            PreparedStatement statement = dbConnection.getConnection().prepareStatement(
+                    "DELETE FROM user_details WHERE id = ?;");
             statement.setObject(1, mentor.getUserDetailsID(), Types.OTHER);
             statement.executeUpdate();
             System.out.println("Removed user successfully.");
@@ -72,7 +76,8 @@ public class MentorDAO implements DAO<Mentor> {
     public void edit(Mentor mentor) {
         try {
             dbConnection.connect();
-            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement("UPDATE user_details SET name = ?, surname = ?, email = ?, password = ?, is_active = ? WHERE id = ?;");
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
+                    "UPDATE user_details SET name = ?, surname = ?, email = ?, password = ?, is_active = ? WHERE id = ?;");
             preparedStatement.setString(1, mentor.getName());
             preparedStatement.setString(2, mentor.getSurname());
             preparedStatement.setString(3, mentor.getEmail());
@@ -93,7 +98,8 @@ public class MentorDAO implements DAO<Mentor> {
         List<Mentor> mentors = new ArrayList<>();
         try {
             dbConnection.connect();
-            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement("SELECT * FROM user_details, mentors WHERE user_details.id = mentors.user_details_id;");
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
+                    "SELECT * FROM user_details, mentors WHERE user_details.id = mentors.user_details_id;");
             ResultSet allMentors = preparedStatement.executeQuery();
             while (allMentors.next()) {
                 final UUID userDetailsID = UUID.fromString(allMentors.getString("id"));
@@ -121,7 +127,8 @@ public class MentorDAO implements DAO<Mentor> {
     public Mentor get(UUID id) throws AbsenceOfRecordsException {
         try {
             dbConnection.connect();
-            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement("SELECT * FROM user_details, mentors WHERE user_details.id = mentors.user_details_id AND user_details_id = ?;");
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
+                    "SELECT * FROM user_details, mentors WHERE user_details.id = mentors.user_details_id AND user_details_id = ?;");
             preparedStatement.setObject(1, id, Types.OTHER);
             ResultSet result = preparedStatement.executeQuery();
             while (result.next()) {
