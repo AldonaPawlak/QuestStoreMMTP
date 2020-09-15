@@ -36,13 +36,9 @@ public class App
         UUID id = idgen.UniqueID();
         UUID id2 = idgen.UniqueID();
         PasswordCrypter crypter = new PasswordCrypter();
-        String toCrypt = "hasloToCrypt";
-        System.out.println(toCrypt);
-        String crypted = crypter.crypter(toCrypt);
-        System.out.println(crypted);
         String password = crypter.crypter("mentor");
         UUID roleID = UUID.fromString("745792a7-681b-4efe-abdd-ca027678b397");
-        Mentor mentor = new Mentor(id, "Matylda","Ostafil", "nik@o2.pl",password , roleID, true, "153 764 987", id2);
+        Mentor mentor = new Mentor(id, "Dominik","Starzyk", "dominik.s@o2.pl",password , roleID, true, "773 764 987", id2);
         dao.add(mentor);*/
 
         }
