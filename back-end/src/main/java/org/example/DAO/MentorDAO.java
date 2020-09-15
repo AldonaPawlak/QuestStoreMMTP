@@ -22,8 +22,8 @@ public class MentorDAO implements DAO<Mentor> {
 
     @Override
     public void add(Mentor mentor) {
-        dbConnection.connect();
         try {
+            dbConnection.connect();
             PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement("INSERT INTO user_details (id, name, surname, email, password, role_id, is_active, phone_number) VALUES (?, ?, ?, ?, ?, ?, true, ?);");
             preparedStatement.setObject(1, mentor.getUserDetailsID(), Types.OTHER);
             preparedStatement.setString(2, mentor.getName());
@@ -89,7 +89,9 @@ public class MentorDAO implements DAO<Mentor> {
     public List<Mentor> getAll() {
         List<Mentor> mentors = new ArrayList<>();
         try {
-            ResultSet allMentors = daoGetSet.getDataSet("SELECT * FROM user_details, mentors WHERE user_details.id = mentors.user_details_id;");
+            dbConnection.connect();
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement("SELECT * FROM user_details, mentors WHERE user_details.id = mentors.user_details_id;");
+            ResultSet allMentors = preparedStatement.executeQuery();
             while (allMentors.next()) {
                 final UUID userDetailsID = UUID.fromString(allMentors.getString("id"));
                 final String name = allMentors.getString("name");
@@ -103,6 +105,7 @@ public class MentorDAO implements DAO<Mentor> {
                 Mentor mentor = new Mentor(userDetailsID, name, surname, email, password, roleID, isActive, phoneNumber, mentorID);
                 mentors.add(mentor);
             }
+            dbConnection.disconnect();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -112,7 +115,10 @@ public class MentorDAO implements DAO<Mentor> {
     @Override
     public Mentor get(UUID id) throws Exception{
         try {
-            ResultSet result = daoGetSet.getDataSet(String.format("SELECT * FROM user_details, mentors WHERE user_details.id = mentors.user_details_id AND user_details_id='%s';", id));
+            dbConnection.connect();
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement("SELECT * FROM user_details, mentors WHERE user_details.id = mentors.user_details_id AND user_details_id=?;");
+            preparedStatement.setObject(1, id, Types.OTHER);
+            ResultSet result = preparedStatement.executeQuery();
             while (result.next()) {
                 final String name = result.getString("name");
                 final String surname = result.getString("surname");
@@ -125,6 +131,7 @@ public class MentorDAO implements DAO<Mentor> {
                 Mentor mentor = new Mentor(id, name, surname, email, password, roleID, isActive, phoneNumber, mentorID);
                 return mentor;
             }
+            dbConnection.disconnect();
         } catch (SQLException e) {
             e.printStackTrace();
         }
