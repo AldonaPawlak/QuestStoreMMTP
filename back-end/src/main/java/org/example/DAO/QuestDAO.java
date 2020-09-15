@@ -25,7 +25,8 @@ public class QuestDAO implements DAO<Quest> {
     public void add(Quest quest) {
         try {
             dbConnection.connect();
-            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement("INSERT INTO (id, name, description, value) VALUES (?, ?, ?, ?);");
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
+                    "INSERT INTO (id, name, description, value) VALUES (?, ?, ?, ?);");
             preparedStatement.setObject(1, quest.getId(), Types.OTHER);
             preparedStatement.setString(2, quest.getName());
             preparedStatement.setString(3, quest.getDescription());
@@ -43,7 +44,8 @@ public class QuestDAO implements DAO<Quest> {
     public void remove(Quest quest) {
         try {
             dbConnection.connect();
-            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement("REMOVE FROM quests WHERE id = ?;");
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
+                    "DELETE FROM quests WHERE id = ?;");
             preparedStatement.setObject(1, quest.getId(), Types.OTHER);
             preparedStatement.executeUpdate();
             System.out.println("Quest removed successfully.");
@@ -101,7 +103,8 @@ public class QuestDAO implements DAO<Quest> {
     public Quest get(UUID id) throws AbsenceOfRecordsException {
         try {
             dbConnection.connect();
-            PreparedStatement preparedStatement = dbConnection.connect().prepareStatement("SELECT * FROM quests WHERE id = ?;");
+            PreparedStatement preparedStatement = dbConnection.connect().prepareStatement(
+                    "SELECT * FROM quests WHERE id = ?;");
             preparedStatement.setObject(1, id, Types.OTHER);
             ResultSet questsSet = preparedStatement.executeQuery();
             while (questsSet.next()) {

@@ -19,14 +19,14 @@ public class StudentDAO implements DAO<Student> {
 
     @Override
     public void add(Student student) {
-        dbConnection.runSqlQuery(String.format("'INSERT INTO user_details (id, name, surname, email, password, role_id, is_active) VALUES ('%s', '%s' ,'%s' ,'%s', '%s', 3, true);'", student.getUserDetailsID(), student.getName(), student.getSurname(), student.getEmail(), student.getPassword()));
+        dbConnection.runSqlQuery(String.format("INSERT INTO user_details (id, name, surname, email, password, role_id, is_active) VALUES ('%s', '%s' ,'%s' ,'%s', '%s', 3, true);'", student.getUserDetailsID(), student.getName(), student.getSurname(), student.getEmail(), student.getPassword()));
         dbConnection.runSqlQuery(String.format("INSERT INTO students (student_id, user_details_id, coins) VALUES ('%s', '%s', 0);", student.getStudentID(), student.getUserDetailsID()));
     }
 
     @Override
     public void remove(Student student) {
-        dbConnection.runSqlQuery(String.format("REMOVE FROM students WHERE id ='%s';", student.getStudentID()));
-        dbConnection.runSqlQuery(String.format("REMOVE FROM user_details WHERE id='%s';", student.getUserDetailsID()));
+        dbConnection.runSqlQuery(String.format("DELETE FROM students WHERE id ='%s';", student.getStudentID()));
+        dbConnection.runSqlQuery(String.format("DELETE FROM user_details WHERE id='%s';", student.getUserDetailsID()));
     }
 
     @Override
