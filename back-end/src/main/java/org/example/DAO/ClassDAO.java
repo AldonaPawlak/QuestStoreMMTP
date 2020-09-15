@@ -18,12 +18,12 @@ public class ClassDAO implements DAO<Class>{
 
     @Override
     public void add(Class claass) {
-        dbConnection.executeStatement(String.format("INSERT INTO classes (id, name) VALUES ('%s', '%s');", claass.getId(), claass.getName()));
+        dbConnection.runSqlQuery(String.format("INSERT INTO classes (id, name) VALUES ('%s', '%s');", claass.getId(), claass.getName()));
     }
 
     @Override
     public void remove(Class claass) {
-        dbConnection.executeStatement(String.format("DELETE FROM classes WHERE id = '%s';", claass.getId()));
+        dbConnection.runSqlQuery(String.format("DELETE FROM classes WHERE id = '%s';", claass.getId()));
     }
 
     @Override

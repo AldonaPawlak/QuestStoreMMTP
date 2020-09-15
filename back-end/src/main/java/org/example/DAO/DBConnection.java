@@ -38,7 +38,7 @@ public class DBConnection implements Connect {
         return connection;
     }
 
-    public void executeStatement(String sql) {
+    public void runSqlQuery(String sql) {
         connect();
         try {
             statement = connection.createStatement();
