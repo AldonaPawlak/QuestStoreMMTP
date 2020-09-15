@@ -1,5 +1,6 @@
 package org.example.DAO;
 
+import org.example.DAO.Exception.AbsenceOfRecordsException;
 import org.example.model.Creep;
 
 import java.sql.ResultSet;
@@ -61,6 +62,12 @@ public class CreepDAO implements  DAO<Creep> {
     }
 
     @Override
+    public Creep get(UUID id) throws AbsenceOfRecordsException {
+        return null;
+    }
+
+/*
+    @Override
     public Creep get(UUID id) throws  SQLException{
         ResultSet result = daoGetSet.getDataSet(String.format("SELECT * FROM user_details, mentors WHERE user_details.id = mentors.user_details_id AND id='%s';", id));
         final UUID userDetailsID = id;
@@ -75,5 +82,6 @@ public class CreepDAO implements  DAO<Creep> {
         Creep creep = new Creep(userDetailsID, name, surname, email, password, roleID, isActive, phoneNumber, creepID);
         return creep;
     }
+*/
 
 }
