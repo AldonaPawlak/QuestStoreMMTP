@@ -23,7 +23,8 @@ public class MentorDAO implements DAO<Mentor> {
     }
 
     @Override
-    public void add(Mentor mentor) throws SQLException {/*
+    public void add(Mentor mentor) throws SQLException {
+        dbConnection.connection();
         PreparedStatement preparedStatement = dbConnection.connection.prepareStatement("INSERT INTO user_details (id, name, surname, email, password, role_id, is_active, phone_number) VALUES (?, ?, ?, ?, ?, ?, true, ?);");
         preparedStatement.setObject(1, mentor.getUserDetailsID(), Types.OTHER);
         preparedStatement.setString(2, mentor.getName());
@@ -31,10 +32,13 @@ public class MentorDAO implements DAO<Mentor> {
         preparedStatement.setString(4, mentor.getEmail());
         preparedStatement.setString(5, mentor.getPassword());
         preparedStatement.setObject(6, mentor.getRoleID(), Types.OTHER);
-        preparedStatement.setString(7, mentor.getPhoneNumber());*/
-        dbConnection.executeStatement(String.format("INSERT INTO user_details (id, name, surname, email, password, role_id, is_active, phone_number) VALUES ('%s', '%s' ,'%s' ,'%s', '%s', '%s', true, '%s');", mentor.getUserDetailsID(), mentor.getName(), mentor.getSurname(), mentor.getEmail(), mentor.getPassword(), mentor.getRoleID(), mentor.getPhoneNumber()));
-      /*  preparedStatement.executeUpdate();*/
-        dbConnection.executeStatement(String.format("INSERT INTO mentors (mentor_id, user_details_id) VALUES ('%s', '%s');", mentor.getMentorID(), mentor.getUserDetailsID()));
+        preparedStatement.setString(7, mentor.getPhoneNumber());
+        preparedStatement.executeUpdate();
+
+        PreparedStatement statement = dbConnection.connection.prepareStatement("INSERT INTO mentors (mentor_id, user_details_id) VALUES (?, ?);");
+        statement.setObject(1, mentor.getMentorID(), Types.OTHER);
+        statement.setObject(2, mentor.getUserDetailsID(), Types.OTHER);
+        statement.executeUpdate();
     }
 
     @Override

@@ -24,7 +24,7 @@ public class DBConnection implements Connect {
 
 
     @Override
-    public void connection() {
+    public Connection connection() {
         try {
             Class.forName("org.postgresql.Driver");
             connection = DriverManager
@@ -35,6 +35,7 @@ public class DBConnection implements Connect {
             System.err.println( e.getClass().getName()+": "+ e.getMessage() );
             System.exit(0);
         }
+        return connection;
     }
 
     public void executeStatement(String sql) {
