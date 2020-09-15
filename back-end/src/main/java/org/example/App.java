@@ -29,7 +29,7 @@ public class App
         server.start();
         System.out.println("server started");
 
-   /*     DBConnection con = new DBConnection();
+/*        DBConnection con = new DBConnection();
         DAOGetSet set = new DAOGetSet(con);
         MentorDAO dao = new MentorDAO(con, set);
         IDgenerator idgen = new IDgenerator();
@@ -42,9 +42,8 @@ public class App
         System.out.println(crypted);
         String password = crypter.crypter("mentor");
         UUID roleID = UUID.fromString("745792a7-681b-4efe-abdd-ca027678b397");
-        Mentor mentor = new Mentor(id, "Mateusz","Ostafil", "nik@o2.pl",password , roleID, true, "153 764 987", id2);
+        Mentor mentor = new Mentor(id, "Matylda","Ostafil", "nik@o2.pl",password , roleID, true, "153 764 987", id2);
         dao.add(mentor);*/
-
 
         }
 
