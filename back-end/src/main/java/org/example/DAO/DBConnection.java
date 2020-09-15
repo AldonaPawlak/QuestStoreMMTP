@@ -12,7 +12,7 @@ public class DBConnection implements Connect {
     private String DBUser;
     private String DBPassword;
     public Statement statement;
-    public Connection connection;
+    private Connection connection;
     JSONreader reader;
 
     public DBConnection() {
@@ -22,6 +22,9 @@ public class DBConnection implements Connect {
         this.DBPassword = reader.JSONread().get("password");
     }
 
+    public Connection getConnection() {
+        return connection;
+    }
 
     @Override
     public Connection connect() {

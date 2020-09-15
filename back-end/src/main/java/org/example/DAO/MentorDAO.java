@@ -23,7 +23,7 @@ public class MentorDAO implements DAO<Mentor> {
     @Override
     public void add(Mentor mentor) throws SQLException {
         dbConnection.connect();
-        PreparedStatement preparedStatement = dbConnection.connection.prepareStatement("INSERT INTO user_details (id, name, surname, email, password, role_id, is_active, phone_number) VALUES (?, ?, ?, ?, ?, ?, true, ?);");
+        PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement("INSERT INTO user_details (id, name, surname, email, password, role_id, is_active, phone_number) VALUES (?, ?, ?, ?, ?, ?, true, ?);");
         preparedStatement.setObject(1, mentor.getUserDetailsID(), Types.OTHER);
         preparedStatement.setString(2, mentor.getName());
         preparedStatement.setString(3, mentor.getSurname());
@@ -34,7 +34,7 @@ public class MentorDAO implements DAO<Mentor> {
         preparedStatement.executeUpdate();
         System.out.println("Added user successfully.");
 
-        PreparedStatement statement = dbConnection.connection.prepareStatement("INSERT INTO mentors (mentor_id, user_details_id) VALUES (?, ?);");
+        PreparedStatement statement = dbConnection.getConnection().prepareStatement("INSERT INTO mentors (mentor_id, user_details_id) VALUES (?, ?);");
         statement.setObject(1, mentor.getMentorID(), Types.OTHER);
         statement.setObject(2, mentor.getUserDetailsID(), Types.OTHER);
         statement.executeUpdate();
@@ -43,12 +43,12 @@ public class MentorDAO implements DAO<Mentor> {
 
     @Override
     public void remove(Mentor mentor) throws SQLException {
-        PreparedStatement preparedStatement = dbConnection.connection.prepareStatement("DELETE FROM mentors WHERE mentor_id = ?;");
+        PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement("DELETE FROM mentors WHERE mentor_id = ?;");
         preparedStatement.setObject(1, mentor.getMentorID(), Types.OTHER);
         preparedStatement.executeUpdate();
         System.out.println("Removed mentor successfully.");
 
-        PreparedStatement statement = dbConnection.connection.prepareStatement("DELETE FROM user_details WHERE id = ?;");
+        PreparedStatement statement = dbConnection.getConnection().prepareStatement("DELETE FROM user_details WHERE id = ?;");
         statement.setObject(1, mentor.getUserDetailsID(), Types.OTHER);
         statement.executeUpdate();
         System.out.println("Removed user successfully.");
