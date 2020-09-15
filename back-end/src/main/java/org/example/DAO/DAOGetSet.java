@@ -12,7 +12,7 @@ public class DAOGetSet {
     }
 
     public ResultSet getDataSet(String query) {
-        dbConnection.connection();
+        dbConnection.connect();
         try {
             dbConnection.statement = dbConnection.connection.createStatement();
             ResultSet results = dbConnection.statement.executeQuery(query);

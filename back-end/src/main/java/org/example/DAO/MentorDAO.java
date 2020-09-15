@@ -1,8 +1,6 @@
 package org.example.DAO;
 
-import org.example.config.IDgenerator;
 import org.example.model.Mentor;
-import org.example.model.Student;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,7 +22,7 @@ public class MentorDAO implements DAO<Mentor> {
 
     @Override
     public void add(Mentor mentor) throws SQLException {
-        dbConnection.connection();
+        dbConnection.connect();
         PreparedStatement preparedStatement = dbConnection.connection.prepareStatement("INSERT INTO user_details (id, name, surname, email, password, role_id, is_active, phone_number) VALUES (?, ?, ?, ?, ?, ?, true, ?);");
         preparedStatement.setObject(1, mentor.getUserDetailsID(), Types.OTHER);
         preparedStatement.setString(2, mentor.getName());
@@ -34,11 +32,13 @@ public class MentorDAO implements DAO<Mentor> {
         preparedStatement.setObject(6, mentor.getRoleID(), Types.OTHER);
         preparedStatement.setString(7, mentor.getPhoneNumber());
         preparedStatement.executeUpdate();
+        System.out.println("Added user successfully.");
 
         PreparedStatement statement = dbConnection.connection.prepareStatement("INSERT INTO mentors (mentor_id, user_details_id) VALUES (?, ?);");
         statement.setObject(1, mentor.getMentorID(), Types.OTHER);
         statement.setObject(2, mentor.getUserDetailsID(), Types.OTHER);
         statement.executeUpdate();
+        System.out.println("Added mentor successfully.");
     }
 
     @Override
@@ -46,10 +46,12 @@ public class MentorDAO implements DAO<Mentor> {
         PreparedStatement preparedStatement = dbConnection.connection.prepareStatement("DELETE FROM mentors WHERE mentor_id = ?;");
         preparedStatement.setObject(1, mentor.getMentorID(), Types.OTHER);
         preparedStatement.executeUpdate();
+        System.out.println("Removed mentor successfully.");
 
         PreparedStatement statement = dbConnection.connection.prepareStatement("DELETE FROM user_details WHERE id = ?;");
         statement.setObject(1, mentor.getUserDetailsID(), Types.OTHER);
         statement.executeUpdate();
+        System.out.println("Removed user successfully.");
     }
 
     @Override
