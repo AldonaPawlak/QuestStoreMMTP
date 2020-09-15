@@ -2,7 +2,6 @@ package org.example.DAO;
 
 import org.example.DAO.Exception.AbsenceOfRecordsException;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 

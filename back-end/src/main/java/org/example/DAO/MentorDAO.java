@@ -118,7 +118,7 @@ public class MentorDAO implements DAO<Mentor> {
     }
 
     @Override
-    public Mentor get(UUID id) throws Exception {
+    public Mentor get(UUID id) throws AbsenceOfRecordsException {
         try {
             dbConnection.connect();
             PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement("SELECT * FROM user_details, mentors WHERE user_details.id = mentors.user_details_id AND user_details_id = ?;");
