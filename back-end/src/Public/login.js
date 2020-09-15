@@ -15,18 +15,15 @@ function login(data) {
             body: data
         })
         .then((response) => {
-            console.log(response),
-            console.log(cookies)
+            /*console.log(response)*/
             return response.json()
         })
         .then((responseJson) => {
             console.log(responseJson);
-            document.cookie = "user=" + responseJson;
-            console.log(cookies)
+            document.cookie = "user=" + responseJson.id + " " + responseJson.email + " " +responseJson.role;
             return responseJson;
         })
-        .catch((error) => {
-            return reject(error);
-        });
+        .catch(error => console.error(error));
+
 
 }
