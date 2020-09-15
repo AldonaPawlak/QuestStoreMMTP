@@ -2,8 +2,10 @@ package org.example.DAO;
 
 import org.example.model.Quest;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -20,17 +22,54 @@ public class QuestDAO implements DAO<Quest> {
 
     @Override
     public void add(Quest quest) {
-        dbConnection.runSqlQuery(String.format("INSERT INTO quests (id, name, description, value) VALUES ('%s', '%s' ,'%s' ,'%d');", quest.getId(), quest.getName(), quest.getDescription(), quest.getValue()));
+        try {
+            dbConnection.connect();
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement("INSERT INTO (id, name, description, value) VALUES (?, ?, ?, ?);");
+            preparedStatement.setObject(1, quest.getId(), Types.OTHER);
+            preparedStatement.setString(2, quest.getName());
+            preparedStatement.setString(3, quest.getDescription());
+            preparedStatement.setInt(4, quest.getValue());
+            preparedStatement.executeUpdate();
+            System.out.println("Quest added successfully.");
+            dbConnection.disconnect();
+        } catch (Exception e) {
+            System.out.println("Adding quest failed.");
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void remove(Quest quest) {
-        dbConnection.runSqlQuery(String.format("REMOVE FROM quests WHERE id='%s';", quest.getId()));
+        try {
+            dbConnection.connect();
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement("REMOVE FROM quests WHERE id = ?;");
+            preparedStatement.setObject(1, quest.getId(), Types.OTHER);
+            preparedStatement.executeUpdate();
+            System.out.println("Quest removed successfully.");
+            dbConnection.disconnect();
+        } catch (SQLException e) {
+            System.out.println("Removing quest failed.");
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void edit(Quest quest) {
         dbConnection.runSqlQuery(String.format("UPDATE quests SET name = '%s', description = '%s', value = %d WHERE id = '%s';", quest.getName(), quest.getDescription(), quest.getValue(), quest.getId()));
+        try {
+            dbConnection.connect();
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement("UPDATE quests SET name = ?, description = ?, value = ? WHERE id = ?;");
+            preparedStatement.setString(1, quest.getName());
+            preparedStatement.setString(2, quest.getDescription());
+            preparedStatement.setInt(3, quest.getValue());
+            preparedStatement.setObject(4, quest.getId(), Types.OTHER);
+            preparedStatement.executeUpdate();
+            System.out.println("Quest edited successfully.");
+            dbConnection.disconnect();
+        } catch (SQLException e) {
+            System.out.println("Editing quest failed.");
+            e.printStackTrace();
+        }
     }
 
     @Override
