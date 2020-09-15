@@ -42,7 +42,7 @@ public class MentorDAO implements DAO<Mentor> {
             statement.executeUpdate();
             System.out.println("Added mentor successfully.");
             dbConnection.disconnect();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Adding mentor failed.");
         }

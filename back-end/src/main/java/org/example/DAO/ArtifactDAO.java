@@ -2,8 +2,10 @@ package org.example.DAO;
 
 import org.example.model.Artifact;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.*;
 
 public class ArtifactDAO implements DAO<Artifact>{
@@ -18,12 +20,37 @@ public class ArtifactDAO implements DAO<Artifact>{
 
     @Override
     public void add(Artifact artifact) {
-        dbConnection.runSqlQuery(String.format("INSERT INTO artifacts (id, name, price, category_id, description, artifact_type_id) VALUES('%s', '%s', '%d', '%s', '%s', '%s');", artifact.getId(), artifact.getName(), artifact.getCategoryID(), artifact.getDescription(), artifact.getArtifactTypeID()));
+        try {
+            dbConnection.connect();
+            PreparedStatement preparedStatement = dbConnection.connect().prepareStatement("INSERT INTO artifacts (id, name, price, category_id, description, artifact_type_id) VALUES(?, ?, ?, ?, ?, ?);");
+            preparedStatement.setObject(1, artifact.getId(), Types.OTHER);
+            preparedStatement.setString(2, artifact.getName());
+            preparedStatement.setInt(3, artifact.getPrice());
+            preparedStatement.setObject(4,artifact.getCategoryID(), Types.OTHER);
+            preparedStatement.setString(5, artifact.getDescription());
+            preparedStatement.setObject(6, artifact.getArtifactTypeID(), Types.OTHER);
+            preparedStatement.executeUpdate();
+            System.out.println("Artifact added successfully.");
+            dbConnection.disconnect();
+        } catch (SQLException e) {
+            System.out.println("Adding artifact failed.");
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void remove(Artifact artifact) {
-        dbConnection.runSqlQuery(String.format("DELETE FROM artifacts WHERE id = '%s';", artifact.getId()));
+        try {
+            dbConnection.connect();
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement("DELETE FROM artifacts WHERE id = ?;");
+            preparedStatement.setObject(1, artifact.getId(), Types.OTHER);
+            preparedStatement.executeUpdate();
+            System.out.println("Artifact removed successfully.");
+            dbConnection.disconnect();
+        } catch (SQLException e) {
+            System.out.println("Removing artifact failed.");
+            e.printStackTrace();
+        }
     }
 
     @Override

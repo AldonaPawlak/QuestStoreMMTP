@@ -33,7 +33,7 @@ public class QuestDAO implements DAO<Quest> {
             preparedStatement.executeUpdate();
             System.out.println("Quest added successfully.");
             dbConnection.disconnect();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Adding quest failed.");
             e.printStackTrace();
         }
