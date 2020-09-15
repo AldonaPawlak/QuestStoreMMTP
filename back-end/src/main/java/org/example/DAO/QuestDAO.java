@@ -1,5 +1,6 @@
 package org.example.DAO;
 
+import org.example.DAO.Exception.AbsenceOfRecordsException;
 import org.example.model.Quest;
 
 import java.sql.PreparedStatement;
@@ -32,7 +33,7 @@ public class QuestDAO implements DAO<Quest> {
             preparedStatement.executeUpdate();
             System.out.println("Quest added successfully.");
             dbConnection.disconnect();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Adding quest failed.");
             e.printStackTrace();
         }
@@ -57,7 +58,8 @@ public class QuestDAO implements DAO<Quest> {
     public void edit(Quest quest) {
         try {
             dbConnection.connect();
-            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement("UPDATE quests SET name = ?, description = ?, value = ? WHERE id = ?;");
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
+                    "UPDATE quests SET name = ?, description = ?, value = ? WHERE id = ?;");
             preparedStatement.setString(1, quest.getName());
             preparedStatement.setString(2, quest.getDescription());
             preparedStatement.setInt(3, quest.getValue());
@@ -96,8 +98,7 @@ public class QuestDAO implements DAO<Quest> {
     }
 
     @Override
-    public Quest get(UUID id) throws Exception {
-        List<Quest> quests = new ArrayList<>();
+    public Quest get(UUID id) throws AbsenceOfRecordsException {
         try {
             dbConnection.connect();
             PreparedStatement preparedStatement = dbConnection.connect().prepareStatement("SELECT * FROM quests WHERE id = ?;");
@@ -117,7 +118,7 @@ public class QuestDAO implements DAO<Quest> {
             System.out.println("Selecting quest from data base failed.");
             e.printStackTrace();
         }
-        throw new Exception("Quest not found.");
+        throw new AbsenceOfRecordsException();
     }
 
 }
