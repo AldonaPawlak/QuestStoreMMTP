@@ -47,6 +47,9 @@ public class App
         mentor.setEmail("nowyEmail@.com");
         mentor.setName("Lalalalala");
         dao.edit(mentor);*/
+       /* PasswordCrypter crypter = new PasswordCrypter();
+        String password = crypter.crypter("creep");
+        System.out.println(password);*/
         }
 
 }

@@ -2,9 +2,12 @@ package org.example.DAO;
 
 import org.example.DAO.Exception.AbsenceOfRecordsException;
 import org.example.model.Creep;
+import org.example.model.Mentor;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -61,27 +64,34 @@ public class CreepDAO implements  DAO<Creep> {
         return mentors;
     }
 
+
     @Override
     public Creep get(UUID id) throws AbsenceOfRecordsException {
-        return null;
+        try {
+            dbConnection.connect();
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
+                    "SELECT * FROM user_details, creeps WHERE user_details.id = creeps.user_details_id AND user_details.id = ?;");
+            preparedStatement.setObject(1, id, Types.OTHER);
+            ResultSet result = preparedStatement.executeQuery();
+            while (result.next()) {
+                final String name = result.getString("name");
+                final String surname = result.getString("surname");
+                final String email = result.getString("email");
+                final String password = result.getString("password");
+                final UUID roleID = UUID.fromString(result.getString("role_id"));
+                final UUID mentorID = UUID.fromString(result.getString("creep_id"));
+                final boolean isActive = result.getBoolean("is_active");
+                final  String phoneNumber = result.getString("phone_number");
+                Creep creep = new Creep(id, name, surname, email, password, roleID, isActive, phoneNumber, mentorID);
+                return creep;
+            }
+            dbConnection.disconnect();
+            System.out.println("Selected creep from data base successfully.");
+        } catch (SQLException e) {
+            System.out.println("Selecting creep from data base failed.");
+            e.printStackTrace();
+        }
+        throw new AbsenceOfRecordsException();
     }
-
-/*
-    @Override
-    public Creep get(UUID id) throws  SQLException{
-        ResultSet result = daoGetSet.getDataSet(String.format("SELECT * FROM user_details, mentors WHERE user_details.id = mentors.user_details_id AND id='%s';", id));
-        final UUID userDetailsID = id;
-        final String name = result.getString("name");
-        final String surname = result.getString("surname");
-        final String email = result.getString("email");
-        final String password = result.getString("password");
-        final UUID roleID = UUID.fromString(result.getString("role_id"));
-        final UUID creepID = UUID.fromString(result.getString("student_id"));
-        final boolean isActive = result.getBoolean("is_active");
-        final String phoneNumber = result.getString("phone_number");
-        Creep creep = new Creep(userDetailsID, name, surname, email, password, roleID, isActive, phoneNumber, creepID);
-        return creep;
-    }
-*/
 
 }
