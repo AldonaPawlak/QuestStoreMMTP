@@ -1,5 +1,6 @@
 package org.example.DAO;
 
+import org.example.DAO.Exception.AbsenceOfRecordsException;
 import org.example.model.Quest;
 
 import java.sql.PreparedStatement;
@@ -96,7 +97,7 @@ public class QuestDAO implements DAO<Quest> {
     }
 
     @Override
-    public Quest get(UUID id) throws Exception {
+    public Quest get(UUID id) throws AbsenceOfRecordsException {
         List<Quest> quests = new ArrayList<>();
         try {
             dbConnection.connect();
@@ -117,7 +118,7 @@ public class QuestDAO implements DAO<Quest> {
             System.out.println("Selecting quest from data base failed.");
             e.printStackTrace();
         }
-        throw new Exception("Quest not found.");
+        throw new AbsenceOfRecordsException();
     }
 
 }

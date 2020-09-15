@@ -1,5 +1,6 @@
 package org.example.DAO;
 
+import org.example.DAO.Exception.AbsenceOfRecordsException;
 import org.example.model.Mentor;
 
 import java.sql.PreparedStatement;
@@ -141,7 +142,7 @@ public class MentorDAO implements DAO<Mentor> {
             System.out.println("Selecting mentor from data base failed.");
             e.printStackTrace();
         }
-        throw new Exception("User not found.");
+        throw new AbsenceOfRecordsException();
     }
 
 }
