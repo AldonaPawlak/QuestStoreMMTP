@@ -96,7 +96,7 @@ public class QuestDAO implements DAO<Quest> {
     }
 
     @Override
-    public Quest get(UUID id) {
+    public Quest get(UUID id) throws Exception {
         List<Quest> quests = new ArrayList<>();
         try {
             dbConnection.connect();
@@ -109,7 +109,7 @@ public class QuestDAO implements DAO<Quest> {
                 final String description = questsSet.getString("description");
                 final int value = questsSet.getInt("value");
                 Quest quest = new Quest(questID, name, description, value);
-                quests.add(quest);
+                return quest;
             }
             dbConnection.disconnect();
             System.out.println("Selected quest from data base successfully.");
@@ -117,7 +117,7 @@ public class QuestDAO implements DAO<Quest> {
             System.out.println("Selecting quest from data base failed.");
             e.printStackTrace();
         }
-        return quests.get(0);
+        throw new Exception("Quest not found.");
     }
 
 }
