@@ -23,6 +23,16 @@ function login(data) {
             document.cookie = "user=" + responseJson.id + " " + responseJson.email + " " +responseJson.role;
             return responseJson;
         })
+        .then ((responseJson) => {
+            if (responseJson.role === "Student") {
+                window.location.href = "http://localhost:63342/back-end/src/Public/websiteLogic/students.html?_ijt=q648jnvbkhk07ins1joab5utnn";}
+            else if (responseJson.role === "Mentor") {
+                window.location.href = "http://localhost:63342/back-end/src/Public/websiteLogic/mentors.html?_ijt=ob378oqekqtl63nv30sgik9p3q";
+            }
+            else if (responseJson.role === "Creep") {
+                window.location.href = "http://localhost:63342/back-end/src/Public/websiteLogic/mentorView.html?_ijt=q648jnvbkhk07ins1joab5utnn";
+            }
+        })
         .catch(error => console.error(error));
 
 
