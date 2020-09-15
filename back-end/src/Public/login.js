@@ -28,4 +28,5 @@ function login(data) {
         .catch((error) => {
             return reject(error);
         });
+
 }

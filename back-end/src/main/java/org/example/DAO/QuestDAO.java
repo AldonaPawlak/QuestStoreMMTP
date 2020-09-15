@@ -55,7 +55,6 @@ public class QuestDAO implements DAO<Quest> {
 
     @Override
     public void edit(Quest quest) {
-        dbConnection.runSqlQuery(String.format("UPDATE quests SET name = '%s', description = '%s', value = %d WHERE id = '%s';", quest.getName(), quest.getDescription(), quest.getValue(), quest.getId()));
         try {
             dbConnection.connect();
             PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement("UPDATE quests SET name = ?, description = ?, value = ? WHERE id = ?;");
@@ -76,7 +75,9 @@ public class QuestDAO implements DAO<Quest> {
     public List<Quest> getAll()  {
         List<Quest> quests = new ArrayList<>();
         try {
-            ResultSet questsSet = daoGetSet.getDataSet("SELECT * FROM quests;");
+            dbConnection.connect();
+            PreparedStatement preparedStatement = dbConnection.connect().prepareStatement("SELECT * FROM quests;");
+            ResultSet questsSet = preparedStatement.executeQuery();
             while (questsSet.next()) {
                 final UUID id = UUID.fromString(questsSet.getString("id"));
                 final String name = questsSet.getString("name");
@@ -85,7 +86,10 @@ public class QuestDAO implements DAO<Quest> {
                 Quest quest = new Quest(id, name, description, value);
                 quests.add(quest);
             }
+            dbConnection.disconnect();
+            System.out.println("Selected quests from data base successfully.");
         } catch (SQLException e) {
+            System.out.println("Selecting quests from data base failed.");
             e.printStackTrace();
         }
         return quests;
@@ -95,7 +99,10 @@ public class QuestDAO implements DAO<Quest> {
     public Quest get(UUID id) {
         List<Quest> quests = new ArrayList<>();
         try {
-            ResultSet questsSet = daoGetSet.getDataSet("SELECT * FROM quests;");
+            dbConnection.connect();
+            PreparedStatement preparedStatement = dbConnection.connect().prepareStatement("SELECT * FROM quests WHERE id = ?;");
+            preparedStatement.setObject(1, id, Types.OTHER);
+            ResultSet questsSet = preparedStatement.executeQuery();
             while (questsSet.next()) {
                 final UUID questID = UUID.fromString(questsSet.getString("id"));
                 final String name = questsSet.getString("name");
@@ -104,7 +111,10 @@ public class QuestDAO implements DAO<Quest> {
                 Quest quest = new Quest(questID, name, description, value);
                 quests.add(quest);
             }
+            dbConnection.disconnect();
+            System.out.println("Selected quest from data base successfully.");
         } catch (SQLException e) {
+            System.out.println("Selecting quest from data base failed.");
             e.printStackTrace();
         }
         return quests.get(0);
