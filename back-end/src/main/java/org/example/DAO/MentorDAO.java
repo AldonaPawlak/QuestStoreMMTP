@@ -62,6 +62,7 @@ public class MentorDAO implements DAO<Mentor> {
             System.out.println("Removed user successfully.");
             dbConnection.disconnect();
         } catch (SQLException e) {
+            System.out.println("Removing mentor failed.");
             e.printStackTrace();
         }
     }
@@ -81,6 +82,7 @@ public class MentorDAO implements DAO<Mentor> {
             preparedStatement.executeUpdate();
             dbConnection.disconnect();
         } catch (SQLException e) {
+            System.out.println("Editing mentor failed.");
             e.printStackTrace();
         }
     }
@@ -108,6 +110,7 @@ public class MentorDAO implements DAO<Mentor> {
             dbConnection.disconnect();
             System.out.println("Selected mentors from data base successfully.");
         } catch (SQLException e) {
+            System.out.println("Selecting mentors from data base failed.");
             e.printStackTrace();
         }
         return mentors;
@@ -135,6 +138,7 @@ public class MentorDAO implements DAO<Mentor> {
             dbConnection.disconnect();
             System.out.println("Selected mentor from data base successfully.");
         } catch (SQLException e) {
+            System.out.println("Selecting mentor from data base failed.");
             e.printStackTrace();
         }
         throw new Exception("User not found.");
