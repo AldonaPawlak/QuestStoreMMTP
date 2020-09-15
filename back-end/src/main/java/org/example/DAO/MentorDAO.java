@@ -120,7 +120,7 @@ public class MentorDAO implements DAO<Mentor> {
     public Mentor get(UUID id) throws Exception {
         try {
             dbConnection.connect();
-            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement("SELECT * FROM user_details, mentors WHERE user_details.id = mentors.user_details_id AND user_details_id=?;");
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement("SELECT * FROM user_details, mentors WHERE user_details.id = mentors.user_details_id AND user_details_id = ?;");
             preparedStatement.setObject(1, id, Types.OTHER);
             ResultSet result = preparedStatement.executeQuery();
             while (result.next()) {
