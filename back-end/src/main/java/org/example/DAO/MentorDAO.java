@@ -52,6 +52,7 @@ public class MentorDAO implements DAO<Mentor> {
         statement.setObject(1, mentor.getUserDetailsID(), Types.OTHER);
         statement.executeUpdate();
         System.out.println("Removed user successfully.");
+        dbConnection.disconnect();
     }
 
     @Override
