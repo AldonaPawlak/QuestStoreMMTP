@@ -15,8 +15,6 @@ public class DBConnection implements Connect {
     private Connection connection;
     JSONreader reader;
 
-    //TODO make a close DB function and add in mentorDAO where sqlInjection is !!!
-
     public DBConnection() {
         this.reader = new JSONreader();
         this.DBConnect = reader.JSONread().get("connection");
@@ -46,11 +44,11 @@ public class DBConnection implements Connect {
     public void disconnect() {
         try {
             connection.close();
+            System.out.println("Connection closed.");
         }  catch ( Exception e ) {
             System.err.println( e.getClass().getName()+": "+ e.getMessage() );
             e.printStackTrace();
         }
-        System.out.println("Connection closed.");
     }
 
     public void runSqlQuery(String sql) {
@@ -60,11 +58,11 @@ public class DBConnection implements Connect {
             statement.executeUpdate(sql);
             statement.close();
             connection.close();
+            System.out.println("Query executed succesfully.");
         }  catch ( Exception e ) {
             System.err.println( e.getClass().getName()+": "+ e.getMessage() );
             e.printStackTrace();
         }
-        System.out.println("Query executed succesfully.");
     }
 
 }
