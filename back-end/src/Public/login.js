@@ -14,13 +14,18 @@ function login(data) {
             method: "POST",
             body: data
         })
-        .then(function (response) {
-            console.log(response.status);
-            if (response.status === 404) {
-                alert(response.text());
-            }
-            console.log(response);
-        }).catch(function (error) {
-        // user NOT authenticated, server return different status than 200-299
-        console.log(error)});
+        .then((response) => {
+            console.log(response),
+            console.log(cookies)
+            return response.json()
+        })
+        .then((responseJson) => {
+            console.log(responseJson);
+            document.cookie = "user=" + responseJson;
+            console.log(cookies)
+            return responseJson;
+        })
+        .catch((error) => {
+            return reject(error);
+        });
 }
