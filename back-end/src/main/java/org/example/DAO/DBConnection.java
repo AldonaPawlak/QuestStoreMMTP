@@ -39,6 +39,7 @@ public class DBConnection implements Connect {
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName()+": "+ e.getMessage() );
             System.exit(0);
+            e.printStackTrace();
         }
         return connection;
     }
@@ -50,6 +51,7 @@ public class DBConnection implements Connect {
         }  catch ( Exception e ) {
             System.err.println( e.getClass().getName()+": "+ e.getMessage() );
             System.exit(0);
+            e.printStackTrace();
         }
         System.out.println("Connection closed.");
     }
@@ -64,6 +66,7 @@ public class DBConnection implements Connect {
         }  catch ( Exception e ) {
         System.err.println( e.getClass().getName()+": "+ e.getMessage() );
         System.exit(0);
+        e.printStackTrace();
         }
         System.out.println("Query executed succesfully");
     }

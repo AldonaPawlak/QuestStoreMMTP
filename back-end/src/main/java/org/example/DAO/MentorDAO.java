@@ -49,6 +49,7 @@ public class MentorDAO implements DAO<Mentor> {
 
     @Override
     public void remove(Mentor mentor) throws SQLException {
+        try {
         dbConnection.connect();
         PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement("DELETE FROM mentors WHERE mentor_id = ?;");
         preparedStatement.setObject(1, mentor.getMentorID(), Types.OTHER);
@@ -59,7 +60,9 @@ public class MentorDAO implements DAO<Mentor> {
         statement.setObject(1, mentor.getUserDetailsID(), Types.OTHER);
         statement.executeUpdate();
         System.out.println("Removed user successfully.");
-        dbConnection.disconnect();
+        dbConnection.disconnect();} catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
