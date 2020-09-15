@@ -21,28 +21,35 @@ public class MentorDAO implements DAO<Mentor> {
     }
 
     @Override
-    public void add(Mentor mentor) throws SQLException {
+    public void add(Mentor mentor) {
         dbConnection.connect();
-        PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement("INSERT INTO user_details (id, name, surname, email, password, role_id, is_active, phone_number) VALUES (?, ?, ?, ?, ?, ?, true, ?);");
-        preparedStatement.setObject(1, mentor.getUserDetailsID(), Types.OTHER);
-        preparedStatement.setString(2, mentor.getName());
-        preparedStatement.setString(3, mentor.getSurname());
-        preparedStatement.setString(4, mentor.getEmail());
-        preparedStatement.setString(5, mentor.getPassword());
-        preparedStatement.setObject(6, mentor.getRoleID(), Types.OTHER);
-        preparedStatement.setString(7, mentor.getPhoneNumber());
-        preparedStatement.executeUpdate();
-        System.out.println("Added user successfully.");
+        try {
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement("INSERT INTO user_details (id, name, surname, email, password, role_id, is_active, phone_number) VALUES (?, ?, ?, ?, ?, ?, true, ?);");
+            preparedStatement.setObject(1, mentor.getUserDetailsID(), Types.OTHER);
+            preparedStatement.setString(2, mentor.getName());
+            preparedStatement.setString(3, mentor.getSurname());
+            preparedStatement.setString(4, mentor.getEmail());
+            preparedStatement.setString(5, mentor.getPassword());
+            preparedStatement.setObject(6, mentor.getRoleID(), Types.OTHER);
+            preparedStatement.setString(7, mentor.getPhoneNumber());
+            preparedStatement.executeUpdate();
+            System.out.println("Added user successfully.");
 
-        PreparedStatement statement = dbConnection.getConnection().prepareStatement("INSERT INTO mentors (mentor_id, user_details_id) VALUES (?, ?);");
-        statement.setObject(1, mentor.getMentorID(), Types.OTHER);
-        statement.setObject(2, mentor.getUserDetailsID(), Types.OTHER);
-        statement.executeUpdate();
-        System.out.println("Added mentor successfully.");
+            PreparedStatement statement = dbConnection.getConnection().prepareStatement("INSERT INTO mentors (mentor_id, user_details_id) VALUES (?, ?);");
+            statement.setObject(1, mentor.getMentorID(), Types.OTHER);
+            statement.setObject(2, mentor.getUserDetailsID(), Types.OTHER);
+            statement.executeUpdate();
+            System.out.println("Added mentor successfully.");
+            dbConnection.disconnect();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Adding mentor failed.");
+        }
     }
 
     @Override
     public void remove(Mentor mentor) throws SQLException {
+        dbConnection.connect();
         PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement("DELETE FROM mentors WHERE mentor_id = ?;");
         preparedStatement.setObject(1, mentor.getMentorID(), Types.OTHER);
         preparedStatement.executeUpdate();
