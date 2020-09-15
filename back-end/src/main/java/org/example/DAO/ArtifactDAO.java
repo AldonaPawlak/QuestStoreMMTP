@@ -19,17 +19,17 @@ public class ArtifactDAO implements DAO<Artifact>{
 
     @Override
     public void add(Artifact artifact) {
-        dbConnection.executeStatement(String.format("INSERT INTO artifacts (id, name, price, category_id, description, artifact_type_id) VALUES('%s', '%s', '%d', '%s', '%s', '%s');", artifact.getId(), artifact.getName(), artifact.getCategoryID(), artifact.getDescription(), artifact.getArtifactTypeID()));
+        dbConnection.runSqlQuery(String.format("INSERT INTO artifacts (id, name, price, category_id, description, artifact_type_id) VALUES('%s', '%s', '%d', '%s', '%s', '%s');", artifact.getId(), artifact.getName(), artifact.getCategoryID(), artifact.getDescription(), artifact.getArtifactTypeID()));
     }
 
     @Override
     public void remove(Artifact artifact) {
-        dbConnection.executeStatement(String.format("DELETE FROM artifacts WHERE id = '%s';", artifact.getId()));
+        dbConnection.runSqlQuery(String.format("DELETE FROM artifacts WHERE id = '%s';", artifact.getId()));
     }
 
     @Override
     public void edit(Artifact artifact) {
-        dbConnection.executeStatement(String.format("UPDATE artifacts SET name = '%s', price = %d, category_id = '%s', description = '%s', artifact_type_id = '%s' WHERE id = '%s';", artifact.getName(), artifact.getPrice(), artifact.getCategoryID(), artifact.getDescription(), artifact.getArtifactTypeID(), artifact.getId()));
+        dbConnection.runSqlQuery(String.format("UPDATE artifacts SET name = '%s', price = %d, category_id = '%s', description = '%s', artifact_type_id = '%s' WHERE id = '%s';", artifact.getName(), artifact.getPrice(), artifact.getCategoryID(), artifact.getDescription(), artifact.getArtifactTypeID(), artifact.getId()));
     }
 
     @Override
