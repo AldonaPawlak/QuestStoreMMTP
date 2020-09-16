@@ -11,6 +11,8 @@ import org.example.DAO.MentorDAO;
 import org.example.config.PasswordCrypter;
 import org.example.model.Mentor;
 import org.example.model.User;
+import org.example.services.DecoderURL;
+import org.example.services.Parser;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -54,16 +56,16 @@ public class MentorHandler implements HttpHandler {
                     removeMentor(userDetailsID);
                 }
                 if(urlParts[3].equals("edit-name")){
-                    editMentorName(urlParts[2], urlParts[4]);
+                    editMentorName(urlParts[2], DecoderURL.polishDecoder(urlParts[4]));
                 }
                 if(urlParts[3].equals("edit-surname")){
-                    editMentorSurname(urlParts[2], urlParts[4]);
+                    editMentorSurname(urlParts[2], DecoderURL.polishDecoder(urlParts[4]));
                 }
                 if(urlParts[3].equals("edit-mail")){
-                    editMentorMail(urlParts[2], urlParts[4]);
+                    editMentorMail(urlParts[2], DecoderURL.polishDecoder(urlParts[4]));
                 }
                 if(urlParts[3].equals("edit-phone")){
-                    editMentorPhone(urlParts[2], urlParts[4]);
+                    editMentorPhone(urlParts[2], DecoderURL.polishDecoder(urlParts[4]));
                 }
                 if(urlParts[3].equals("add")){
                     addMentor();
