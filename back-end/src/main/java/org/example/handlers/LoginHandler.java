@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.*;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.io.*;
 
@@ -75,3 +74,5 @@ public class LoginHandler implements HttpHandler {
     }
 
 }
+
+/*[root@localhost nginx]# rsync -av --delete /home/jadwiga.skarbek/CodeCool/WEB/TW/QuestStoreMMTP/back-end/src/Public/ /usr/share/nginx/html/*/
