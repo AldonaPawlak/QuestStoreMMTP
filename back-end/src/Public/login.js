@@ -23,8 +23,7 @@ function login(data) {
         })
         .then ((responseJson) => {
             if (responseJson.role === "Student") {
-                window.location.href = "students.html";
-            }
+                window.location.href = "students.html";}
             else if (responseJson.role === "Mentor") {
                 window.location.href = "mentors.html";
             }
@@ -33,4 +32,6 @@ function login(data) {
             }
         })
         .catch(error => console.error(error));
+
+
 }
