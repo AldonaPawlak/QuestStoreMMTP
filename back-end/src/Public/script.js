@@ -6,6 +6,17 @@ function myFunction() {
 
 const form = document.querySelector('form');
 
+(() => {
+    /*    initShowSignInForm();*/
+    /*    form.addEventListener('submit', function(e) {
+            e.preventDefault();*/
+    /*       showSignInForm();*/
+    /*    });*/
+    openSlideMenu();
+    closeSlideMenu();
+})();
+
+
 function showSignInForm() {
     const confirmPassword = document.querySelector("input[name='confirm_password']");
     if (confirmPassword.style.display === 'block') {
@@ -28,15 +39,3 @@ function openSlideMenu() {
 function closeSlideMenu() {
     document.getElementById('menu').style.width = '0';
 }
-
-function main() {
-/*    initShowSignInForm();*/
-/*    form.addEventListener('submit', function(e) {
-        e.preventDefault();*/
- /*       showSignInForm();*/
-/*    });*/
-    openSlideMenu();
-    closeSlideMenu();
-};
-
-main();
