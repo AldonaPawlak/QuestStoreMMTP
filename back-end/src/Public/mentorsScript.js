@@ -1,4 +1,4 @@
-const template = document.querySelector(".mentor-template");
+const template = document.querySelector("#mentor-template");
 const container = document.querySelector(".mentors-container");
 const apiURL = "http://localhost:8000";
 

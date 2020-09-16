@@ -25,11 +25,11 @@ function login(data) {
             if (responseJson.role === "Student") {
                 window.location.href = "students.html";
             }
-            else if (responseJson.role === "Mentor") {
-                window.location.href = "mentors.html";
-            }
-            else if (responseJson.role === "Creep") {
+            if (responseJson.role === "Mentor") {
                 window.location.href = "mentorView.html";
+            }
+            if (responseJson.role === "Creep") {
+                window.location.href = "mentors.html";
             }
         })
         .catch(error => console.error(error));
