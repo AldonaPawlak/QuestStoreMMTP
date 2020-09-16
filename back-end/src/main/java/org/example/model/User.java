@@ -24,6 +24,7 @@ public abstract class User {
         this.phoneNumber = phoneNumber;
     }
 
+
     public UUID getUserDetailsID() {
         return userDetailsID;
     }
