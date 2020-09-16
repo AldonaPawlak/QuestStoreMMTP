@@ -6,12 +6,15 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import org.example.DAO.DAOGetSet;
 import org.example.DAO.DBConnection;
+import org.example.DAO.Exception.AbsenceOfRecordsException;
 import org.example.DAO.MentorDAO;
+import org.example.config.PasswordCrypter;
 import org.example.model.Mentor;
 import org.example.model.User;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.security.CryptoPrimitive;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -50,17 +53,32 @@ public class MentorHandler implements HttpHandler {
                 if(urlParts[3].equals("remove")) {
                     removeMentor(userDetailsID);
                 }
-                if(urlParts[3].equals("edit")){
-                    editMentorName(urlParts[2],urlParts[4]);
+                if(urlParts[3].equals("edit-name")){
+                    editMentorName(urlParts[2], urlParts[4]);
+                }
+                if(urlParts[3].equals("edit-surname")){
+                    editMentorSurname(urlParts[2], urlParts[4]);
+                }
+                if(urlParts[3].equals("edit-mail")){
+                    editMentorMail(urlParts[2], urlParts[4]);
+                }
+                if(urlParts[3].equals("edit-phone")){
+                    editMentorPhone(urlParts[2], urlParts[4]);
+                }
+                if(urlParts[3].equals("add")){
+                    addMentor();
                 }
                 response = getMentors();
                 sendResponse(response, exchange, status);
-                System.out.println("New respones: " + response);}
+                System.out.println("New response: " + response);}
         } catch (Exception e) {
             e.printStackTrace();
             exchange.sendResponseHeaders(404, response.getBytes().length);
         }
     }
+
+
+
 
     private String getMentors() throws JsonProcessingException {
         List<Mentor> mentors = mentorDAO.getAll();
@@ -74,11 +92,35 @@ public class MentorHandler implements HttpHandler {
     }
 
     private void editMentorName(String userDetailsID, String newName) throws Exception {
-        User mentor = mentorDAO.get(UUID.fromString(userDetailsID));
+        Mentor mentor = mentorDAO.get(UUID.fromString(userDetailsID));
         mentor.setName(newName);
-        Mentor mentorToEdit = (Mentor) mentor;
-        mentorDAO.edit(mentorToEdit);
+        mentorDAO.edit(mentor);
+    }
 
+    private void editMentorSurname(String userDetailsID, String newSurname) throws AbsenceOfRecordsException {
+        Mentor mentor = mentorDAO.get(UUID.fromString(userDetailsID));
+        mentor.setSurname(newSurname);
+        mentorDAO.edit(mentor);
+    }
+
+    private void editMentorMail(String userDetailsID, String newMail) throws AbsenceOfRecordsException {
+        Mentor mentor = mentorDAO.get(UUID.fromString(userDetailsID));
+        mentor.setEmail(newMail);
+        mentorDAO.edit(mentor);
+    }
+
+    private void editMentorPhone(String userDetailsID, String newPhone) throws AbsenceOfRecordsException {
+        Mentor mentor = mentorDAO.get(UUID.fromString(userDetailsID));
+        mentor.setPhoneNumber(newPhone);
+        System.out.println("!!!!!!!" + mentor.getPhoneNumber());
+        System.out.println("!!!22222!" + newPhone);
+
+        mentorDAO.edit(mentor);
+    }
+
+    private void addMentor() {
+        Mentor mentor = new Mentor(UUID.randomUUID(), "Name", "Surname", "mail@mail.com", PasswordCrypter.crypter("password"), UUID.fromString("745792a7-681b-4efe-abdd-ca027678b397"), true, "444 222 000", UUID.randomUUID());
+        mentorDAO.add(mentor);
     }
 
     private void sendResponse(String response, HttpExchange exchange, int status) throws IOException {

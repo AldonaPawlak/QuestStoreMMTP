@@ -29,6 +29,18 @@ function innerMentors(mentors){
             editName.setAttribute("data-id", mentor.userDetailsID);
             editName.addEventListener("click", editNameFunction);
 
+            const editSurname = clone.querySelector('#edit-surname');
+            editSurname.setAttribute("data-id", mentor.userDetailsID);
+            editSurname.addEventListener("click", editSurnameFunction);
+
+            const editMail = clone.querySelector('#edit-mail');
+            editMail.setAttribute("data-id", mentor.userDetailsID);
+            editMail.addEventListener("click", editMailFunction);
+
+            const editPhone = clone.querySelector('#edit-phone');
+            editPhone.setAttribute("data-id", mentor.userDetailsID);
+            editPhone.addEventListener("click", editPhoneFunction);
+
             const remButt = clone.querySelector('.removeButton');
             remButt.setAttribute("data-id", mentor.userDetailsID);
             remButt.addEventListener("click", removeMentor);
@@ -53,6 +65,7 @@ function removeMentor(){
         });
 }
 
+
 function popUp() {
     // const id = this.getAttribute("data-id");
     var popup = this.lastElementChild;
@@ -62,28 +75,88 @@ function popUp() {
 
 function editNameFunction() {
     const id = this.getAttribute("data-id");
-    console.log(id);
-    const newName = prompt("Enter new name", 'name');
-    console.log(newName);
-    fetch(`${apiURL}/mentor/${id}/edit/${newName}`, {
+    const newName = prompt("Enter new name", 'Name');
+    fetch(`${apiURL}/mentor/${id}/edit-name/${newName}`, {
         method: "POST" }
     )
         .then(function (response) {
             return response.json();
-
         })
         .then(function (mentors) {
             innerMentors(mentors)
             location.reload();
         });
+}
+
+function editSurnameFunction() {
+    const id = this.getAttribute("data-id");
+    const newSurname = prompt("Enter new Surname", 'Surname');
+    fetch(`${apiURL}/mentor/${id}/edit-surname/${newSurname}`, {
+        method: "POST" }
+    )
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (mentors) {
+            innerMentors(mentors)
+            location.reload();
+        });
+}
 
 
+function editMailFunction() {
+    const id = this.getAttribute("data-id");
+    const newMail = prompt("Enter new e-mail", 'example@this.is');
+    fetch(`${apiURL}/mentor/${id}/edit-mail/${newMail}`, {
+        method: "POST" }
+    )
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (mentors) {
+            innerMentors(mentors)
+            location.reload();
+        });
+}
 
+function editPhoneFunction() {
+    const id = this.getAttribute("data-id");
+    const newPhone = prompt("Enter new phone number", '444 222 000');
+    console.log(newPhone);
+    fetch(`${apiURL}/mentor/${id}/edit-phone/${newPhone}`, {
+        method: "POST" }
+    )
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (mentors) {
+            innerMentors(mentors)
+            location.reload();
+        });
+}
+
+function addNewMentor() {
+    document.getElementById("add").addEventListener("click", function () {
+        fetch(`${apiURL}/mentor/new/add`, {
+            // mode: 'cors',
+            method: "POST" }
+        )
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (mentors) {
+                innerMentors(mentors);
+                location.reload();
+            });
+
+    });
 }
 
 
 
 
 
-getMentors();
 
+
+getMentors();
+addNewMentor();
