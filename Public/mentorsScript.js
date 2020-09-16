@@ -1,4 +1,4 @@
-const template = document.querySelector("#mentor-template");
+const template = document.querySelector(".mentor-template");
 const container = document.querySelector(".mentors-container");
 const apiURL = "http://localhost:8000"
 
@@ -21,8 +21,8 @@ function innerMentors(mentors){
             clone.querySelector('.surname').textContent = mentor.surname;
             clone.querySelector('.email').textContent = mentor.email;
             clone.querySelector('.phone').textContent = mentor.phoneNumber;
-            const edit = clone.querySelector('.popup');
 
+            const edit = clone.querySelector('.popup');
             edit.addEventListener("click", popUp);
 
             const editName = clone.querySelector('#edit-name');
@@ -40,6 +40,7 @@ function innerMentors(mentors){
             const editPhone = clone.querySelector('#edit-phone');
             editPhone.setAttribute("data-id", mentor.userDetailsID);
             editPhone.addEventListener("click", editPhoneFunction);
+
 
             const remButt = clone.querySelector('.removeButton');
             remButt.setAttribute("data-id", mentor.userDetailsID);
@@ -145,8 +146,10 @@ function addNewMentor() {
                 return response.json();
             })
             .then(function (mentors) {
+                // var mentors = document.querySelector(".mentors-container").children;
+
                 innerMentors(mentors);
-                location.reload();
+                // location.reload();
             });
 
     });
