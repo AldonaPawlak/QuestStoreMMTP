@@ -61,8 +61,8 @@ function removeMentor(){
 
         })
         .then(function (mentors) {
+            clearMentors();
             innerMentors(mentors);
-            location.reload();
         });
 }
 
@@ -84,8 +84,8 @@ function editNameFunction() {
             return response.json();
         })
         .then(function (mentors) {
+            clearMentors();
             innerMentors(mentors)
-            location.reload();
         });
 }
 
@@ -99,8 +99,8 @@ function editSurnameFunction() {
             return response.json();
         })
         .then(function (mentors) {
-            innerMentors(mentors)
-            location.reload();
+            clearMentors();
+            innerMentors(mentors);
         });
 }
 
@@ -115,8 +115,9 @@ function editMailFunction() {
             return response.json();
         })
         .then(function (mentors) {
-            innerMentors(mentors)
-            location.reload();
+            clearMentors();
+            innerMentors(mentors);
+
         });
 }
 
@@ -131,10 +132,11 @@ function editPhoneFunction() {
             return response.json();
         })
         .then(function (mentors) {
-            innerMentors(mentors)
-            location.reload();
+            clearMentors();
+            innerMentors(mentors);
         });
 }
+
 
 function addNewMentor() {
     document.getElementById("add").addEventListener("click", function () {
@@ -146,13 +148,19 @@ function addNewMentor() {
                 return response.json();
             })
             .then(function (mentors) {
-                // var mentors = document.querySelector(".mentors-container").children;
-
+                clearMentors();
                 innerMentors(mentors);
                 // location.reload();
             });
 
     });
+}
+
+function clearMentors() {
+    const mentorsToClear = document.querySelector(".mentors-container");
+    while (mentorsToClear.lastElementChild) {
+        mentorsToClear.removeChild(mentorsToClear.lastElementChild);
+    }
 }
 
 
