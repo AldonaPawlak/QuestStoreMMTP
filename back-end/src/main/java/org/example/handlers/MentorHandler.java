@@ -54,16 +54,16 @@ public class MentorHandler implements HttpHandler {
                     removeMentor(userDetailsID);
                 }
                 if(urlParts[3].equals("edit-name")){
-                    editMentorName(urlParts[2], urlParts[4]);
+                    editMentorName(urlParts[2], urlParts[4].replace("%20", " "));
                 }
                 if(urlParts[3].equals("edit-surname")){
-                    editMentorSurname(urlParts[2], urlParts[4]);
+                    editMentorSurname(urlParts[2], urlParts[4].replace("%20", " "));
                 }
                 if(urlParts[3].equals("edit-mail")){
-                    editMentorMail(urlParts[2], urlParts[4]);
+                    editMentorMail(urlParts[2], urlParts[4].replace("%20", " "));
                 }
                 if(urlParts[3].equals("edit-phone")){
-                    editMentorPhone(urlParts[2], urlParts[4]);
+                    editMentorPhone(urlParts[2], urlParts[4].replace("%20", " "));
                 }
                 if(urlParts[3].equals("add")){
                     addMentor();
