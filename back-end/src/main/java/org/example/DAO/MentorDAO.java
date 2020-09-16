@@ -77,13 +77,14 @@ public class MentorDAO implements DAO<Mentor> {
         try {
             dbConnection.connect();
             PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
-                    "UPDATE user_details SET name = ?, surname = ?, email = ?, password = ?, is_active = ? WHERE id = ?;");
+                    "UPDATE user_details SET name = ?, surname = ?, email = ?, password = ?, is_active = ?, phone_number = ? WHERE id = ?;");
             preparedStatement.setString(1, mentor.getName());
             preparedStatement.setString(2, mentor.getSurname());
             preparedStatement.setString(3, mentor.getEmail());
             preparedStatement.setString(4, mentor.getPassword());
             preparedStatement.setBoolean(5, mentor.isActive());
-            preparedStatement.setObject(6, mentor.getUserDetailsID(), Types.OTHER);
+            preparedStatement.setString(6, mentor.getPhoneNumber());
+            preparedStatement.setObject(7, mentor.getUserDetailsID(), Types.OTHER);
             System.out.println("Mentors data edited successfully.");
             preparedStatement.executeUpdate();
             dbConnection.disconnect();
