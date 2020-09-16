@@ -8,6 +8,7 @@ import org.example.DAO.DAOGetSet;
 import org.example.DAO.DBConnection;
 import org.example.DAO.MentorDAO;
 import org.example.model.Mentor;
+import org.example.model.User;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -46,11 +47,15 @@ public class MentorHandler implements HttpHandler {
                 String url = exchange.getRequestURI().getRawPath();
                 String[] urlParts = url.split("/");
                 String userDetailsID = urlParts[2];
-                removeMentor(userDetailsID);
+                if(urlParts[3].equals("remove")) {
+                    removeMentor(userDetailsID);
+                }
+                if(urlParts[3].equals("edit")){
+                    editMentorName(urlParts[2],urlParts[4]);
+                }
                 response = getMentors();
                 sendResponse(response, exchange, status);
-                System.out.println("New respones: " + response);
-            }
+                System.out.println("New respones: " + response);}
         } catch (Exception e) {
             e.printStackTrace();
             exchange.sendResponseHeaders(404, response.getBytes().length);
@@ -66,6 +71,14 @@ public class MentorHandler implements HttpHandler {
     private void removeMentor(String userDetailsID) throws Exception {
         Mentor mentor = mentorDAO.get(UUID.fromString(userDetailsID));
         mentorDAO.remove(mentor);
+    }
+
+    private void editMentorName(String userDetailsID, String newName) throws Exception {
+        User mentor = mentorDAO.get(UUID.fromString(userDetailsID));
+        mentor.setName(newName);
+        Mentor mentorToEdit = (Mentor) mentor;
+        mentorDAO.edit(mentorToEdit);
+
     }
 
     private void sendResponse(String response, HttpExchange exchange, int status) throws IOException {
