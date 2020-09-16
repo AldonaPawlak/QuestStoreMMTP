@@ -20,17 +20,17 @@ public class MentorClassDAO implements DAO<MentorClass> {
 
     @Override
     public void add(MentorClass mentorClass) {
-        dbConnection.executeStatement(String.format("INSERT INTO mentors_classes(classes_id, mentors_id) VALUES('%s', '%s')", mentorClass.getClassID(),mentorClass.getMentorID()));
+        dbConnection.runSqlQuery(String.format("INSERT INTO mentors_classes(classes_id, mentors_id) VALUES('%s', '%s')", mentorClass.getClassID(),mentorClass.getMentorID()));
     }
 
     @Override
     public void remove(MentorClass mentorClass) {
-        dbConnection.executeStatement(String.format("DELETE FROM mentors_classes WHERE id='%s';", mentorClass.getClassID()));
+        dbConnection.runSqlQuery(String.format("DELETE FROM mentors_classes WHERE id='%s';", mentorClass.getClassID()));
     }
 
     @Override
     public void edit(MentorClass mentorClass) {
-        dbConnection.executeStatement(String.format("UPDATE mentors_classes SET mentors_id = '%s' WHERE classes_id = '%s';", mentorClass.getMentorID(), mentorClass.getClassID()));
+        dbConnection.runSqlQuery(String.format("UPDATE mentors_classes SET mentors_id = '%s' WHERE classes_id = '%s';", mentorClass.getMentorID(), mentorClass.getClassID()));
     }
 
     @Override

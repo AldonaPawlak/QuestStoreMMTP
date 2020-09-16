@@ -12,9 +12,9 @@ public class DAOGetSet {
     }
 
     public ResultSet getDataSet(String query) {
-        dbConnection.connection();
+        dbConnection.connect();
         try {
-            dbConnection.statement = dbConnection.connection.createStatement();
+            dbConnection.statement = dbConnection.getConnection().createStatement();
             ResultSet results = dbConnection.statement.executeQuery(query);
             return results;
         } catch (SQLException e) {

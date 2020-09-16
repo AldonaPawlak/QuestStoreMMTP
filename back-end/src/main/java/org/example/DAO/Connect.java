@@ -1,7 +1,7 @@
 package org.example.DAO;
 
-public interface Connect {
+public interface Connect<T> {
 
-    void connection();
+    T connect();
 
 }

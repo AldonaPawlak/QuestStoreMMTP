@@ -12,7 +12,7 @@ public class DBConnection implements Connect {
     private String DBUser;
     private String DBPassword;
     public Statement statement;
-    public Connection connection;
+    private Connection connection;
     JSONreader reader;
 
     public DBConnection() {
@@ -22,33 +22,47 @@ public class DBConnection implements Connect {
         this.DBPassword = reader.JSONread().get("password");
     }
 
+    public Connection getConnection() {
+        return connection;
+    }
 
     @Override
-    public void connection() {
+    public Connection connect() {
         try {
             Class.forName("org.postgresql.Driver");
             connection = DriverManager
                     .getConnection(DBConnect,
                             DBUser, DBPassword);
-            System.out.println("Opened database successfully");
+            System.out.println("Opened database successfully.");
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName()+": "+ e.getMessage() );
-            System.exit(0);
+            e.printStackTrace();
+        }
+        return connection;
+    }
+
+    public void disconnect() {
+        try {
+            connection.close();
+            System.out.println("Connection closed.");
+        }  catch ( Exception e ) {
+            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+            e.printStackTrace();
         }
     }
 
-    public void executeStatement(String sql) {
-        connection();
+    public void runSqlQuery(String sql) {
+        connect();
         try {
             statement = connection.createStatement();
             statement.executeUpdate(sql);
             statement.close();
             connection.close();
+            System.out.println("Query executed succesfully.");
         }  catch ( Exception e ) {
-        System.err.println( e.getClass().getName()+": "+ e.getMessage() );
-        System.exit(0);
+            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+            e.printStackTrace();
         }
-        System.out.println("Query executed succesfully");
     }
 
 }

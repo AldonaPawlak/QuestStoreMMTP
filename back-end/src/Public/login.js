@@ -14,13 +14,26 @@ function login(data) {
             method: "POST",
             body: data
         })
-        .then(function (response) {
-            console.log(response.status);
-            if (response.status === 404) {
-                alert(response.text());
+        .then((response) => {
+            /*console.log(response)*/
+            return response.json()
+        })
+        .then((responseJson) => {
+            console.log(responseJson);
+            document.cookie = "user=" + responseJson.id + " " + responseJson.email + " " +responseJson.role;
+            return responseJson;
+        })
+        .then ((responseJson) => {
+            if (responseJson.role === "Student") {
+                window.location.href = "http://localhost:63342/back-end/src/Public/websiteLogic/students.html?_ijt=q648jnvbkhk07ins1joab5utnn";}
+            else if (responseJson.role === "Mentor") {
+                window.location.href = "http://localhost:63342/back-end/src/Public/websiteLogic/mentors.html?_ijt=ob378oqekqtl63nv30sgik9p3q";
             }
-            console.log(response);
-        }).catch(function (error) {
-        // user NOT authenticated, server return different status than 200-299
-        console.log(error)});
+            else if (responseJson.role === "Creep") {
+                window.location.href = "http://localhost:63342/back-end/src/Public/websiteLogic/mentorView.html?_ijt=q648jnvbkhk07ins1joab5utnn";
+            }
+        })
+        .catch(error => console.error(error));
+
+
 }

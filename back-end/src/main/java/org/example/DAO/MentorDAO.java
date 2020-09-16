@@ -1,8 +1,7 @@
 package org.example.DAO;
 
-import org.example.config.IDgenerator;
+import org.example.DAO.Exception.AbsenceOfRecordsException;
 import org.example.model.Mentor;
-import org.example.model.Student;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,42 +22,85 @@ public class MentorDAO implements DAO<Mentor> {
     }
 
     @Override
-    public void add(Mentor mentor) throws SQLException {/*
-        PreparedStatement preparedStatement = dbConnection.connection.prepareStatement("INSERT INTO user_details (id, name, surname, email, password, role_id, is_active, phone_number) VALUES (?, ?, ?, ?, ?, ?, true, ?);");
-        preparedStatement.setObject(1, mentor.getUserDetailsID(), Types.OTHER);
-        preparedStatement.setString(2, mentor.getName());
-        preparedStatement.setString(3, mentor.getSurname());
-        preparedStatement.setString(4, mentor.getEmail());
-        preparedStatement.setString(5, mentor.getPassword());
-        preparedStatement.setObject(6, mentor.getRoleID(), Types.OTHER);
-        preparedStatement.setString(7, mentor.getPhoneNumber());*/
-        dbConnection.executeStatement(String.format("INSERT INTO user_details (id, name, surname, email, password, role_id, is_active, phone_number) VALUES ('%s', '%s' ,'%s' ,'%s', '%s', '%s', true, '%s');", mentor.getUserDetailsID(), mentor.getName(), mentor.getSurname(), mentor.getEmail(), mentor.getPassword(), mentor.getRoleID(), mentor.getPhoneNumber()));
-      /*  preparedStatement.executeUpdate();*/
-        dbConnection.executeStatement(String.format("INSERT INTO mentors (mentor_id, user_details_id) VALUES ('%s', '%s');", mentor.getMentorID(), mentor.getUserDetailsID()));
+    public void add(Mentor mentor) {
+        try {
+            dbConnection.connect();
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
+                    "INSERT INTO user_details (id, name, surname, email, password, role_id, is_active, phone_number) VALUES (?, ?, ?, ?, ?, ?, true, ?);");
+            preparedStatement.setObject(1, mentor.getUserDetailsID(), Types.OTHER);
+            preparedStatement.setString(2, mentor.getName());
+            preparedStatement.setString(3, mentor.getSurname());
+            preparedStatement.setString(4, mentor.getEmail());
+            preparedStatement.setString(5, mentor.getPassword());
+            preparedStatement.setObject(6, mentor.getRoleID(), Types.OTHER);
+            preparedStatement.setString(7, mentor.getPhoneNumber());
+            preparedStatement.executeUpdate();
+            System.out.println("Added user successfully.");
+
+            PreparedStatement statement = dbConnection.getConnection().prepareStatement(
+                    "INSERT INTO mentors (mentor_id, user_details_id) VALUES (?, ?);");
+            statement.setObject(1, mentor.getMentorID(), Types.OTHER);
+            statement.setObject(2, mentor.getUserDetailsID(), Types.OTHER);
+            statement.executeUpdate();
+            System.out.println("Added mentor successfully.");
+            dbConnection.disconnect();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Adding mentor failed.");
+        }
     }
 
     @Override
-    public void remove(Mentor mentor) throws SQLException {
-        PreparedStatement preparedStatement = dbConnection.connection.prepareStatement("DELETE FROM mentors WHERE mentor_id = ?;");
-        preparedStatement.setObject(1, mentor.getMentorID(), Types.OTHER);
-        preparedStatement.executeUpdate();
+    public void remove(Mentor mentor) {
+        try {
+            dbConnection.connect();
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
+                    "DELETE FROM mentors WHERE mentor_id = ?;");
+            preparedStatement.setObject(1, mentor.getMentorID(), Types.OTHER);
+            preparedStatement.executeUpdate();
+            System.out.println("Removed mentor successfully.");
 
-        PreparedStatement statement = dbConnection.connection.prepareStatement("DELETE FROM user_details WHERE id = ?;");
-        statement.setObject(1, mentor.getUserDetailsID(), Types.OTHER);
-        statement.executeUpdate();
+            PreparedStatement statement = dbConnection.getConnection().prepareStatement(
+                    "DELETE FROM user_details WHERE id = ?;");
+            statement.setObject(1, mentor.getUserDetailsID(), Types.OTHER);
+            statement.executeUpdate();
+            System.out.println("Removed user successfully.");
+            dbConnection.disconnect();
+        } catch (SQLException e) {
+            System.out.println("Removing mentor failed.");
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void edit(Mentor mentor) {
-        dbConnection.executeStatement(String.format("UPDATE mentors SET user_details_id = '%s' WHERE id = '%s';", mentor.getUserDetailsID(), mentor.getMentorID()));
-        dbConnection.executeStatement(String.format("UPDATE user_details SET name = '%s', surname = '%s', email = '%s', password = '%s', role_id = '%s', is_active = '%b' WHERE id = '%s;'", mentor.getName(), mentor.getSurname(), mentor.getEmail(), mentor.getPassword(), mentor.getRoleID(), mentor.isActive(), mentor.getUserDetailsID()));
+        try {
+            dbConnection.connect();
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
+                    "UPDATE user_details SET name = ?, surname = ?, email = ?, password = ?, is_active = ? WHERE id = ?;");
+            preparedStatement.setString(1, mentor.getName());
+            preparedStatement.setString(2, mentor.getSurname());
+            preparedStatement.setString(3, mentor.getEmail());
+            preparedStatement.setString(4, mentor.getPassword());
+            preparedStatement.setBoolean(5, mentor.isActive());
+            preparedStatement.setObject(6, mentor.getUserDetailsID(), Types.OTHER);
+            System.out.println("Mentors data edited successfully.");
+            preparedStatement.executeUpdate();
+            dbConnection.disconnect();
+        } catch (SQLException e) {
+            System.out.println("Editing mentor failed.");
+            e.printStackTrace();
+        }
     }
 
     @Override
     public List<Mentor> getAll() {
         List<Mentor> mentors = new ArrayList<>();
         try {
-            ResultSet allMentors = daoGetSet.getDataSet("SELECT * FROM user_details, mentors WHERE user_details.id = mentors.user_details_id;");
+            dbConnection.connect();
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
+                    "SELECT * FROM user_details, mentors WHERE user_details.id = mentors.user_details_id;");
+            ResultSet allMentors = preparedStatement.executeQuery();
             while (allMentors.next()) {
                 final UUID userDetailsID = UUID.fromString(allMentors.getString("id"));
                 final String name = allMentors.getString("name");
@@ -72,16 +114,23 @@ public class MentorDAO implements DAO<Mentor> {
                 Mentor mentor = new Mentor(userDetailsID, name, surname, email, password, roleID, isActive, phoneNumber, mentorID);
                 mentors.add(mentor);
             }
+            dbConnection.disconnect();
+            System.out.println("Selected mentors from data base successfully.");
         } catch (SQLException e) {
+            System.out.println("Selecting mentors from data base failed.");
             e.printStackTrace();
         }
         return mentors;
     }
 
     @Override
-    public Mentor get(UUID id) throws Exception{
+    public Mentor get(UUID id) throws AbsenceOfRecordsException {
         try {
-            ResultSet result = daoGetSet.getDataSet(String.format("SELECT * FROM user_details, mentors WHERE user_details.id = mentors.user_details_id AND user_details_id='%s';", id));
+            dbConnection.connect();
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
+                    "SELECT * FROM user_details, mentors WHERE user_details.id = mentors.user_details_id AND user_details_id = ?;");
+            preparedStatement.setObject(1, id, Types.OTHER);
+            ResultSet result = preparedStatement.executeQuery();
             while (result.next()) {
                 final String name = result.getString("name");
                 final String surname = result.getString("surname");
@@ -94,10 +143,13 @@ public class MentorDAO implements DAO<Mentor> {
                 Mentor mentor = new Mentor(id, name, surname, email, password, roleID, isActive, phoneNumber, mentorID);
                 return mentor;
             }
+            dbConnection.disconnect();
+            System.out.println("Selected mentor from data base successfully.");
         } catch (SQLException e) {
+            System.out.println("Selecting mentor from data base failed.");
             e.printStackTrace();
         }
-        throw new Exception("User not found");
+        throw new AbsenceOfRecordsException();
     }
 
 }
