@@ -24,6 +24,10 @@ public abstract class User {
         this.phoneNumber = phoneNumber;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public UUID getUserDetailsID() {
         return userDetailsID;
     }
