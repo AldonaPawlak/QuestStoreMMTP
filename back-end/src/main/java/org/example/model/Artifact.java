@@ -7,17 +7,17 @@ public class Artifact {
     private UUID id;
     private String name;
     private int price;
-    private  UUID categoryID;
+    private  String category;
     private  String description;
-    private  UUID artifactTypeID;
+    private  String type;
 
-    public Artifact(UUID id, String name, int price, UUID categoryID, String description, UUID artifactTypeID) {
+    public Artifact(UUID id, String name, int price, String category, String description, String type) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.categoryID = categoryID;
+        this.category = category;
         this.description = description;
-        this.artifactTypeID = artifactTypeID;
+        this.type = type;
     }
 
     public UUID getId() {
@@ -32,16 +32,16 @@ public class Artifact {
         return price;
     }
 
-    public UUID getCategoryID() {
-        return categoryID;
+    public String getCategory() {
+        return category;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public UUID getArtifactTypeID() {
-        return artifactTypeID;
+    public String getType() {
+        return type;
     }
 
     public void setName(String name) {
@@ -52,8 +52,16 @@ public class Artifact {
         this.price = price;
     }
 
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
 }
