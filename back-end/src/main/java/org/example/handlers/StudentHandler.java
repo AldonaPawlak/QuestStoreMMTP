@@ -24,13 +24,11 @@ public class StudentHandler implements HttpHandler {
     //TODO generate is_active update possibility
 
     DBConnection dbConnection;
-    DAOGetSet daoGetSet;
     StudentDAO studentDAO;
 
     public StudentHandler() {
         this.dbConnection = new DBConnection();
-        this.daoGetSet = new DAOGetSet(dbConnection);
-        this.studentDAO = new StudentDAO(dbConnection, daoGetSet);
+        this.studentDAO = new StudentDAO(dbConnection);
     }
 
     @Override
