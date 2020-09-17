@@ -78,7 +78,8 @@ public class QuestDAO implements DAO<Quest> {
         List<Quest> quests = new ArrayList<>();
         try {
             dbConnection.connect();
-            PreparedStatement preparedStatement = dbConnection.connect().prepareStatement("SELECT * FROM quests;");
+            PreparedStatement preparedStatement = dbConnection.connect().prepareStatement(
+                    "SELECT * FROM quests ORDER BY name;");
             ResultSet questsSet = preparedStatement.executeQuery();
             while (questsSet.next()) {
                 final UUID id = UUID.fromString(questsSet.getString("id"));
@@ -128,7 +129,8 @@ public class QuestDAO implements DAO<Quest> {
         try {
             dbConnection.connect();
             PreparedStatement preparedStatement = dbConnection.connect().prepareStatement(
-                    "SELECT id, name, description, value FROM quests, students WHERE students.user_details_id = ?;");
+                    "SELECT name, description, value FROM quests, students " +
+                            "WHERE students.user_details_id = ? ORDER BY name;;");
             preparedStatement.setObject(1, id, Types.OTHER);
             ResultSet questsSet = preparedStatement.executeQuery();
             while (questsSet.next()) {
