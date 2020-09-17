@@ -19,4 +19,5 @@ public class Class {
     public String getName() {
         return name;
     }
+
 }

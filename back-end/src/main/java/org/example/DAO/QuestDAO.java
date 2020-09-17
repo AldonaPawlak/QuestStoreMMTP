@@ -14,11 +14,9 @@ import java.util.UUID;
 public class QuestDAO implements DAO<Quest> {
 
     DBConnection dbConnection;
-    DAOGetSet daoGetSet;
 
-    public QuestDAO(DBConnection dbConnection, DAOGetSet daoGetSet) {
+    public QuestDAO(DBConnection dbConnection) {
         this.dbConnection = dbConnection;
-        this.daoGetSet = daoGetSet;
     }
 
     @Override
@@ -35,8 +33,8 @@ public class QuestDAO implements DAO<Quest> {
             System.out.println("Quest added successfully.");
             dbConnection.disconnect();
         } catch (SQLException e) {
-            System.out.println("Adding quest failed.");
             e.printStackTrace();
+            System.out.println("Adding quest failed.");
         }
     }
 
@@ -51,8 +49,8 @@ public class QuestDAO implements DAO<Quest> {
             System.out.println("Quest removed successfully.");
             dbConnection.disconnect();
         } catch (SQLException e) {
-            System.out.println("Removing quest failed.");
             e.printStackTrace();
+            System.out.println("Removing quest failed.");
         }
     }
 
@@ -70,8 +68,8 @@ public class QuestDAO implements DAO<Quest> {
             System.out.println("Quest edited successfully.");
             dbConnection.disconnect();
         } catch (SQLException e) {
-            System.out.println("Editing quest failed.");
             e.printStackTrace();
+            System.out.println("Editing quest failed.");
         }
     }
 
@@ -93,8 +91,8 @@ public class QuestDAO implements DAO<Quest> {
             dbConnection.disconnect();
             System.out.println("Selected quests from data base successfully.");
         } catch (SQLException e) {
-            System.out.println("Selecting quests from data base failed.");
             e.printStackTrace();
+            System.out.println("Selecting quests from data base failed.");
         }
         return quests;
     }
@@ -118,10 +116,35 @@ public class QuestDAO implements DAO<Quest> {
             dbConnection.disconnect();
             System.out.println("Selected quest from data base successfully.");
         } catch (SQLException e) {
-            System.out.println("Selecting quest from data base failed.");
             e.printStackTrace();
+            System.out.println("Selecting quest from data base failed.");
         }
         throw new AbsenceOfRecordsException();
+    }
+
+    public List<Quest> getAllStudentQuests(UUID id)  {
+        List<Quest> quests = new ArrayList<>();
+        try {
+            dbConnection.connect();
+            PreparedStatement preparedStatement = dbConnection.connect().prepareStatement(
+                    "SELECT id, name, description, value FROM quests, students WHERE students.user_details_id = ?;");
+            preparedStatement.setObject(1, id, Types.OTHER);
+            ResultSet questsSet = preparedStatement.executeQuery();
+            while (questsSet.next()) {
+                final UUID questID = UUID.fromString(questsSet.getString("id"));
+                final String name = questsSet.getString("name");
+                final String description = questsSet.getString("description");
+                final int value = questsSet.getInt("value");
+                Quest quest = new Quest(questID, name, description, value);
+                quests.add(quest);
+            }
+            dbConnection.disconnect();
+            System.out.println("Selected students quests from data base successfully.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Selecting students quests from data base failed.");
+        }
+        return quests;
     }
 
 }
