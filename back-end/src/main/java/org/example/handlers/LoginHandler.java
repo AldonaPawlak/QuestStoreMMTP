@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.*;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.io.*;
 
@@ -49,13 +48,9 @@ public class LoginHandler implements HttpHandler {
                     user.getEmail(),
                     user.getClass().getSimpleName()
             );
-
             HttpCookie cookie = new HttpCookie("user", mapper.writeValueAsString(loggedUser));
-
             exchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
-
             sendResponse(mapper.writeValueAsString(loggedUser), exchange, 200);
-
         } catch (Exception e) {
             e.printStackTrace();
             sendResponse(e.getMessage(), exchange, 404);

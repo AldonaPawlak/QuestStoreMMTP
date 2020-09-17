@@ -46,7 +46,7 @@ public class LoginDAO {
     private User getUser(UUID id, String role) throws Exception {
         switch (role) {
             case "mentor" :
-                MentorDAO mentorDAO = new MentorDAO(dbConnection, daoGetSet);
+                MentorDAO mentorDAO = new MentorDAO(dbConnection);
                 return mentorDAO.get(id);
             case "student" :
                 StudentDAO studentDAOImp = new StudentDAO(dbConnection, daoGetSet);
