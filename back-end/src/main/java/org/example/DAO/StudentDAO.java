@@ -13,13 +13,10 @@ import java.util.*;
 public class StudentDAO implements DAO<Student> {
 
     DBConnection dbConnection;
-    DAOGetSet daoGetSet;
 
-    public StudentDAO(DBConnection dbConnection, DAOGetSet daoGetSet) {
+    public StudentDAO(DBConnection dbConnection) {
         this.dbConnection = dbConnection;
-        this.daoGetSet = daoGetSet;
     }
-
 
     @Override
     public void add(Student student) {
@@ -77,7 +74,7 @@ public class StudentDAO implements DAO<Student> {
         try {
             dbConnection.connect();
             PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
-                    "UPDATE students SET coins = ? WHERE id = ?;");
+                    "UPDATE students SET coins = ? WHERE student_id = ?;");
             preparedStatement.setInt(1, student.getCoins());
             preparedStatement.setObject(2, student.getStudentID());
             preparedStatement.executeUpdate();
