@@ -26,7 +26,8 @@ public class MentorDAO implements DAO<Mentor> {
         try {
             dbConnection.connect();
             PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
-                    "INSERT INTO user_details (id, name, surname, email, password, role_id, is_active, phone_number) VALUES (?, ?, ?, ?, ?, ?, true, ?);");
+                    "INSERT INTO user_details (id, name, surname, email, password, role_id, is_active, phone_number)" +
+                            " VALUES (?, ?, ?, ?, ?, ?, true, ?);");
             preparedStatement.setObject(1, mentor.getUserDetailsID(), Types.OTHER);
             preparedStatement.setString(2, mentor.getName());
             preparedStatement.setString(3, mentor.getSurname());
@@ -67,8 +68,8 @@ public class MentorDAO implements DAO<Mentor> {
             System.out.println("Removed user successfully.");
             dbConnection.disconnect();
         } catch (SQLException e) {
-            System.out.println("Removing mentor failed.");
             e.printStackTrace();
+            System.out.println("Removing mentor failed.");
         }
     }
 
@@ -89,8 +90,8 @@ public class MentorDAO implements DAO<Mentor> {
             preparedStatement.executeUpdate();
             dbConnection.disconnect();
         } catch (SQLException e) {
-            System.out.println("Editing mentor failed.");
             e.printStackTrace();
+            System.out.println("Editing mentor failed.");
         }
     }
 
