@@ -9,23 +9,23 @@ h3 {
 table {
     width: 100%;
     border-collapse: collapse;
-  }
-  
+}
+
 td {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
-  }
-  
+}
+
 td, th {
     border: 1px solid rgb(196, 195, 195);
     padding: 0.5em;
     text-align: center;
-  }
-  
+}
+
 tr:nth-child(even){background-color: #f2f2f2;}
-  
+
 /*tr:hover {background-color: #ddd;}*/
-  
+
 th {
     padding-top: 0.8em;
     padding-bottom: 0.8em;
@@ -46,9 +46,9 @@ button {
     border-radius: 15px;
     box-shadow: 0 0.4em #999;
 }
-  
+
 button:hover {background-color: #bb0000}
-  
+
 button:active {
     background-color: #7e0000;
     box-shadow: 0 0.4em #666;
@@ -69,9 +69,9 @@ button:active {
     border-radius: 15px;
     box-shadow: 0 0.3em #999;
 }
-  
+
 #add:hover {background-color: #008337}
-  
+
 #add:active {
     background-color: #005e2f;
     box-shadow: 0 0.4em #666;
@@ -79,15 +79,15 @@ button:active {
 }
 
 h1 {
-	font-family: 'Poiret One', cursive;
-	font-style: normal;
-	font-weight: normal;
-	text-align: center;
+    font-family: 'Poiret One', cursive;
+    font-style: normal;
+    font-weight: normal;
+    text-align: center;
 }
 
 .bars {
-	display: flex;
-	justify-content: space-around;
+    display: flex;
+    justify-content: space-around;
 }
 
 .bars > a{
@@ -111,18 +111,18 @@ h1 {
 
 .button{
     align-self: flex-end;
-	text-decoration: none;
-	background-color: #C4C4C4;
-	padding: 0.2%;
-	border-radius: 2vh;
-	font-family: 'Poiret One', cursive;
-	font-style: normal;
-	font-weight: normal;
-	font-size: 1em;
-	text-align: center;
-	letter-spacing: 0.15em;
-	color: #000000;
-	box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.25), inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    text-decoration: none;
+    background-color: #C4C4C4;
+    padding: 0.2%;
+    border-radius: 2vh;
+    font-family: 'Poiret One', cursive;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1em;
+    text-align: center;
+    letter-spacing: 0.15em;
+    color: #000000;
+    box-shadow: 0px 5px 4px rgba(0, 0, 0, 0.25), inset 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .button:hover {
@@ -138,8 +138,6 @@ h1 {
     /*-ms-user-select: none;*/
     /*user-select: none;*/
 }
-
-
 
 /* The actual popup */
 .popup .popuptext {

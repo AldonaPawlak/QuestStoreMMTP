@@ -19,34 +19,24 @@ public class ArtifactDAO implements DAO<Artifact>{
 
     @Override
     public void add(Artifact artifact) {
-   /*     try {
+       try {
             dbConnection.connect();
-            *//*id, name, price, category, description, type*//*
-            PreparedStatement statement = dbConnection.getConnection().prepareStatement(
-                    "SELECT category_id, artifact_type_id FROM artifacts WHERE id = ?;");
-            statement.setObject(1, artifact.getId(), Types.OTHER);
-            ResultSet allArtifacts = statement.executeQuery();
-            while (allArtifacts.next()) {
-                UUID categoryID = allArtifacts.getObject()
-                        UUID typeID =
-            }
-
             PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
                     "INSERT INTO artifacts (id, name, price, category_id, description, artifact_type_id) " +
                             "VALUES(?, ?, ?, ?, ?, ?);");
             preparedStatement.setObject(1, artifact.getId(), Types.OTHER);
             preparedStatement.setString(2, artifact.getName());
             preparedStatement.setInt(3, artifact.getPrice());
-            preparedStatement.setObject(4, categoryID, Types.OTHER);
+            preparedStatement.setObject(4, artifact.getCategoryID(), Types.OTHER);
             preparedStatement.setString(5, artifact.getDescription());
-            preparedStatement.setObject(6, typeID, Types.OTHER);
+            preparedStatement.setObject(6, artifact.getTypeID(), Types.OTHER);
             preparedStatement.executeUpdate();
             System.out.println("Artifact added successfully.");
             dbConnection.disconnect();
         } catch (SQLException e) {
             System.out.println("Adding artifact failed.");
             e.printStackTrace();
-        }*/
+        }
     }
 
     @Override
@@ -90,10 +80,11 @@ public class ArtifactDAO implements DAO<Artifact>{
         try {
             dbConnection.connect();
             PreparedStatement preparedStatement = dbConnection.connect().prepareStatement(
-                    "SELECT artifacts.id, artifacts.name, price, categories.name AS category, " +
-                            "description, artifact_types.name AS type FROM artifacts, categories, artifact_types " +
+                    "SELECT artifacts.id, artifacts.name, price, categories.name AS category," +
+                            " description, artifact_types.name AS type, categories.id AS category_id," +
+                            " artifact_types.id AS type_id FROM artifacts, categories, artifact_types " +
                             "WHERE artifacts.category_id = categories.id " +
-                            "AND artifacts.artifact_type_id = artifact_types.id;");
+                            "AND artifacts.artifact_type_id = artifact_types.id ORDER BY name;");
             ResultSet allArtifacts = preparedStatement.executeQuery();
             while (allArtifacts.next()) {
                 final UUID id = UUID.fromString(allArtifacts.getString("id"));
@@ -102,7 +93,9 @@ public class ArtifactDAO implements DAO<Artifact>{
                 final String category = allArtifacts.getString("category");
                 final String description = allArtifacts.getString("description");
                 final String type = allArtifacts.getString("type");
-                Artifact artifact = new Artifact(id, name, price, category, description, type);
+                final UUID categoryID = UUID.fromString(allArtifacts.getString("category_id"));
+                final UUID typeID = UUID.fromString(allArtifacts.getString("type_id"));
+                Artifact artifact = new Artifact(id, name, price, category, description, type, categoryID, typeID);
                 artifacts.add(artifact);
             }
             dbConnection.disconnect();
@@ -119,10 +112,11 @@ public class ArtifactDAO implements DAO<Artifact>{
         try {
             dbConnection.connect();
             PreparedStatement preparedStatement = dbConnection.connect().prepareStatement(
-                    "SELECT artifacts.id, artifacts.name, price, categories.name AS category, " +
-                            "description, artifact_types.name AS type FROM artifacts, categories, artifact_types " +
-                            "WHERE artifacts.category_id = categories.id " +
-                            "AND artifacts.artifact_type_id = artifact_types.id AND id = ?;");
+                    "SELECT artifacts.id, artifacts.name, price, categories.name AS category," +
+                            " description, artifact_types.name AS type, categories.id AS category_id," +
+                            " artifact_types.id AS type_id FROM artifacts, categories, artifact_types " +
+                            "WHERE artifacts.category_id = categories.id AND artifacts.artifact_type_id = artifact_types.id " +
+                            "AND artifacts.id = ?;");
             preparedStatement.setObject(1, id, Types.OTHER);
             ResultSet allArtifacts = preparedStatement.executeQuery();
             while (allArtifacts.next()) {
@@ -132,7 +126,9 @@ public class ArtifactDAO implements DAO<Artifact>{
                 final String category = allArtifacts.getString("category");
                 final String description = allArtifacts.getString("description");
                 final String type = allArtifacts.getString("type");
-                Artifact artifact = new Artifact(artifactID, name, price, category, description, type);
+                final UUID categoryID = UUID.fromString(allArtifacts.getString("category_id"));
+                final UUID typeID = UUID.fromString(allArtifacts.getString("type_id"));
+                Artifact artifact = new Artifact(artifactID, name, price, category, description, type, categoryID, typeID);
                 return artifact;
             }
             dbConnection.disconnect();
