@@ -16,6 +16,7 @@ public class DecoderURL {
                 .replace("%C5%BB", "Ż")
                 .replace("%C5%BC", "ż")
                 .replace("%C5%B9", "Ź")
-                .replace("%C5%BA", "ź");
+                .replace("%C5%BA", "ź")
+                .replace("%C5%9B", "ś");
     }
 }
