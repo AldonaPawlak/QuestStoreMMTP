@@ -14,11 +14,9 @@ import java.util.UUID;
 public class MentorDAO implements DAO<Mentor> {
 
     DBConnection dbConnection;
-    DAOGetSet daoGetSet;
 
-    public MentorDAO(DBConnection dbConnection, DAOGetSet daoGetSet) {
+    public MentorDAO(DBConnection dbConnection) {
         this.dbConnection = dbConnection;
-        this.daoGetSet = daoGetSet;
     }
 
     @Override

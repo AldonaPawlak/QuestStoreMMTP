@@ -1,5 +1,7 @@
 package org.example.DAO;
 
+import org.example.DAO.Exception.AbsenceOfRecordsException;
+import org.example.model.Mentor;
 import org.example.model.Student;
 
 import java.sql.PreparedStatement;
@@ -93,6 +95,7 @@ public class StudentDAO implements DAO<Student> {
             statement.setObject(7, student.getUserDetailsID(), Types.OTHER);
             statement.executeUpdate();
             System.out.println("User data edited successfully.");
+            dbConnection.disconnect();
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Editing student failed.");
@@ -103,7 +106,10 @@ public class StudentDAO implements DAO<Student> {
     public List<Student> getAll() {
         List<Student> students = new ArrayList<>();
         try {
-            ResultSet allStudents = daoGetSet.getDataSet("SELECT * FROM user_details, students WHERE user_details.id = students.user_details_id;");
+            dbConnection.connect();
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
+                    "SELECT * FROM user_details, students WHERE user_details.id = students.user_details_id;");
+            ResultSet allStudents = preparedStatement.executeQuery();
             while (allStudents.next()) {
                 final UUID userDetailsID = UUID.fromString(allStudents.getString("id"));
                 final String name = allStudents.getString("name");
@@ -112,41 +118,50 @@ public class StudentDAO implements DAO<Student> {
                 final String password = allStudents.getString("password");
                 final UUID roleID = UUID.fromString(allStudents.getString("role_id"));
                 final UUID studentID = UUID.fromString(allStudents.getString("student_id"));
-                final int coins = allStudents.getInt("coins");
                 final boolean isActive = allStudents.getBoolean("is_active");
-                final String phoneNumber = allStudents.getString("phone_number");
+                final  String phoneNumber = allStudents.getString("phone_number");
+                final int coins = allStudents.getInt("coins");
                 Student student = new Student(userDetailsID, name, surname, email, password, roleID, isActive, phoneNumber, studentID, coins);
                 students.add(student);
             }
+            dbConnection.disconnect();
+            System.out.println("Selected students from data base successfully.");
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println("Selecting students from data base failed.");
         }
         return students;
     }
 
     @Override
-    public Student get(UUID id) {
-        List<Student> students = new ArrayList<>();
+    public Student get(UUID id) throws AbsenceOfRecordsException {
         try {
-            ResultSet allStudents = daoGetSet.getDataSet(String.format("SELECT * FROM user_details, students WHERE user_details.id = students.user_details_id AND id ='%s';", id));
-            while (allStudents.next()) {
-                final UUID userDetailsID = UUID.fromString(allStudents.getString("id"));
-                final String name = allStudents.getString("name");
-                final String surname = allStudents.getString("surname");
-                final String email = allStudents.getString("email");
-                final String password = allStudents.getString("password");
-                final UUID roleID = UUID.fromString(allStudents.getString("role_id"));
-                final UUID studentID = UUID.fromString(allStudents.getString("student_id"));
-                final int coins = allStudents.getInt("coins");
-                final boolean isActive = allStudents.getBoolean("is_active");
-                final String phoneNumber = allStudents.getString("phone_number");
+            dbConnection.connect();
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
+                    "SELECT * FROM user_details, students WHERE user_details.id = students.user_details_id AND id = ?;");
+            preparedStatement.setObject(1, id, Types.OTHER);
+            ResultSet result = preparedStatement.executeQuery();
+            while (result.next()) {
+                final UUID userDetailsID = UUID.fromString(result.getString("id"));
+                final String name = result.getString("name");
+                final String surname = result.getString("surname");
+                final String email = result.getString("email");
+                final String password = result.getString("password");
+                final UUID roleID = UUID.fromString(result.getString("role_id"));
+                final UUID studentID = UUID.fromString(result.getString("student_id"));
+                final boolean isActive = result.getBoolean("is_active");
+                final String phoneNumber = result.getString("phone_number");
+                final int coins = result.getInt("coins");
                 Student student = new Student(userDetailsID, name, surname, email, password, roleID, isActive, phoneNumber, studentID, coins);
-                students.add(student);
+                return student;
             }
+            dbConnection.disconnect();
+            System.out.println("Selected student from data base successfully.");
         } catch (SQLException e) {
+            System.out.println("Selecting student from data base failed.");
             e.printStackTrace();
         }
-        return students.get(0);
+        throw new AbsenceOfRecordsException();
     }
 
 }
