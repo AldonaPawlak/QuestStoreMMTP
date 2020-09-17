@@ -169,3 +169,6 @@ public class ClassDAO implements DAO<Class>{
     }
 
 }
+
+/*rsync -av --delete /home/jadwiga.skarbek/CodeCool/WEB/TW/QuestStoreMMTP/back-end/src/Public/ /usr/share/nginx/html/
+ */
