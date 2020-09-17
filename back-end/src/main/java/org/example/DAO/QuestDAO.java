@@ -46,8 +46,8 @@ public class QuestDAO implements DAO<Quest> {
                     "DELETE FROM quests WHERE id = ?;");
             preparedStatement.setObject(1, quest.getId(), Types.OTHER);
             preparedStatement.executeUpdate();
-            System.out.println("Quest removed successfully.");
             dbConnection.disconnect();
+            System.out.println("Quest removed successfully.");
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Removing quest failed.");
@@ -65,8 +65,8 @@ public class QuestDAO implements DAO<Quest> {
             preparedStatement.setInt(3, quest.getValue());
             preparedStatement.setObject(4, quest.getId(), Types.OTHER);
             preparedStatement.executeUpdate();
-            System.out.println("Quest edited successfully.");
             dbConnection.disconnect();
+            System.out.println("Quest edited successfully.");
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Editing quest failed.");
@@ -123,6 +123,7 @@ public class QuestDAO implements DAO<Quest> {
     }
 
     public List<Quest> getAllStudentQuests(UUID id)  {
+        /*We have to pass here student id*/
         List<Quest> quests = new ArrayList<>();
         try {
             dbConnection.connect();
