@@ -117,6 +117,7 @@ public class ClassDAO implements DAO<Class>{
     }
 
     public List<Class> getAllStudentClasses(UUID id) {
+        /*Getting all classes assigned to specific student by his id*/
         List<Class> classes = new ArrayList<>();
         try {
             dbConnection.connect();
@@ -142,6 +143,7 @@ public class ClassDAO implements DAO<Class>{
     }
 
     public List<Class> getAllMentorClasses(UUID id) {
+        /*Getting all classes assigned to specific mentor by his id*/
         List<Class> classes = new ArrayList<>();
         try {
             dbConnection.connect();
