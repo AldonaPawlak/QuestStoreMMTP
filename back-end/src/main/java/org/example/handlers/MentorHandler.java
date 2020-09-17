@@ -4,33 +4,30 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import org.example.DAO.DAOGetSet;
 import org.example.DAO.DBConnection;
 import org.example.DAO.Exception.AbsenceOfRecordsException;
 import org.example.DAO.MentorDAO;
 import org.example.config.PasswordCrypter;
 import org.example.model.Mentor;
-import org.example.model.User;
 import org.example.services.DecoderURL;
-import org.example.services.Parser;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.security.CryptoPrimitive;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
 public class MentorHandler implements HttpHandler {
 
+    //TODO change program logic to create only one connection and DAO
+    //TODO generate is_active update possibility
+
     DBConnection dbConnection;
-    DAOGetSet daoGetSet;
     MentorDAO mentorDAO;
 
     public MentorHandler() {
         this.dbConnection = new DBConnection();
-        this.daoGetSet = new DAOGetSet(dbConnection);
-        this.mentorDAO = new MentorDAO(dbConnection, daoGetSet);
+        this.mentorDAO = new MentorDAO(dbConnection);
     }
 
     @Override
@@ -79,9 +76,6 @@ public class MentorHandler implements HttpHandler {
         }
     }
 
-
-
-
     private String getMentors() throws JsonProcessingException {
         List<Mentor> mentors = mentorDAO.getAll();
         ObjectMapper mapper = new ObjectMapper();
@@ -116,7 +110,6 @@ public class MentorHandler implements HttpHandler {
         mentor.setPhoneNumber(newPhone);
         System.out.println("!!!!!!!" + mentor.getPhoneNumber());
         System.out.println("!!!22222!" + newPhone);
-
         mentorDAO.edit(mentor);
     }
 
