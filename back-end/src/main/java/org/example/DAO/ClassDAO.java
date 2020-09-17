@@ -2,23 +2,34 @@ package org.example.DAO;
 
 import org.example.model.Class;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.List;
 import java.util.UUID;
 
 public class ClassDAO implements DAO<Class>{
 
     DBConnection dbConnection;
-    DAOGetSet daoGetSet;
 
-    public ClassDAO(DBConnection dbConnection, DAOGetSet daoGetSet) {
+    public ClassDAO(DBConnection dbConnection) {
         this.dbConnection = dbConnection;
-        this.daoGetSet = daoGetSet;
     }
 
     @Override
     public void add(Class claass) {
-        dbConnection.runSqlQuery(String.format("INSERT INTO classes (id, name) VALUES ('%s', '%s');", claass.getId(), claass.getName()));
+        try {
+            dbConnection.connect();
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement("INSERT INTO classes (id, name) VALUES (?, ?);");
+            preparedStatement.setObject(1, claass.getId(), Types.OTHER);
+            preparedStatement.setString(2, claass.getName());
+            preparedStatement.executeUpdate();
+            dbConnection.disconnect();
+            System.out.println("Class added successfully.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Adding class failed.");
+        }
     }
 
     @Override
