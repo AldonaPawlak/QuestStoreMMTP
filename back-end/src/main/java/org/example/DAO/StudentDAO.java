@@ -2,8 +2,10 @@ package org.example.DAO;
 
 import org.example.model.Student;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.*;
 
 public class StudentDAO implements DAO<Student> {
@@ -19,8 +21,31 @@ public class StudentDAO implements DAO<Student> {
 
     @Override
     public void add(Student student) {
-        dbConnection.runSqlQuery(String.format("INSERT INTO user_details (id, name, surname, email, password, role_id, is_active) VALUES ('%s', '%s' ,'%s' ,'%s', '%s', 3, true);'", student.getUserDetailsID(), student.getName(), student.getSurname(), student.getEmail(), student.getPassword()));
-        dbConnection.runSqlQuery(String.format("INSERT INTO students (student_id, user_details_id, coins) VALUES ('%s', '%s', 0);", student.getStudentID(), student.getUserDetailsID()));
+        try {
+            dbConnection.connect();
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
+                    "INSERT INTO user_details (id, name, surname, email, password, role_id, is_active, phone_number)" +
+                            " VALUES (?, ?, ?, ?, ?, ?, true, ?);");
+            preparedStatement.setObject(1, student.getUserDetailsID(), Types.OTHER);
+            preparedStatement.setString(2, student.getName());
+            preparedStatement.setString(3, student.getSurname());
+            preparedStatement.setString(4, student.getEmail());
+            preparedStatement.setString(5, student.getPassword());
+            preparedStatement.setObject(6, student.getRoleID(), Types.OTHER);
+            preparedStatement.setString(7, student.getPhoneNumber());
+            preparedStatement.executeUpdate();
+            System.out.println("Added user successfully.");
+            PreparedStatement statement = dbConnection.getConnection().prepareStatement(
+                    "INSERT INTO students (student_id, user_details_id, coins) VALUES (?, ?, 0);");
+            statement.setObject(1, student.getStudentID(), Types.OTHER);
+            statement.setObject(2, student.getUserDetailsID());
+            statement.executeUpdate();
+            System.out.println("Added student successfully.");
+            dbConnection.disconnect();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Adding student failed.");
+        }
     }
 
     @Override
