@@ -31,4 +31,17 @@ public class Quest {
     public int getValue() {
         return value;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+
 }
