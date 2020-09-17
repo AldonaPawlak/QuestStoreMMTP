@@ -43,4 +43,17 @@ public class Artifact {
     public UUID getArtifactTypeID() {
         return artifactTypeID;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
 }

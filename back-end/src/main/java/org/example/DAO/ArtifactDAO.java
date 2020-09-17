@@ -12,11 +12,9 @@ import java.util.*;
 public class ArtifactDAO implements DAO<Artifact>{
 
     DBConnection dbConnection;
-    DAOGetSet daoGetSet;
 
-    public ArtifactDAO(DBConnection dbConnection, DAOGetSet daoGetSet) {
+    public ArtifactDAO(DBConnection dbConnection) {
         this.dbConnection = dbConnection;
-        this.daoGetSet = daoGetSet;
     }
 
     @Override
@@ -24,7 +22,8 @@ public class ArtifactDAO implements DAO<Artifact>{
         try {
             dbConnection.connect();
             PreparedStatement preparedStatement = dbConnection.connect().prepareStatement(
-                    "INSERT INTO artifacts (id, name, price, category_id, description, artifact_type_id) VALUES(?, ?, ?, ?, ?, ?);");
+                    "INSERT INTO artifacts (id, name, price, category_id, description, artifact_type_id) " +
+                            "VALUES(?, ?, ?, ?, ?, ?);");
             preparedStatement.setObject(1, artifact.getId(), Types.OTHER);
             preparedStatement.setString(2, artifact.getName());
             preparedStatement.setInt(3, artifact.getPrice());
@@ -80,7 +79,8 @@ public class ArtifactDAO implements DAO<Artifact>{
         List<Artifact> artifacts = new ArrayList<>();
         try {
             dbConnection.connect();
-            PreparedStatement preparedStatement = dbConnection.connect().prepareStatement("SELECT * FROM artifacts;");
+            PreparedStatement preparedStatement = dbConnection.connect().prepareStatement(
+                    "SELECT * FROM artifacts;");
             ResultSet allArtifacts = preparedStatement.executeQuery();
             while (allArtifacts.next()) {
                 final UUID id = UUID.fromString(allArtifacts.getString("id"));
@@ -105,7 +105,8 @@ public class ArtifactDAO implements DAO<Artifact>{
     public Artifact get(UUID id) throws AbsenceOfRecordsException {
         try {
             dbConnection.connect();
-            PreparedStatement preparedStatement = dbConnection.connect().prepareStatement("SELECT * FROM artifacts WHERE id = ?;");
+            PreparedStatement preparedStatement = dbConnection.connect().prepareStatement(
+                    "SELECT * FROM artifacts WHERE id = ?;");
             preparedStatement.setObject(1, id, Types.OTHER);
             ResultSet allArtifacts = preparedStatement.executeQuery();
             while (allArtifacts.next()) {
@@ -127,4 +128,35 @@ public class ArtifactDAO implements DAO<Artifact>{
         throw new AbsenceOfRecordsException();
     }
 
+    public List<Artifact> getAllStudentArtifacts(UUID id) {
+        /*selecting all artifacts belongings to student by his id*/
+        List<Artifact> artifacts = new ArrayList<>();
+        try {
+            dbConnection.connect();
+            PreparedStatement preparedStatement = dbConnection.connect().prepareStatement(
+                    "SELECT artifacts.id, name, price, category_id, description, status, artifact_type_id " +
+                            "FROM artifacts, student_artifacts WHERE artifacts.id = student_artifacts.artifact_id " +
+                            "AND student_artifacts.student_id = ?;");
+            preparedStatement.setObject(1, id, Types.OTHER);
+            ResultSet allArtifacts = preparedStatement.executeQuery();
+            while (allArtifacts.next()) {
+                final UUID artifactID = UUID.fromString(allArtifacts.getString("id"));
+                final String name = allArtifacts.getString("name");
+                final int price = allArtifacts.getInt("price");
+                final UUID categoryID = UUID.fromString(allArtifacts.getString("category_id"));
+                final String description = allArtifacts.getString("description");
+                final UUID artifactTypeID = UUID.fromString(allArtifacts.getString("artifact_type_id"));
+                Artifact artifact = new Artifact(artifactID, name, price, categoryID, description, artifactTypeID);
+                artifacts.add(artifact);
+            }
+            dbConnection.disconnect();
+            System.out.println("Selected artifacts from data base successfully.");
+        } catch (SQLException e) {
+            System.out.println("Selecting artifacts from data base failed.");
+            e.printStackTrace();
+        }
+        return artifacts;
+    }
+
 }
+
