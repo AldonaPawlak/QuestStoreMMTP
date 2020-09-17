@@ -9,10 +9,9 @@
     <meta name="keywords" content="Codecool, Quest Store">
     <meta name="author" content="John Doe">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/user-view.css">
-
+    <script src="../profileScript.js" defer></script>
     <script src="https://kit.fontawesome.com/bd5d5911de.js" crossorigin="anonymous"></script>
     <script src="../script.js" defer></script>
 
@@ -21,17 +20,14 @@
 <body>
 
 <header>
-
     <a id="hamburgerMenu" href="#" onclick="openSlideMenu()">
         <i class="fas fa-bars"></i>
     </a>
-
     <a href="index.html">
-        <img id="image" src="../images/logo.png">
+        <img id="Public/image" src="../images/logo.png">
     </a>
-
     <div class="topBarButtons" id="topBarButton">
-        <a id="user" href="studentProfile.html">
+        <a id="user" href="userView.html">
             <i class="far fa-user-circle"></i>
             Codecooler
         </a>
@@ -40,11 +36,9 @@
             Log out
         </a>
     </div>
-
 </header>
 
 <div id="content">
-
     <div id="menu" class="nav">
         <a href="#" class="close" onclick="closeSlideMenu()">
             <i class="fas fa-times"></i>
@@ -53,9 +47,31 @@
         <a href="shop.html">Shop</a>
         <a href="quests.html">Quests</a>
     </div>
-
-    <div class="welcome-screen">
-        Welcome screen
+    <div class="card-container">
+        <img
+                class="round"
+                src="https://randomuser.me/api/portraits/women/79.jpg"
+                alt="user"
+        />
+        <h3 class="name">Ricky Park</h3>
+        <h6>New York</h6>
+        <p>
+            User interface designer and <br/>
+            front-end developer
+        </p>
+        <hr style="color: green;">
+        <div class="skills">
+            <h6>Skills</h6>
+            <ul>
+                <li>UI / UX</li>
+                <li>Front End Development</li>
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+                <li>React</li>
+                <li>Node</li>
+            </ul>
+        </div>
     </div>
 </div>
 

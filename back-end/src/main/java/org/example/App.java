@@ -1,5 +1,6 @@
 package org.example;
 
+import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
 import org.example.DAO.DAOGetSet;
@@ -9,6 +10,7 @@ import org.example.config.IDgenerator;
 import org.example.config.PasswordCrypter;
 import org.example.handlers.LoginHandler;
 import org.example.handlers.MentorHandler;
+import org.example.handlers.MentorProfileHandler;
 import org.example.handlers.StudentHandler;
 import org.example.model.Mentor;
 
@@ -23,7 +25,7 @@ public class App
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
         server.createContext("/mentor", new MentorHandler());
         server.createContext("/student", new StudentHandler());
-//        server.createContext("/mentor", new MentorMenuController());
+        server.createContext("/mentorView", new MentorProfileHandler());
        server.createContext("/login", new LoginHandler());
 
         server.setExecutor(null);

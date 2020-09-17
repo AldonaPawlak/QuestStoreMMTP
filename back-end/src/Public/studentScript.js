@@ -28,6 +28,13 @@ function innerStudents(students){
         clone.querySelector('.email').textContent = student.email;
         clone.querySelector('.phone').textContent = student.phoneNumber;
 
+         const profile = clone.querySelector('.profile');
+         profile.setAttribute("data-id", student.userDetailsID);
+         profile.addEventListener("click", function () {
+
+                 document.location.href='studentProfile.html';
+         })
+
         const edit = clone.querySelector('.popup');
         edit.addEventListener("click", popUp);
 
