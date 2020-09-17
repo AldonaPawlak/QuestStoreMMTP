@@ -72,8 +72,31 @@ public class StudentDAO implements DAO<Student> {
 
     @Override
     public void edit(Student student) {
-        dbConnection.runSqlQuery(String.format("UPDATE students SET coins = %d WHERE id = '%s';", student.getCoins(), student.getStudentID()));
-        dbConnection.runSqlQuery(String.format("UPDATE user_details SET name = '%s', surname = '%s', email = '%s', password = '%s', role_id = '%s', is_active = '%b' WHERE id = '%s;'", student.getName(), student.getSurname(), student.getEmail(), student.getPassword(), student.getRoleID(), student.isActive(), student.getUserDetailsID()));
+        try {
+            dbConnection.connect();
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
+                    "UPDATE students SET coins = ? WHERE id = ?;");
+            preparedStatement.setInt(1, student.getCoins());
+            preparedStatement.setObject(2, student.getStudentID());
+            preparedStatement.executeUpdate();
+            System.out.println("Students data edited successfully.");
+
+            PreparedStatement statement = dbConnection.getConnection().prepareStatement(
+                    "UPDATE user_details SET " +
+                            "name = ?, surname = ?, email = ?, password = ?, role_id = ?, is_active = ? WHERE id = ?;");
+            statement.setString(1, student.getName());
+            statement.setString(2, student.getSurname());
+            statement.setString(3, student.getEmail());
+            statement.setString(4, student.getPassword());
+            statement.setObject(5, student.getRoleID(), Types.OTHER);
+            statement.setBoolean(6, student.isActive());
+            statement.setObject(7, student.getUserDetailsID(), Types.OTHER);
+            statement.executeUpdate();
+            System.out.println("User data edited successfully.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Editing student failed.");
+        }
     }
 
     @Override

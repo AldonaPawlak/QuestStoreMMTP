@@ -90,8 +90,8 @@ public class MentorDAO implements DAO<Mentor> {
             preparedStatement.executeUpdate();
             dbConnection.disconnect();
         } catch (SQLException e) {
-            System.out.println("Editing mentor failed.");
             e.printStackTrace();
+            System.out.println("Editing mentor failed.");
         }
     }
 
