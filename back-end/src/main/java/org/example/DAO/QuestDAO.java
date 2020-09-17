@@ -15,8 +15,6 @@ public class QuestDAO implements DAO<Quest> {
 
     DBConnection dbConnection;
 
-    //TODO create function to get all specific student quests (here or in studentDAO?)
-
     public QuestDAO(DBConnection dbConnection) {
         this.dbConnection = dbConnection;
     }
@@ -35,8 +33,8 @@ public class QuestDAO implements DAO<Quest> {
             System.out.println("Quest added successfully.");
             dbConnection.disconnect();
         } catch (SQLException e) {
-            System.out.println("Adding quest failed.");
             e.printStackTrace();
+            System.out.println("Adding quest failed.");
         }
     }
 
@@ -51,8 +49,8 @@ public class QuestDAO implements DAO<Quest> {
             System.out.println("Quest removed successfully.");
             dbConnection.disconnect();
         } catch (SQLException e) {
-            System.out.println("Removing quest failed.");
             e.printStackTrace();
+            System.out.println("Removing quest failed.");
         }
     }
 
@@ -70,8 +68,8 @@ public class QuestDAO implements DAO<Quest> {
             System.out.println("Quest edited successfully.");
             dbConnection.disconnect();
         } catch (SQLException e) {
-            System.out.println("Editing quest failed.");
             e.printStackTrace();
+            System.out.println("Editing quest failed.");
         }
     }
 
@@ -93,8 +91,8 @@ public class QuestDAO implements DAO<Quest> {
             dbConnection.disconnect();
             System.out.println("Selected quests from data base successfully.");
         } catch (SQLException e) {
-            System.out.println("Selecting quests from data base failed.");
             e.printStackTrace();
+            System.out.println("Selecting quests from data base failed.");
         }
         return quests;
     }
@@ -118,8 +116,8 @@ public class QuestDAO implements DAO<Quest> {
             dbConnection.disconnect();
             System.out.println("Selected quest from data base successfully.");
         } catch (SQLException e) {
-            System.out.println("Selecting quest from data base failed.");
             e.printStackTrace();
+            System.out.println("Selecting quest from data base failed.");
         }
         throw new AbsenceOfRecordsException();
     }
@@ -130,6 +128,7 @@ public class QuestDAO implements DAO<Quest> {
             dbConnection.connect();
             PreparedStatement preparedStatement = dbConnection.connect().prepareStatement(
                     "SELECT id, name, description, value FROM quests, students WHERE students.user_details_id = ?;");
+            preparedStatement.setObject(1, id, Types.OTHER);
             ResultSet questsSet = preparedStatement.executeQuery();
             while (questsSet.next()) {
                 final UUID questID = UUID.fromString(questsSet.getString("id"));
@@ -142,8 +141,8 @@ public class QuestDAO implements DAO<Quest> {
             dbConnection.disconnect();
             System.out.println("Selected students quests from data base successfully.");
         } catch (SQLException e) {
-            System.out.println("Selecting students quests from data base failed.");
             e.printStackTrace();
+            System.out.println("Selecting students quests from data base failed.");
         }
         return quests;
     }
