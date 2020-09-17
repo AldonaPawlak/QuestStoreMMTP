@@ -50,8 +50,24 @@ public class StudentDAO implements DAO<Student> {
 
     @Override
     public void remove(Student student) {
-        dbConnection.runSqlQuery(String.format("DELETE FROM students WHERE id ='%s';", student.getStudentID()));
-        dbConnection.runSqlQuery(String.format("DELETE FROM user_details WHERE id='%s';", student.getUserDetailsID()));
+        try {
+            dbConnection.connect();
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
+                    "DELETE FROM students WHERE mentor_id = ?;");
+            preparedStatement.setObject(1, student.getStudentID(), Types.OTHER);
+            preparedStatement.executeUpdate();
+            System.out.println("Removed student successfully.");
+
+            PreparedStatement statement = dbConnection.getConnection().prepareStatement(
+                    "DELETE FROM user_details WHERE id = ?;");
+            statement.setObject(1, student.getUserDetailsID(), Types.OTHER);
+            statement.executeUpdate();
+            System.out.println("Removed user successfully.");
+            dbConnection.disconnect();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Removing student failed.");
+        }
     }
 
     @Override

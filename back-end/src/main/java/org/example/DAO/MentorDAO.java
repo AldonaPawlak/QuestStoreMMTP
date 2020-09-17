@@ -68,8 +68,8 @@ public class MentorDAO implements DAO<Mentor> {
             System.out.println("Removed user successfully.");
             dbConnection.disconnect();
         } catch (SQLException e) {
-            System.out.println("Removing mentor failed.");
             e.printStackTrace();
+            System.out.println("Removing mentor failed.");
         }
     }
 
