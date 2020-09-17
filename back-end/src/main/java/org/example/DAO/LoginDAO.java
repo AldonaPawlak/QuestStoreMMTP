@@ -49,7 +49,7 @@ public class LoginDAO {
                 MentorDAO mentorDAO = new MentorDAO(dbConnection);
                 return mentorDAO.get(id);
             case "student" :
-                StudentDAO studentDAOImp = new StudentDAO(dbConnection, daoGetSet);
+                StudentDAO studentDAOImp = new StudentDAO(dbConnection);
                 return studentDAOImp.get(id);
             case "creep" :
                 CreepDAO creepDAO = new CreepDAO(dbConnection, daoGetSet);
