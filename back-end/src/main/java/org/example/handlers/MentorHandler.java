@@ -108,8 +108,6 @@ public class MentorHandler implements HttpHandler {
     private void editMentorPhone(String userDetailsID, String newPhone) throws AbsenceOfRecordsException {
         Mentor mentor = mentorDAO.get(UUID.fromString(userDetailsID));
         mentor.setPhoneNumber(newPhone);
-        System.out.println("!!!!!!!" + mentor.getPhoneNumber());
-        System.out.println("!!!22222!" + newPhone);
         mentorDAO.edit(mentor);
     }
 

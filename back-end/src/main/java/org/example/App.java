@@ -9,6 +9,7 @@ import org.example.config.IDgenerator;
 import org.example.config.PasswordCrypter;
 import org.example.handlers.LoginHandler;
 import org.example.handlers.MentorHandler;
+import org.example.handlers.StudentHandler;
 import org.example.model.Mentor;
 
 import java.io.IOException;
@@ -21,7 +22,7 @@ public class App
     public static void main( String[] args ) throws IOException, Exception {
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
         server.createContext("/mentor", new MentorHandler());
-//        server.createContext("/student", new StudentMenuController());
+        server.createContext("/student", new StudentHandler());
 //        server.createContext("/mentor", new MentorMenuController());
        server.createContext("/login", new LoginHandler());
 
