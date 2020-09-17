@@ -14,11 +14,11 @@ import java.util.UUID;
 public class QuestDAO implements DAO<Quest> {
 
     DBConnection dbConnection;
-    DAOGetSet daoGetSet;
 
-    public QuestDAO(DBConnection dbConnection, DAOGetSet daoGetSet) {
+    //TODO create function to get all specific student quests (here or in studentDAO?)
+
+    public QuestDAO(DBConnection dbConnection) {
         this.dbConnection = dbConnection;
-        this.daoGetSet = daoGetSet;
     }
 
     @Override
@@ -122,6 +122,30 @@ public class QuestDAO implements DAO<Quest> {
             e.printStackTrace();
         }
         throw new AbsenceOfRecordsException();
+    }
+
+    public List<Quest> getAllStudentQuests(UUID id)  {
+        List<Quest> quests = new ArrayList<>();
+        try {
+            dbConnection.connect();
+            PreparedStatement preparedStatement = dbConnection.connect().prepareStatement(
+                    "SELECT id, name, description, value FROM quests, students WHERE students.user_details_id = ?;");
+            ResultSet questsSet = preparedStatement.executeQuery();
+            while (questsSet.next()) {
+                final UUID questID = UUID.fromString(questsSet.getString("id"));
+                final String name = questsSet.getString("name");
+                final String description = questsSet.getString("description");
+                final int value = questsSet.getInt("value");
+                Quest quest = new Quest(questID, name, description, value);
+                quests.add(quest);
+            }
+            dbConnection.disconnect();
+            System.out.println("Selected students quests from data base successfully.");
+        } catch (SQLException e) {
+            System.out.println("Selecting students quests from data base failed.");
+            e.printStackTrace();
+        }
+        return quests;
     }
 
 }
