@@ -76,7 +76,7 @@ public class ClassDAO implements DAO<Class>{
         try {
             dbConnection.connect();
             PreparedStatement preparedStatement = dbConnection.connect().prepareStatement(
-                    "SELECT * FROM classes;");
+                    "SELECT * FROM classes ORDER BY name;");
             ResultSet classesSet = preparedStatement.executeQuery();
             while (classesSet.next()) {
                 final UUID id = UUID.fromString(classesSet.getString("id"));
@@ -124,7 +124,7 @@ public class ClassDAO implements DAO<Class>{
             PreparedStatement preparedStatement = dbConnection.connect().prepareStatement(
                     " SELECT id, name FROM classes, students_classes " +
                             "WHERE classes.id = students_classes.classes_id " +
-                            "AND students_classes.student_id= ?;");
+                            "AND students_classes.student_id= ? ORDER BY name;");
             preparedStatement.setObject(1, id, Types.OTHER);
             ResultSet classesSet = preparedStatement.executeQuery();
             while (classesSet.next()) {
@@ -150,7 +150,7 @@ public class ClassDAO implements DAO<Class>{
             PreparedStatement preparedStatement = dbConnection.connect().prepareStatement(
                     " SELECT id, name FROM classes, mentors_classes " +
                             "WHERE classes.id = mentors_classes.classes_id " +
-                            "AND mentors_classes.mentor_id= ?;");
+                            "AND mentors_classes.mentor_id= ? ORDER BY name;");
             preparedStatement.setObject(1, id, Types.OTHER);
             ResultSet classesSet = preparedStatement.executeQuery();
             while (classesSet.next()) {
@@ -169,3 +169,6 @@ public class ClassDAO implements DAO<Class>{
     }
 
 }
+
+/*rsync -av --delete /home/jadwiga.skarbek/CodeCool/WEB/TW/QuestStoreMMTP/back-end/src/Public/ /usr/share/nginx/html/
+ */

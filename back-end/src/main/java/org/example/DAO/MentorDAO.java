@@ -99,7 +99,7 @@ public class MentorDAO implements DAO<Mentor> {
         try {
             dbConnection.connect();
             PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
-                    "SELECT * FROM user_details, mentors WHERE user_details.id = mentors.user_details_id;");
+                    "SELECT * FROM user_details, mentors WHERE user_details.id = mentors.user_details_id ORDER BY surname;");
             ResultSet allMentors = preparedStatement.executeQuery();
             while (allMentors.next()) {
                 final UUID userDetailsID = UUID.fromString(allMentors.getString("id"));

@@ -13,13 +13,10 @@ import java.util.*;
 public class StudentDAO implements DAO<Student> {
 
     DBConnection dbConnection;
-    DAOGetSet daoGetSet;
 
-    public StudentDAO(DBConnection dbConnection, DAOGetSet daoGetSet) {
+    public StudentDAO(DBConnection dbConnection) {
         this.dbConnection = dbConnection;
-        this.daoGetSet = daoGetSet;
     }
-
 
     @Override
     public void add(Student student) {
@@ -108,7 +105,7 @@ public class StudentDAO implements DAO<Student> {
         try {
             dbConnection.connect();
             PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
-                    "SELECT * FROM user_details, students WHERE user_details.id = students.user_details_id;");
+                    "SELECT * FROM user_details, students WHERE user_details.id = students.user_details_id ORDER BY surname;");
             ResultSet allStudents = preparedStatement.executeQuery();
             while (allStudents.next()) {
                 final UUID userDetailsID = UUID.fromString(allStudents.getString("id"));
