@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="eng">
+
 <head>
     <title>Quest Store</title>
 
@@ -16,6 +17,7 @@
 
     <script src="https://kit.fontawesome.com/bd5d5911de.js" crossorigin="anonymous"></script>
     <script src="../script.js" defer></script>
+    <script src="../questScript.js" defer></script>
 </head>
 
 <body>
@@ -52,55 +54,21 @@
 
     <div id="inner-content">
 
+        <template id="quest-template">
+            <div class="quest-card">
+                <div class="price-tag">
+                    price
+                </div>
+                <img src="../images/photo.png">
+                <h2 class="quest-name">name</h2>
+                <div class="description">
+                    desc
+                </div>
+            </div>
+        </template>
+
         <div class="cards-container">
-            <div class="quest-card">
-                <div class="price-tag">
-                    9$
-                </div>
-                <img src="../images/photo.png">
-                <h2>Name of quest</h2>
-                <div class="description">
-                    Maecenas tincidunt tortor in enim mollis, vel blandit mauris tincidunt. Maecenas commodo ut nunc
-                    sit amet pulvinar. Maecenas tempus odio ut hendrerit ullamcorper. Pellentesque quis diam erat.
-                    Donec imperdiet blandit odio et finibus. Suspendisse dictum rhoncus diam, id tincidunt urna
-                </div>
-            </div>
-            <div class="quest-card">
-                <div class="price-tag">
-                    2$
-                </div>
-                <img src="../images/photo.png" alt="">
-                <h2>Name of quest</h2>
-                <div class="description">
-                    Maecenas tincidunt tortor in enim mollis, vel blandit mauris tincidunt. Maecenas commodo ut nunc
-                    sit amet pulvinar. Maecenas tempus odio ut hendrerit ullamcorper. Pellentesque quis diam erat.
-                    Donec imperdiet blandit odio et finibus. Suspendisse dictum rhoncus diam, id tincidunt urna
-                </div>
-            </div>
-            <div class="quest-card">
-                <div class="price-tag">
-                    100$
-                </div>
-                <img src="../images/photo.png">
-                <h2>Name of quest</h2>
-                <div class="description">
-                    Maecenas tincidunt tortor in enim mollis, vel blandit mauris tincidunt. Maecenas commodo ut nunc
-                    sit amet pulvinar. Maecenas tempus odio ut hendrerit ullamcorper. Pellentesque quis diam erat.
-                    Donec imperdiet blandit odio et finibus. Suspendisse dictum rhoncus diam, id tincidunt urna
-                </div>
-            </div>
-            <div class="quest-card">
-                <div class="price-tag">
-                    22$
-                </div>
-                <img src="../images/photo.png" alt="">
-                <h2>Name of quest</h2>
-                <div class="description">
-                    Maecenas tincidunt tortor in enim mollis, vel blandit mauris tincidunt. Maecenas commodo ut nunc
-                    sit amet pulvinar. Maecenas tempus odio ut hendrerit ullamcorper. Pellentesque quis diam erat.
-                    Donec imperdiet blandit odio et finibus. Suspendisse dictum rhoncus diam, id tincidunt urna
-                </div>
-            </div>
+
         </div>
     </div>
 </div>
