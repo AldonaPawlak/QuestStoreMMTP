@@ -16,6 +16,7 @@
 
     <script src="https://kit.fontawesome.com/bd5d5911de.js" crossorigin="anonymous"></script>
     <script src="../script.js" defer></script>
+    <script src="../artifactScript.js" defer></script>
 
 </head>
 
@@ -53,55 +54,21 @@
 
     <div id="inner-content">
 
+        <template id="artifact-template">
+            <div class="artifact-card">
+                <div class="price-tag">
+                    price
+                </div>
+                <img src="../images/photo.png">
+                <h2 class="artifact-name">Name</h2>
+                <div class="description">
+                    desc
+                </div>
+            </div>
+        </template>
+
         <div class="cards-container">
-            <div class="artifact-card">
-                <div class="price-tag">
-                    2.5$
-                </div>
-                <img src="../images/photo.png">
-                <h2>Name of artifact</h2>
-                <div class="description">
-                    Maecenas tincidunt tortor in enim mollis, vel blandit mauris tincidunt. Maecenas commodo ut nunc
-                    sit amet pulvinar. Maecenas tempus odio ut hendrerit ullamcorper. Pellentesque quis diam erat.
-                    Donec imperdiet blandit odio et finibus. Suspendisse dictum rhoncus diam, id tincidunt urna
-                </div>
-            </div>
-            <div class="artifact-card">
-                <div class="price-tag">
-                    11$
-                </div>
-                <img src="../images/photo.png">
-                <h2>Name of artifact</h2>
-                <div class="description">
-                    Maecenas tincidunt tortor in enim mollis, vel blandit mauris tincidunt. Maecenas commodo ut nunc
-                    sit amet pulvinar. Maecenas tempus odio ut hendrerit ullamcorper. Pellentesque quis diam erat.
-                    Donec imperdiet blandit odio et finibus. Suspendisse dictum rhoncus diam, id tincidunt urna
-                </div>
-            </div>
-            <div class="artifact-card">
-                <div class="price-tag">
-                    199$
-                </div>
-                <img src="../images/photo.png">
-                <h2>Name of artifact</h2>
-                <div class="description">
-                    Maecenas tincidunt tortor in enim mollis, vel blandit mauris tincidunt. Maecenas commodo ut nunc
-                    sit amet pulvinar. Maecenas tempus odio ut hendrerit ullamcorper. Pellentesque quis diam erat.
-                    Donec imperdiet blandit odio et finibus. Suspendisse dictum rhoncus diam, id tincidunt urna
-                </div>
-            </div>
-            <div class="artifact-card">
-                <div class="price-tag">
-                    2$
-                </div>
-                <img id="artifact-photo" src="../images/photo.png">
-                <h2>Name of artifact</h2>
-                <div class="description">
-                    Maecenas tincidunt tortor in enim mollis, vel blandit mauris tincidunt. Maecenas commodo ut nunc
-                    sit amet pulvinar. Maecenas tempus odio ut hendrerit ullamcorper. Pellentesque quis diam erat.
-                    Donec imperdiet blandit odio et finibus. Suspendisse dictum rhoncus diam, id tincidunt urna
-                </div>
-            </div>
+
         </div>
     </div>
 </div>

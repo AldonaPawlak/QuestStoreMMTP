@@ -2,22 +2,19 @@
 <html lang="eng">
 
 <head>
-    <title>Quest Store</title>
+    <title>User View</title>
 
     <meta charset="UTF-8">
-    <meta name="description" content="Quest Store">
+    <meta name="description" content="User View">
     <meta name="keywords" content="Codecool, Quest Store">
     <meta name="author" content="John Doe">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/wallet.css">
-    <link rel="stylesheet" href="../css/quests.css">
-    <link rel="stylesheet" href="../css/shop.css">
-
+    <link rel="stylesheet" href="../css/user-view.css">
+    <script src="../profileScript.js" defer></script>
     <script src="https://kit.fontawesome.com/bd5d5911de.js" crossorigin="anonymous"></script>
     <script src="../script.js" defer></script>
-    <script src="../questScript.js" defer></script>
+
 </head>
 
 <body>
@@ -27,7 +24,7 @@
         <i class="fas fa-bars"></i>
     </a>
     <a href="index.html">
-        <img id="image" src="../images/logo.png" alt="">
+        <img id="Public/image" src="../images/logo.png">
     </a>
     <div class="topBarButtons" id="topBarButton">
         <a id="user" href="userView.html">
@@ -42,7 +39,6 @@
 </header>
 
 <div id="content">
-
     <div id="menu" class="nav">
         <a href="#" class="close" onclick="closeSlideMenu()">
             <i class="fas fa-times"></i>
@@ -51,26 +47,34 @@
         <a href="shop.html">Shop</a>
         <a href="quests.html">Quests</a>
     </div>
-
-    <div id="inner-content">
-
-        <template id="quest-template">
-            <div class="quest-card">
-                <div class="price-tag">
-                    price
-                </div>
-                <img src="../images/photo.png">
-                <h2 class="quest-name">name</h2>
-                <div class="description">
-                    desc
-                </div>
-            </div>
-        </template>
-
-        <div class="cards-container">
-
+    <div class="card-container">
+        <img
+                class="round"
+                src="https://randomuser.me/api/portraits/women/79.jpg"
+                alt="user"
+        />
+        <h3 class="name">Ricky Park</h3>
+        <h6>New York</h6>
+        <p>
+            User interface designer and <br/>
+            front-end developer
+        </p>
+        <hr style="color: green;">
+        <div class="skills">
+            <h6>Skills</h6>
+            <ul>
+                <li>UI / UX</li>
+                <li>Front End Development</li>
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+                <li>React</li>
+                <li>Node</li>
+            </ul>
         </div>
     </div>
 </div>
+
 </body>
+
 </html>
