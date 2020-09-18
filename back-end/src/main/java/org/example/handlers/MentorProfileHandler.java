@@ -3,10 +3,11 @@ package org.example.handlers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import org.example.DAO.DBConnection;
+import org.example.DAO.*;
 import org.example.DAO.Exception.AbsenceOfRecordsException;
-import org.example.DAO.MentorDAO;
+import org.example.model.Creep;
 import org.example.model.Mentor;
+import org.example.model.Student;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -17,10 +18,14 @@ public class MentorProfileHandler implements HttpHandler {
 
     DBConnection dbConnection;
     MentorDAO mentorDAO;
+    StudentDAO studentDAO;
+    CreepDAO creepDAO;
 
     public MentorProfileHandler() {
         this.dbConnection = new DBConnection();
         this.mentorDAO = new MentorDAO(dbConnection);
+        this.studentDAO = new StudentDAO(dbConnection);
+        this.creepDAO = new CreepDAO(dbConnection, new DAOGetSet(dbConnection));
     }
 
     public void handle(HttpExchange exchange) throws IOException {
@@ -38,7 +43,13 @@ public class MentorProfileHandler implements HttpHandler {
                 System.out.println("id: " + urlParts[3]);
                 String id = urlParts[3].replace("user=", "").split("%20")[0];
                 System.out.println(id);
+
                 Mentor mentor = mentorDAO.get(UUID.fromString(id));
+//                Student student = studentDAO.get(UUID.fromString(id));
+//                Creep creep = creepDAO.get(UUID.fromString(id));
+//                System.out.println(mentor);
+//                System.out.println(student);
+//                System.out.println(creep);
                 ObjectMapper objectMapper = new ObjectMapper();
                 response = objectMapper.writeValueAsString(mentor);
                 System.out.println(response);
