@@ -1,23 +1,13 @@
 package org.example;
 
-import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
-import org.example.DAO.DAOGetSet;
-import org.example.DAO.DBConnection;
-import org.example.DAO.MentorDAO;
-import org.example.config.IDgenerator;
-import org.example.config.PasswordCrypter;
-import org.example.handlers.LoginHandler;
-import org.example.handlers.MentorHandler;
+import org.example.handlers.*;
 import org.example.handlers.MentorProfileHandler;
 import org.example.handlers.StudentHandler;
-import org.example.model.Mentor;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.sql.SQLException;
-import java.util.UUID;
 
 public class App
 {
@@ -27,6 +17,9 @@ public class App
         server.createContext("/student", new StudentHandler());
         server.createContext("/mentorView", new MentorProfileHandler());
        server.createContext("/login", new LoginHandler());
+       server.createContext("/shop", new ArtifactHandler());
+       server.createContext("/quest", new QuestHandler());
+       server.createContext("/wallet", new WalletHandler());
 
         server.setExecutor(null);
         server.start();
