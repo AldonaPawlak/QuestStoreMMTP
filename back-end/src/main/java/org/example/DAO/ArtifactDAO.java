@@ -76,6 +76,10 @@ public class ArtifactDAO implements DAO<Artifact>{
 
     @Override
     public List<Artifact> getAll() {
+        return null;
+    }
+
+    public List<Artifact> getAll(UUID studentID) {
         List<Artifact> artifacts = new ArrayList<>();
         try {
             dbConnection.connect();
@@ -84,7 +88,8 @@ public class ArtifactDAO implements DAO<Artifact>{
                             " description, artifact_types.name AS type, categories.id AS category_id," +
                             " artifact_types.id AS type_id FROM artifacts, categories, artifact_types " +
                             "WHERE artifacts.category_id = categories.id " +
-                            "AND artifacts.artifact_type_id = artifact_types.id ORDER BY name;");
+                            "AND artifacts.artifact_type_id = artifact_types.id AND student_id = ? ORDER BY name;");
+            preparedStatement.setObject(1, studentID, Types.OTHER);
             ResultSet allArtifacts = preparedStatement.executeQuery();
             while (allArtifacts.next()) {
                 final UUID id = UUID.fromString(allArtifacts.getString("id"));
