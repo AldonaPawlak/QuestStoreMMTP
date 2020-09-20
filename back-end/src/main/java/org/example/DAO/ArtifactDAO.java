@@ -79,39 +79,6 @@ public class ArtifactDAO implements DAO<Artifact>{
         return null;
     }
 
-    public List<Artifact> getAll(UUID studentID) {
-        List<Artifact> artifacts = new ArrayList<>();
-        try {
-            dbConnection.connect();
-            PreparedStatement preparedStatement = dbConnection.connect().prepareStatement(
-                    "SELECT artifacts.id, artifacts.name, price, categories.name AS category," +
-                            " description, artifact_types.name AS type, categories.id AS category_id," +
-                            " artifact_types.id AS type_id FROM artifacts, categories, artifact_types " +
-                            "WHERE artifacts.category_id = categories.id " +
-                            "AND artifacts.artifact_type_id = artifact_types.id AND student_id = ? ORDER BY name;");
-            preparedStatement.setObject(1, studentID, Types.OTHER);
-            ResultSet allArtifacts = preparedStatement.executeQuery();
-            while (allArtifacts.next()) {
-                final UUID id = UUID.fromString(allArtifacts.getString("id"));
-                final String name = allArtifacts.getString("name");
-                final int price = allArtifacts.getInt("price");
-                final String category = allArtifacts.getString("category");
-                final String description = allArtifacts.getString("description");
-                final String type = allArtifacts.getString("type");
-                final UUID categoryID = UUID.fromString(allArtifacts.getString("category_id"));
-                final UUID typeID = UUID.fromString(allArtifacts.getString("type_id"));
-                Artifact artifact = new Artifact(id, name, price, category, description, type, categoryID, typeID);
-                artifacts.add(artifact);
-            }
-            dbConnection.disconnect();
-            System.out.println("Selected artifacts from data base successfully.");
-        } catch (SQLException e) {
-            System.out.println("Selecting artifacts from data base failed.");
-            e.printStackTrace();
-        }
-        return artifacts;
-    }
-
     @Override
     public Artifact get(UUID id) throws AbsenceOfRecordsException {
         try {
@@ -145,17 +112,21 @@ public class ArtifactDAO implements DAO<Artifact>{
         throw new AbsenceOfRecordsException();
     }
 
-    public List<Artifact> getAllbyID(UUID studentID) {
+    public List<Artifact> getAllStudentsArtifacts(UUID studentID) {
         List<Artifact> artifacts = new ArrayList<>();
         try {
             dbConnection.connect();
             PreparedStatement preparedStatement = dbConnection.connect().prepareStatement(
-                    "SELECT artifacts.id, artifacts.name, price, categories.name AS category," +
-                            " description, artifact_types.name AS type, categories.id AS category_id," +
-                            " artifact_types.id AS type_id FROM artifacts, categories, artifact_types, student_artifacts " +
-                            "WHERE artifacts.category_id = categories.id " +
-                            "AND artifacts.artifact_type_id = artifact_types.id AND student_artifacts.student_id = ? ORDER BY name;");
+                    "SELECT artifacts.name, artifacts.id, artifacts.price, artifacts.category_id, " +
+                            "artifacts.description, artifacts.artifact_type_id, artifact_types.name AS type, " +
+                            "categories.name AS category " +
+                            "FROM artifacts, student_artifacts, user_details, students, categories, artifact_types WHERE " +
+                            "artifacts.category_id = categories.id AND artifacts.artifact_type_id = artifact_types.id " +
+                            "AND user_details.id = ? AND students.user_details_id = ?" +
+                            "AND artifacts.id = student_artifacts.artifact_id AND " +
+                            "student_artifacts.student_id = students.student_id ORDER BY name;");
             preparedStatement.setObject(1, studentID, Types.OTHER);
+            preparedStatement.setObject(2, studentID, Types.OTHER);
             ResultSet allArtifacts = preparedStatement.executeQuery();
             while (allArtifacts.next()) {
                 final UUID id = UUID.fromString(allArtifacts.getString("id"));
@@ -165,7 +136,7 @@ public class ArtifactDAO implements DAO<Artifact>{
                 final String description = allArtifacts.getString("description");
                 final String type = allArtifacts.getString("type");
                 final UUID categoryID = UUID.fromString(allArtifacts.getString("category_id"));
-                final UUID typeID = UUID.fromString(allArtifacts.getString("type_id"));
+                final UUID typeID = UUID.fromString(allArtifacts.getString("artifact_type_id"));
                 Artifact artifact = new Artifact(id, name, price, category, description, type, categoryID, typeID);
                 artifacts.add(artifact);
             }
