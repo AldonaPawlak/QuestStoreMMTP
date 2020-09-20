@@ -44,14 +44,14 @@ public class MentorProfileHandler implements HttpHandler {
                 String id = urlParts[3].replace("user=", "").split("%20")[0];
                 System.out.println(id);
 
-                Mentor mentor = mentorDAO.get(UUID.fromString(id));
+/*                Mentor mentor = mentorDAO.get(UUID.fromString(id));*/
 //                Student student = studentDAO.get(UUID.fromString(id));
-//                Creep creep = creepDAO.get(UUID.fromString(id));
+                Creep creep = creepDAO.get(UUID.fromString(id));
 //                System.out.println(mentor);
 //                System.out.println(student);
 //                System.out.println(creep);
                 ObjectMapper objectMapper = new ObjectMapper();
-                response = objectMapper.writeValueAsString(mentor);
+                response = objectMapper.writeValueAsString(creep);
                 System.out.println(response);
                 sendResponse(response, exchange, status);
                 }

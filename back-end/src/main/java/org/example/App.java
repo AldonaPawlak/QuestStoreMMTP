@@ -16,10 +16,10 @@ public class App
         server.createContext("/mentor", new MentorHandler());
         server.createContext("/student", new StudentHandler());
         server.createContext("/mentorView", new MentorProfileHandler());
-       server.createContext("/login", new LoginHandler());
-       server.createContext("/shop", new ArtifactHandler());
-       server.createContext("/quest", new QuestHandler());
-       server.createContext("/wallet", new WalletHandler());
+        server.createContext("/login", new LoginHandler());
+        server.createContext("/shop", new ArtifactHandler());
+        server.createContext("/quest", new QuestHandler());
+        server.createContext("/wallet", new WalletHandler());
 
         server.setExecutor(null);
         server.start();
