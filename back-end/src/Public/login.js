@@ -29,7 +29,7 @@ function login(data) {
                 window.location.href = "mentorView.html";
             }
             if (responseJson.role === "Creep") {
-                window.location.href = "mentors.html";
+                window.location.href = "creepView.html";
             }
         })
         .catch(error => console.error(error));

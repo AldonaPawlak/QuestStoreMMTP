@@ -1,33 +1,31 @@
 package org.example.handlers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import org.example.DAO.*;
-import org.example.DAO.Exception.AbsenceOfRecordsException;
-import org.example.model.Creep;
-import org.example.model.Mentor;
-import org.example.model.Student;
+import org.example.DAO.DAOGetSet;
+import org.example.DAO.DBConnection;
+import org.example.DAO.QuestDAO;
+import org.example.model.Quest;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Collections;
-import java.util.UUID;
+import java.util.List;
 
-public class MentorProfileHandler implements HttpHandler {
+public class QuestHandler implements HttpHandler {
 
     DBConnection dbConnection;
-    MentorDAO mentorDAO;
-    StudentDAO studentDAO;
-    CreepDAO creepDAO;
+    QuestDAO questDAO;
 
-    public MentorProfileHandler() {
+    public QuestHandler() {
         this.dbConnection = new DBConnection();
-        this.mentorDAO = new MentorDAO(dbConnection);
-        this.studentDAO = new StudentDAO(dbConnection);
-        this.creepDAO = new CreepDAO(dbConnection, new DAOGetSet(dbConnection));
+        this.questDAO = new QuestDAO(dbConnection);
     }
 
+
+    @Override
     public void handle(HttpExchange exchange) throws IOException {
         exchange.getResponseHeaders().put("Access-Control-Allow-Methods", Collections.singletonList("*"));
         exchange.getResponseHeaders().put("Content-type", Collections.singletonList("application/json"));
@@ -37,27 +35,21 @@ public class MentorProfileHandler implements HttpHandler {
         System.out.println("Method " + method);
         int status = 200;
         try {
-            if (method.equals("POST")) {
-                String url = exchange.getRequestURI().getRawPath();
-                String[] urlParts = url.split("/");
-                System.out.println("id: " + urlParts[3]);
-                String id = urlParts[3].replace("user=", "").split("%20")[0];
-                System.out.println(id);
-
-                Mentor mentor = mentorDAO.get(UUID.fromString(id));
-//                Student student = studentDAO.get(UUID.fromString(id));
-//                Creep creep = creepDAO.get(UUID.fromString(id));
-//                System.out.println(mentor);
-//                System.out.println(student);
-//                System.out.println(creep);
-                ObjectMapper objectMapper = new ObjectMapper();
-                response = objectMapper.writeValueAsString(mentor);
+            if (method.equals("GET")) {
+                response = getQuests();
                 System.out.println(response);
                 sendResponse(response, exchange, status);
-                }
-            } catch (AbsenceOfRecordsException e) {
+            }
+        } catch (Exception e) {
             e.printStackTrace();
+            exchange.sendResponseHeaders(404, response.getBytes().length);
         }
+    }
+
+    private String getQuests() throws JsonProcessingException {
+        List<Quest> quests = questDAO.getAll();
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(quests);
     }
 
     private void sendResponse(String response, HttpExchange exchange, int status) throws IOException {
@@ -70,5 +62,4 @@ public class MentorProfileHandler implements HttpHandler {
         os.write(response.getBytes());
         os.close();
     }
-
 }
