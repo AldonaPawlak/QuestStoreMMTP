@@ -121,8 +121,8 @@ public class MentorDAO implements DAO<Mentor> {
             dbConnection.disconnect();
             System.out.println("Selected mentors from data base successfully.");
         } catch (SQLException e) {
-            System.out.println("Selecting mentors from data base failed.");
             e.printStackTrace();
+            System.out.println("Selecting mentors from data base failed.");
         }
         return mentors;
     }
@@ -153,8 +153,8 @@ public class MentorDAO implements DAO<Mentor> {
             dbConnection.disconnect();
             System.out.println("Selected mentor from data base successfully.");
         } catch (SQLException e) {
-            System.out.println("Selecting mentor from data base failed.");
             e.printStackTrace();
+            System.out.println("Selecting mentor from data base failed.");
         }
         throw new AbsenceOfRecordsException();
     }

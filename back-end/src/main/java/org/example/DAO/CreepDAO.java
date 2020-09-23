@@ -44,9 +44,11 @@ public class CreepDAO implements  DAO<Creep> {
     public List<Creep> getAll() {
         List<Creep> creeps = new ArrayList<>();
         try {
-            ResultSet allCreeps = daoGetSet.getDataSet("SELECT ud.*, r.name AS role , c.creep_id " +
-                    "FROM user_details ud JOIN roles r ON r.id = ud.role_id JOIN creeps c ON c.user_details_id = ud.id " +
-                    "ORDER BY surname;");
+            dbConnection.connect();
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement("SELECT ud.*, r.name" +
+                    " AS role , c.creep_id FROM user_details ud JOIN roles r ON r.id = ud.role_id JOIN creeps c " +
+                    "ON c.user_details_id = ud.id ORDER BY surname;");
+            ResultSet allCreeps = preparedStatement.executeQuery();
             while (allCreeps.next()) {
                 final UUID userDetailsID = UUID.fromString(allCreeps.getString("id"));
                 final String name = allCreeps.getString("name");
@@ -62,8 +64,11 @@ public class CreepDAO implements  DAO<Creep> {
                         role, creepID);
                 creeps.add(creep);
             }
+            dbConnection.disconnect();
+            System.out.println("Selected creeps from data base successfully.");
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println("Selecting creeps from data base failed.");
         }
         return creeps;
     }
