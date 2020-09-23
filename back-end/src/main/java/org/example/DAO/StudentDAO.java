@@ -1,9 +1,7 @@
 package org.example.DAO;
 
 import org.example.DAO.Exception.AbsenceOfRecordsException;
-import org.example.model.Mentor;
 import org.example.model.Student;
-import org.example.model.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,11 +9,12 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.*;
 
-public class StudentDAO extends UserDAO {
+public class StudentDAO /*extends UserDAO*/ implements DAO<Student> {
 
+    DBConnection dbConnection;
 
     public StudentDAO(DBConnection dbConnection) {
-        super(dbConnection);
+        this.dbConnection = dbConnection;
     }
 
     public void add(Student student) {
@@ -129,10 +128,38 @@ public class StudentDAO extends UserDAO {
         return students;
     }
 
-    /*SELECT ud.*, r.name AS role , s.student_id FROM user_details ud JOIN roles r ON r.id = ud.role_id JOIN students s
-    ON s.user_details_id = ud.id
-WHERE ud.id = ?;
-query to get one student by id given
-*/
+    @Override
+    public Student get(UUID id) throws AbsenceOfRecordsException {
+        try {
+            dbConnection.connect();
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
+                    "SELECT ud.*, r.name AS role , s.student_id FROM user_details ud JOIN roles r " +
+                            "ON r.id = ud.role_id JOIN students s ON s.user_details_id = ud.id " +
+                            "WHERE ud.id = ?;");
+            ResultSet allStudents = preparedStatement.executeQuery();
+            while (allStudents.next()) {
+                final UUID userDetailsID = UUID.fromString(allStudents.getString("id"));
+                final String name = allStudents.getString("name");
+                final String surname = allStudents.getString("surname");
+                final String email = allStudents.getString("email");
+                final String password = allStudents.getString("password");
+                final String role = allStudents.getString("role");
+                final UUID studentID = UUID.fromString(allStudents.getString("student_id"));
+                final boolean isActive = allStudents.getBoolean("is_active");
+                final  String phoneNumber = allStudents.getString("phone_number");
+                final int coins = allStudents.getInt("coins");
+                final UUID roleID = UUID.fromString(allStudents.getString("role_id"));
+                Student student = new Student(userDetailsID, name, surname, email, password, roleID, isActive,
+                        phoneNumber, role, studentID, coins);
+                return student;
+            }
+            dbConnection.disconnect();
+            System.out.println("Selected student from data base successfully.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Selecting student from data base failed.");
+        }
+        throw new AbsenceOfRecordsException();
+    }
 
 }

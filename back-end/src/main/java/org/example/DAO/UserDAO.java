@@ -1,3 +1,4 @@
+/*
 package org.example.DAO;
 
 import org.example.DAO.Exception.AbsenceOfRecordsException;
@@ -58,21 +59,27 @@ public class UserDAO implements DAO<User> {
                 final String role = result.getString("role");
                 final boolean isActive = result.getBoolean("is_active");
                 final String phoneNumber = result.getString("phone_number");
+                final UUID roleID = UUID.fromString(result.getString("role_id"));
                 User user;
                 switch (role) {
                     case "mentor" :
-                        user = new Mentor(id, name, surname, email, password, role, isActive, phoneNumber);
+                        final UUID mentorID;
+                        user = new Mentor(userDetailsID, name, surname, email, password, roleID, isActive, phoneNumber,
+                                role, mentorID);
                         break;
                     case "creep" :
-                        user = new Creep(id, name, surname, email, password, role, isActive, phoneNumber);
+                        final UUID creepID;
+                        user = new Creep(id, name, surname, email, password, roleID, isActive, phoneNumber,
+                                role, creepID);
                         break;
                     default :
                         PreparedStatement coinsStatement = dbConnection.getConnection().prepareStatement(
                                 "SELECT coins FROM students WHERE user_details_id = ?;");
                         coinsStatement.setObject(1, id, Types.OTHER);
                         final int coins = result.getInt("coins");
-                        user = new Student(userDetailsID, name, surname, email, password, role, isActive, phoneNumber,
-                                coins);
+                        final UUID studentID;
+                        user = new Student(userDetailsID, name, surname, email, password, roleID, isActive,
+                                phoneNumber, role, studentID, coins);
                         break;
                 }
                 return user;
@@ -88,3 +95,4 @@ public class UserDAO implements DAO<User> {
 
 
 }
+*/
