@@ -12,8 +12,10 @@ public abstract class User {
     private UUID roleID;
     private boolean isActive;
     private  String phoneNumber;
+    private String role;
 
-    public User(UUID userDetailsID, String name, String surname, String email, String password, UUID roleID, boolean isActive, String phoneNumber) {
+    public User(UUID userDetailsID, String name, String surname, String email, String password, UUID roleID,
+                boolean isActive, String phoneNumber, String role) {
         this.userDetailsID = userDetailsID;
         this.name = name;
         this.surname = surname;
@@ -22,6 +24,7 @@ public abstract class User {
         this.roleID = roleID;
         this.isActive = isActive;
         this.phoneNumber = phoneNumber;
+        this.role = role;
     }
 
 

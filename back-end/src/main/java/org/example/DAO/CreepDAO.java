@@ -42,26 +42,35 @@ public class CreepDAO implements  DAO<Creep> {
 
     @Override
     public List<Creep> getAll() {
-        List<Creep> mentors = new ArrayList<>();
+        List<Creep> creeps = new ArrayList<>();
         try {
-            ResultSet allMentors = daoGetSet.getDataSet("SELECT * FROM user_details, creeps WHERE user_details.id = creeps.user_details_id;");
-            while (allMentors.next()) {
-                final UUID userDetailsID = UUID.fromString(allMentors.getString("id"));
-                final String name = allMentors.getString("name");
-                final String surname = allMentors.getString("surname");
-                final String email = allMentors.getString("email");
-                final String password = allMentors.getString("password");
-                final UUID roleID = UUID.fromString(allMentors.getString("role_id"));
-                final UUID creepID = UUID.fromString(allMentors.getString("creep_id"));
-                final boolean isActive = allMentors.getBoolean("is_active");
-                final String phoneNumber = allMentors.getString("phone_number");
-                Creep creep = new Creep(userDetailsID, name, surname, email, password, roleID, isActive, phoneNumber, creepID);
-                mentors.add(creep);
+            dbConnection.connect();
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement("SELECT ud.*, r.name" +
+                    " AS role , c.creep_id FROM user_details ud JOIN roles r ON r.id = ud.role_id JOIN creeps c " +
+                    "ON c.user_details_id = ud.id ORDER BY surname;");
+            ResultSet allCreeps = preparedStatement.executeQuery();
+            while (allCreeps.next()) {
+                final UUID userDetailsID = UUID.fromString(allCreeps.getString("id"));
+                final String name = allCreeps.getString("name");
+                final String surname = allCreeps.getString("surname");
+                final String email = allCreeps.getString("email");
+                final String password = allCreeps.getString("password");
+                final UUID roleID = UUID.fromString(allCreeps.getString("role_id"));
+                final UUID creepID = UUID.fromString(allCreeps.getString("creep_id"));
+                final boolean isActive = allCreeps.getBoolean("is_active");
+                final String phoneNumber = allCreeps.getString("phone_number");
+                final String role = allCreeps.getString("role");
+                Creep creep = new Creep(userDetailsID, name, surname, email, password, roleID, isActive, phoneNumber,
+                        role, creepID);
+                creeps.add(creep);
             }
+            dbConnection.disconnect();
+            System.out.println("Selected creeps from data base successfully.");
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println("Selecting creeps from data base failed.");
         }
-        return mentors;
+        return creeps;
     }
 
 
@@ -70,7 +79,8 @@ public class CreepDAO implements  DAO<Creep> {
         try {
             dbConnection.connect();
             PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
-                    "SELECT * FROM user_details, creeps WHERE user_details.id = creeps.user_details_id AND user_details.id = ?;");
+                    "SELECT ud.*, r.name AS role , c.creep_id FROM user_details ud JOIN roles r " +
+                            "ON r.id = ud.role_id JOIN creeps c ON c.user_details_id = ud.id WHERE ud.id = ?;");
             preparedStatement.setObject(1, id, Types.OTHER);
             ResultSet result = preparedStatement.executeQuery();
             while (result.next()) {
@@ -79,10 +89,12 @@ public class CreepDAO implements  DAO<Creep> {
                 final String email = result.getString("email");
                 final String password = result.getString("password");
                 final UUID roleID = UUID.fromString(result.getString("role_id"));
-                final UUID mentorID = UUID.fromString(result.getString("creep_id"));
+                final UUID creepID = UUID.fromString(result.getString("creep_id"));
                 final boolean isActive = result.getBoolean("is_active");
                 final  String phoneNumber = result.getString("phone_number");
-                Creep creep = new Creep(id, name, surname, email, password, roleID, isActive, phoneNumber, mentorID);
+                final String role = result.getString("role");
+                Creep creep = new Creep(id, name, surname, email, password, roleID, isActive, phoneNumber,
+                        role, creepID);
                 return creep;
             }
             dbConnection.disconnect();
