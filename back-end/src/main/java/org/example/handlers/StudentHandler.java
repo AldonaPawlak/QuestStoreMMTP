@@ -20,9 +20,6 @@ import java.util.UUID;
 
 public class StudentHandler implements HttpHandler {
 
-    //TODO change program logic to create only one connection and DAO
-    //TODO generate is_active update possibility
-
     DBConnection dbConnection;
     StudentDAO studentDAO;
 
@@ -111,7 +108,9 @@ public class StudentHandler implements HttpHandler {
     }
 
     private void addStudent() {
-        Student student = new Student(UUID.randomUUID(), "Name", "Surname", "mail@mail.com", PasswordCrypter.crypter("password"), UUID.fromString("745792a7-681b-4efe-abdd-ca027678b397"), true, "444 222 000", UUID.randomUUID(), 0);
+        Student student = new Student(UUID.randomUUID(), "Name", "Surname", "mail@mail.com",
+                PasswordCrypter.crypter("password"), "student", true, "444 222 000",
+                0);
         studentDAO.add(student);
     }
 

@@ -45,7 +45,8 @@ public class UserDAO implements DAO<User> {
         try {
             dbConnection.connect();
             PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
-                    "SELECT ud.*, r.name AS role FROM user_details ud JOIN roles r ON r.id = ud.role_id WHERE ud.id ?;");
+                    "SELECT ud.*, r.name AS role FROM user_details ud JOIN roles r ON r.id = ud.role_id " +
+                            "WHERE ud.id ?;");
             preparedStatement.setObject(1, id, Types.OTHER);
             ResultSet result = preparedStatement.executeQuery();
             while (result.next()) {
@@ -54,24 +55,24 @@ public class UserDAO implements DAO<User> {
                 final String surname = result.getString("surname");
                 final String email = result.getString("email");
                 final String password = result.getString("password");
-                final UUID roleID = UUID.fromString(result.getString("role_id"));
                 final String role = result.getString("role");
                 final boolean isActive = result.getBoolean("is_active");
                 final String phoneNumber = result.getString("phone_number");
                 User user;
                 switch (role) {
                     case "mentor" :
-                        final UUID detailsID = UUID.fromString(result.getString("id"));
-                        user = new Mentor(id, name, surname, email, password, roleID, isActive, phoneNumber, detailsID);
+                        user = new Mentor(id, name, surname, email, password, role, isActive, phoneNumber);
                         break;
                     case "creep" :
-                        user = new Creep(id, name, surname, email, password, roleID, isActive, phoneNumber, mentorID);
+                        user = new Creep(id, name, surname, email, password, role, isActive, phoneNumber);
                         break;
                     default :
+                        PreparedStatement coinsStatement = dbConnection.getConnection().prepareStatement(
+                                "SELECT coins FROM students WHERE user_details_id = ?;");
+                        coinsStatement.setObject(1, id, Types.OTHER);
                         final int coins = result.getInt("coins");
-                        final UUID studentID = UUID.fromString(result.getString("student_id"));
-                        user = new Student(userDetailsID, name, surname, email, password, roleID, isActive, phoneNumber,
-                                studentID, coins);
+                        user = new Student(userDetailsID, name, surname, email, password, role, isActive, phoneNumber,
+                                coins);
                         break;
                 }
                 return user;
