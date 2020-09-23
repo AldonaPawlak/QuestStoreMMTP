@@ -76,7 +76,8 @@ public class MentorDAO implements DAO<Mentor> {
         try {
             dbConnection.connect();
             PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
-                    "UPDATE user_details SET name = ?, surname = ?, email = ?, password = ?, is_active = ?, phone_number = ? WHERE id = ?;");
+                    "UPDATE user_details SET name = ?, surname = ?, email = ?, password = ?, is_active = ?, " +
+                            "phone_number = ? WHERE id = ?;");
             preparedStatement.setString(1, mentor.getName());
             preparedStatement.setString(2, mentor.getSurname());
             preparedStatement.setString(3, mentor.getEmail());
@@ -99,7 +100,8 @@ public class MentorDAO implements DAO<Mentor> {
         try {
             dbConnection.connect();
             PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
-                    "SELECT * FROM user_details, mentors WHERE user_details.id = mentors.user_details_id ORDER BY surname;");
+                    "SELECT ud.*, r.name AS role , m.mentor_id FROM user_details ud JOIN roles r " +
+                            "ON r.id = ud.role_id JOIN mentors m ON m.user_details_id = ud.id ORDER BY surname;");
             ResultSet allMentors = preparedStatement.executeQuery();
             while (allMentors.next()) {
                 final UUID userDetailsID = UUID.fromString(allMentors.getString("id"));
@@ -111,7 +113,9 @@ public class MentorDAO implements DAO<Mentor> {
                 final UUID mentorID = UUID.fromString(allMentors.getString("mentor_id"));
                 final boolean isActive = allMentors.getBoolean("is_active");
                 final  String phoneNumber = allMentors.getString("phone_number");
-                Mentor mentor = new Mentor(userDetailsID, name, surname, email, password, roleID, isActive, phoneNumber, mentorID);
+                final String role = allMentors.getString("role");
+                Mentor mentor = new Mentor(userDetailsID, name, surname, email, password, roleID, isActive, phoneNumber,
+                        role, mentorID);
                 mentors.add(mentor);
             }
             dbConnection.disconnect();
@@ -128,7 +132,8 @@ public class MentorDAO implements DAO<Mentor> {
         try {
             dbConnection.connect();
             PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
-                    "SELECT * FROM user_details, mentors WHERE user_details.id = mentors.user_details_id AND user_details_id = ?;");
+                    "SELECT ud.*, r.name AS role , m.mentor_id FROM user_details ud JOIN roles r " +
+                            "ON r.id = ud.role_id JOIN mentors m ON m.user_details_id = ud.id WHERE ud.id = ?;");
             preparedStatement.setObject(1, id, Types.OTHER);
             ResultSet result = preparedStatement.executeQuery();
             while (result.next()) {
@@ -140,7 +145,9 @@ public class MentorDAO implements DAO<Mentor> {
                 final UUID mentorID = UUID.fromString(result.getString("mentor_id"));
                 final boolean isActive = result.getBoolean("is_active");
                 final  String phoneNumber = result.getString("phone_number");
-                Mentor mentor = new Mentor(id, name, surname, email, password, roleID, isActive, phoneNumber, mentorID);
+                final String role = result.getString("role");
+                Mentor mentor = new Mentor(id, name, surname, email, password, roleID, isActive, phoneNumber,
+                        role, mentorID);
                 return mentor;
             }
             dbConnection.disconnect();

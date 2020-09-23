@@ -4,9 +4,16 @@ import java.util.UUID;
 
 public class Mentor extends User {
 
-    public Mentor(UUID userDetailsID, String name, String surname, String email, String password, String role,
-                  boolean isActive, String phoneNumber) {
-        super(userDetailsID, name, surname, email, password, role, isActive, phoneNumber);
+    private UUID mentorID;
+
+    public Mentor(UUID userDetailsID, String name, String surname, String email, String password, UUID roleID,
+                  boolean isActive, String phoneNumber, String role, UUID mentorID) {
+        super(userDetailsID, name, surname, email, password, roleID, isActive, phoneNumber, role);
+        this.mentorID = mentorID;
+    }
+
+    public UUID getMentorID() {
+        return mentorID;
     }
 
 }
