@@ -32,9 +32,6 @@ public class MentorHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        exchange.getResponseHeaders().put("Access-Control-Allow-Methods", Collections.singletonList("*"));
-        exchange.getResponseHeaders().put("Content-type", Collections.singletonList("application/json"));
-        exchange.getResponseHeaders().put("Access-Control-Allow-Origin", Collections.singletonList("*"));
         String method = exchange.getRequestMethod();
         String response = "";
         System.out.println("Method " + method);
@@ -43,7 +40,7 @@ public class MentorHandler implements HttpHandler {
             if (method.equals("GET")) {
                 response = getMentors();
                 System.out.println(response);
-                sendResponse(response, exchange, status);
+                ResponseHelper.sendResponse(response, exchange, status);
             }
             if (method.equals("POST")) {
                 String url = exchange.getRequestURI().getRawPath();
@@ -68,7 +65,7 @@ public class MentorHandler implements HttpHandler {
                     addMentor();
                 }
                 response = getMentors();
-                sendResponse(response, exchange, status);
+                ResponseHelper.sendResponse(response, exchange, status);
                 System.out.println("New response: " + response);}
         } catch (Exception e) {
             e.printStackTrace();
@@ -112,19 +109,10 @@ public class MentorHandler implements HttpHandler {
     }
 
     private void addMentor() {
-        Mentor mentor = new Mentor(UUID.randomUUID(), "Name", "Surname", "mail@mail.com", PasswordCrypter.crypter("password"), UUID.fromString("745792a7-681b-4efe-abdd-ca027678b397"), true, "444 222 000", UUID.randomUUID());
+        Mentor mentor = new Mentor(UUID.randomUUID(), "Name", "Surname", "mail@mail.com",
+                PasswordCrypter.crypter("password"), UUID.fromString("745792a7-681b-4efe-abdd-ca027678b397"),
+                true, "444 222 000","mentor" , UUID.randomUUID());
         mentorDAO.add(mentor);
-    }
-
-    private void sendResponse(String response, HttpExchange exchange, int status) throws IOException {
-        if (status == 200) {
-            exchange.getResponseHeaders().put("Content-type", Collections.singletonList("application/json"));
-            exchange.getResponseHeaders().put("Access-Control-Allow-Origin", Collections.singletonList("*"));
-        }
-        exchange.sendResponseHeaders(status, response.getBytes().length);
-        OutputStream os = exchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
     }
 
 }

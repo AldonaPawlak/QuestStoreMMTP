@@ -12,8 +12,6 @@ import org.example.model.Artifact;
 import org.example.model.Student;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,18 +20,17 @@ public class WalletHandler implements HttpHandler {
     DBConnection dbConnection;
     StudentDAO studentDAO;
     ArtifactDAO artifactDAO;
+/*    UserDAO userDAO;*/
 
     public WalletHandler() {
         this.dbConnection = new DBConnection();
         this.artifactDAO = new ArtifactDAO(dbConnection);
         this.studentDAO = new StudentDAO(dbConnection);
+/*        this.userDAO = new UserDAO(dbConnection);*/
     }
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        exchange.getResponseHeaders().put("Access-Control-Allow-Methods", Collections.singletonList("*"));
-        exchange.getResponseHeaders().put("Content-type", Collections.singletonList("application/json"));
-        exchange.getResponseHeaders().put("Access-Control-Allow-Origin", Collections.singletonList("*"));
         String method = exchange.getRequestMethod();
         String response = "";
         System.out.println("Method " + method);
@@ -50,7 +47,7 @@ public class WalletHandler implements HttpHandler {
                     response = getArtifacts(userDetailsID);
                 }
                 System.out.println(response);
-                sendResponse(response, exchange, status);
+                ResponseHelper.sendResponse(response, exchange, status);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -70,14 +67,4 @@ public class WalletHandler implements HttpHandler {
         return String.valueOf(student.getCoins());
     }
 
-    private void sendResponse(String response, HttpExchange exchange, int status) throws IOException {
-        if (status == 200) {
-            exchange.getResponseHeaders().put("Content-type", Collections.singletonList("application/json"));
-            exchange.getResponseHeaders().put("Access-Control-Allow-Origin", Collections.singletonList("*"));
-        }
-        exchange.sendResponseHeaders(status, response.getBytes().length);
-        OutputStream os = exchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
-    }
 }
