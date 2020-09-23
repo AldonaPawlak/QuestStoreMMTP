@@ -8,8 +8,10 @@ import org.example.DAO.DAOGetSet;
 import org.example.DAO.DBConnection;
 import org.example.DAO.Exception.AbsenceOfRecordsException;
 import org.example.DAO.StudentDAO;
+import org.example.DAO.UserDAO;
 import org.example.config.PasswordCrypter;
 import org.example.model.Student;
+import org.example.model.User;
 import org.example.services.DecoderURL;
 
 import java.io.IOException;
@@ -22,10 +24,12 @@ public class StudentHandler implements HttpHandler {
 
     DBConnection dbConnection;
     StudentDAO studentDAO;
+    UserDAO userDAO;
 
     public StudentHandler() {
         this.dbConnection = new DBConnection();
         this.studentDAO = new StudentDAO(dbConnection);
+        this.userDAO = new UserDAO(dbConnection);
     }
 
     @Override
@@ -79,32 +83,32 @@ public class StudentHandler implements HttpHandler {
     }
 
     private void removeStudent(String userDetailsID) throws Exception {
-        Student student = studentDAO.get(UUID.fromString(userDetailsID));
-        studentDAO.remove(student);
+        User user = userDAO.get(UUID.fromString(userDetailsID));
+        studentDAO.remove(user);
     }
 
     private void editStudentName(String userDetailsID, String newName) throws Exception {
-        Student student = studentDAO.get(UUID.fromString(userDetailsID));
+        User student = userDAO.get(UUID.fromString(userDetailsID));
         student.setName(newName);
         studentDAO.edit(student);
     }
 
     private void editStudentSurname(String userDetailsID, String newSurname) throws AbsenceOfRecordsException {
-        Student student = studentDAO.get(UUID.fromString(userDetailsID));
-        student.setSurname(newSurname);
-        studentDAO.edit(student);
+        User user = userDAO.get(UUID.fromString(userDetailsID));
+        user.setSurname(newSurname);
+        studentDAO.edit(user);
     }
 
     private void editStudentMail(String userDetailsID, String newMail) throws AbsenceOfRecordsException {
-        Student student = studentDAO.get(UUID.fromString(userDetailsID));
-        student.setEmail(newMail);
-        studentDAO.edit(student);
+        User user = userDAO.get(UUID.fromString(userDetailsID));
+        user.setEmail(newMail);
+        studentDAO.edit(user);
     }
 
     private void editStudentPhone(String userDetailsID, String newPhone) throws AbsenceOfRecordsException {
-        Student student = studentDAO.get(UUID.fromString(userDetailsID));
-        student.setPhoneNumber(newPhone);
-        studentDAO.edit(student);
+        User user = userDAO.get(UUID.fromString(userDetailsID));
+        user.setPhoneNumber(newPhone);
+        studentDAO.edit(user);
     }
 
     private void addStudent() {

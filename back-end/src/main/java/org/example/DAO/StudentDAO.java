@@ -29,13 +29,13 @@ public class StudentDAO extends UserDAO {
             preparedStatement.setString(3, student.getSurname());
             preparedStatement.setString(4, student.getEmail());
             preparedStatement.setString(5, student.getPassword());
-            preparedStatement.setObject(6, student.getRoleID(), Types.OTHER);
+/*            preparedStatement.setObject(6, student.getRoleID(), Types.OTHER);*/
             preparedStatement.setString(7, student.getPhoneNumber());
             preparedStatement.executeUpdate();
             System.out.println("Added user successfully.");
             PreparedStatement statement = dbConnection.getConnection().prepareStatement(
                     "INSERT INTO students (student_id, user_details_id, coins) VALUES (?, ?, 0);");
-            statement.setObject(1, student.getStudentID(), Types.OTHER);
+/*            statement.setObject(1, student.getStudentID(), Types.OTHER);*/
             statement.setObject(2, student.getUserDetailsID());
             statement.executeUpdate();
             System.out.println("Added student successfully.");
@@ -73,7 +73,7 @@ public class StudentDAO extends UserDAO {
             PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
                     "UPDATE students SET coins = ? WHERE student_id = ?;");
             preparedStatement.setInt(1, student.getCoins());
-            preparedStatement.setObject(2, student.getStudentID());
+      /*      preparedStatement.setObject(2, student.getStudentID());*/
             preparedStatement.executeUpdate();
             System.out.println("Students data edited successfully.");
 
@@ -84,7 +84,7 @@ public class StudentDAO extends UserDAO {
             statement.setString(2, student.getSurname());
             statement.setString(3, student.getEmail());
             statement.setString(4, student.getPassword());
-            statement.setObject(5, student.getRoleID(), Types.OTHER);
+          /*  statement.setObject(5, student.getRoleID(), Types.OTHER);*/
             statement.setBoolean(6, student.isActive());
             statement.setObject(7, student.getUserDetailsID(), Types.OTHER);
             statement.executeUpdate();
@@ -96,8 +96,8 @@ public class StudentDAO extends UserDAO {
         }
     }
 
-    public List<User> getAll() {
-        List<User> students = new ArrayList<>();
+    public List<Student> getAll() {
+        List<Student> students = new ArrayList<>();
         try {
             dbConnection.connect();
             PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
@@ -109,12 +109,12 @@ public class StudentDAO extends UserDAO {
                 final String surname = allStudents.getString("surname");
                 final String email = allStudents.getString("email");
                 final String password = allStudents.getString("password");
-                final UUID roleID = UUID.fromString(allStudents.getString("role_id"));
-                final UUID studentID = UUID.fromString(allStudents.getString("student_id"));
+                final String role = allStudents.getString("role");
+         /*       final UUID studentID = UUID.fromString(allStudents.getString("student_id"));*/
                 final boolean isActive = allStudents.getBoolean("is_active");
                 final  String phoneNumber = allStudents.getString("phone_number");
                 final int coins = allStudents.getInt("coins");
-                Student student = new Student(userDetailsID, name, surname, email, password, roleID, isActive, phoneNumber, studentID, coins);
+                Student student = new Student(userDetailsID, name, surname, email, password, role, isActive, phoneNumber, coins);
                 students.add(student);
             }
             dbConnection.disconnect();
@@ -125,7 +125,5 @@ public class StudentDAO extends UserDAO {
         }
         return students;
     }
-
-
 
 }

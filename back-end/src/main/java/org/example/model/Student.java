@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public class Student extends User {
 
-    private int coins;
+    static int coins;
 
     public Student(UUID userDetailsID, String name, String surname, String email, String password, String role,
                    boolean isActive, String phoneNumber, int coins) {
@@ -12,7 +12,7 @@ public class Student extends User {
         this.coins = coins;
     }
 
-    public int getCoins() {
+    public static int getCoins() {
         return coins;
     }
 

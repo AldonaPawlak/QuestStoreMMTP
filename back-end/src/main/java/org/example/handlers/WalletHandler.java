@@ -66,7 +66,7 @@ public class WalletHandler implements HttpHandler {
 
     private String getBalance(String id) throws AbsenceOfRecordsException {
         User student = userDAO.get(UUID.fromString(id));
-        return String.valueOf(student.getCoins());
+        return String.valueOf(Student.getCoins());
     }
 
 }

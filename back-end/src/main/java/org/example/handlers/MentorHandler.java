@@ -109,7 +109,7 @@ public class MentorHandler implements HttpHandler {
     }
 
     private void addMentor() {
-        Mentor mentor = new Mentor(UUID.randomUUID(), "Name", "Surname", "mail@mail.com", PasswordCrypter.crypter("password"), UUID.fromString("745792a7-681b-4efe-abdd-ca027678b397"), true, "444 222 000", UUID.randomUUID());
+        Mentor mentor = new Mentor(UUID.randomUUID(), "Name", "Surname", "mail@mail.com", PasswordCrypter.crypter("password"), "mentor", true, "444 222 000");
         mentorDAO.add(mentor);
     }
 
