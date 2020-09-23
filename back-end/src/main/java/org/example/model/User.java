@@ -9,17 +9,17 @@ public abstract class User {
     private String surname;
     private String email;
     private String password;
-    private UUID roleID;
+    private String role;
     private boolean isActive;
     private  String phoneNumber;
 
-    public User(UUID userDetailsID, String name, String surname, String email, String password, UUID roleID, boolean isActive, String phoneNumber) {
+    public User(UUID userDetailsID, String name, String surname, String email, String password, String role, boolean isActive, String phoneNumber) {
         this.userDetailsID = userDetailsID;
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.password = password;
-        this.roleID = roleID;
+        this.role = role;
         this.isActive = isActive;
         this.phoneNumber = phoneNumber;
     }
@@ -45,8 +45,8 @@ public abstract class User {
         return password;
     }
 
-    public UUID getRoleID() {
-        return roleID;
+    public String getRole() {
+        return role;
     }
 
     public boolean isActive() {

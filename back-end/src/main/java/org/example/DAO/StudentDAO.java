@@ -3,6 +3,7 @@ package org.example.DAO;
 import org.example.DAO.Exception.AbsenceOfRecordsException;
 import org.example.model.Mentor;
 import org.example.model.Student;
+import org.example.model.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,15 +11,13 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.*;
 
-public class StudentDAO implements DAO<Student> {
+public class StudentDAO extends UserDAO {
 
-    DBConnection dbConnection;
 
     public StudentDAO(DBConnection dbConnection) {
-        this.dbConnection = dbConnection;
+        super(dbConnection);
     }
 
-    @Override
     public void add(Student student) {
         try {
             dbConnection.connect();
@@ -47,7 +46,6 @@ public class StudentDAO implements DAO<Student> {
         }
     }
 
-    @Override
     public void remove(Student student) {
         try {
             dbConnection.connect();
@@ -69,7 +67,6 @@ public class StudentDAO implements DAO<Student> {
         }
     }
 
-    @Override
     public void edit(Student student) {
         try {
             dbConnection.connect();
@@ -99,9 +96,8 @@ public class StudentDAO implements DAO<Student> {
         }
     }
 
-    @Override
-    public List<Student> getAll() {
-        List<Student> students = new ArrayList<>();
+    public List<User> getAll() {
+        List<User> students = new ArrayList<>();
         try {
             dbConnection.connect();
             PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
@@ -130,35 +126,6 @@ public class StudentDAO implements DAO<Student> {
         return students;
     }
 
-    @Override
-    public Student get(UUID id) throws AbsenceOfRecordsException {
-        try {
-            dbConnection.connect();
-            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
-                    "SELECT * FROM user_details, students WHERE user_details.id = students.user_details_id AND id = ?;");
-            preparedStatement.setObject(1, id, Types.OTHER);
-            ResultSet result = preparedStatement.executeQuery();
-            while (result.next()) {
-                final UUID userDetailsID = UUID.fromString(result.getString("id"));
-                final String name = result.getString("name");
-                final String surname = result.getString("surname");
-                final String email = result.getString("email");
-                final String password = result.getString("password");
-                final UUID roleID = UUID.fromString(result.getString("role_id"));
-                final UUID studentID = UUID.fromString(result.getString("student_id"));
-                final boolean isActive = result.getBoolean("is_active");
-                final String phoneNumber = result.getString("phone_number");
-                final int coins = result.getInt("coins");
-                Student student = new Student(userDetailsID, name, surname, email, password, roleID, isActive, phoneNumber, studentID, coins);
-                return student;
-            }
-            dbConnection.disconnect();
-            System.out.println("Selected student from data base successfully.");
-        } catch (SQLException e) {
-            System.out.println("Selecting student from data base failed.");
-            e.printStackTrace();
-        }
-        throw new AbsenceOfRecordsException();
-    }
+
 
 }

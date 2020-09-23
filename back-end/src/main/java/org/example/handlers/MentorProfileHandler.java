@@ -8,6 +8,7 @@ import org.example.DAO.Exception.AbsenceOfRecordsException;
 import org.example.model.Creep;
 import org.example.model.Mentor;
 import org.example.model.Student;
+import org.example.model.User;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -29,9 +30,6 @@ public class MentorProfileHandler implements HttpHandler {
     }
 
     public void handle(HttpExchange exchange) throws IOException {
-        exchange.getResponseHeaders().put("Access-Control-Allow-Methods", Collections.singletonList("*"));
-        exchange.getResponseHeaders().put("Content-type", Collections.singletonList("application/json"));
-        exchange.getResponseHeaders().put("Access-Control-Allow-Origin", Collections.singletonList("*"));
         String method = exchange.getRequestMethod();
         String response = "";
         System.out.println("Method " + method);
@@ -46,29 +44,18 @@ public class MentorProfileHandler implements HttpHandler {
 
 /*                Mentor mentor = mentorDAO.get(UUID.fromString(id));*/
 //                Student student = studentDAO.get(UUID.fromString(id));
-                Creep creep = creepDAO.get(UUID.fromString(id));
+                User user = creepDAO.get(UUID.fromString(id));
 //                System.out.println(mentor);
 //                System.out.println(student);
 //                System.out.println(creep);
                 ObjectMapper objectMapper = new ObjectMapper();
-                response = objectMapper.writeValueAsString(creep);
+                response = objectMapper.writeValueAsString(user);
                 System.out.println(response);
-                sendResponse(response, exchange, status);
+                ResponseHelper.sendResponse(response, exchange, status);
                 }
             } catch (AbsenceOfRecordsException e) {
             e.printStackTrace();
         }
-    }
-
-    private void sendResponse(String response, HttpExchange exchange, int status) throws IOException {
-        if (status == 200) {
-            exchange.getResponseHeaders().put("Content-type", Collections.singletonList("application/json"));
-            exchange.getResponseHeaders().put("Access-Control-Allow-Origin", Collections.singletonList("*"));
-        }
-        exchange.sendResponseHeaders(status, response.getBytes().length);
-        OutputStream os = exchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
     }
 
 }

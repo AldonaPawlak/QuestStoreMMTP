@@ -27,9 +27,6 @@ public class QuestHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        exchange.getResponseHeaders().put("Access-Control-Allow-Methods", Collections.singletonList("*"));
-        exchange.getResponseHeaders().put("Content-type", Collections.singletonList("application/json"));
-        exchange.getResponseHeaders().put("Access-Control-Allow-Origin", Collections.singletonList("*"));
         String method = exchange.getRequestMethod();
         String response = "";
         System.out.println("Method " + method);
@@ -38,7 +35,7 @@ public class QuestHandler implements HttpHandler {
             if (method.equals("GET")) {
                 response = getQuests();
                 System.out.println(response);
-                sendResponse(response, exchange, status);
+                ResponseHelper.sendResponse(response, exchange, status);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -52,14 +49,4 @@ public class QuestHandler implements HttpHandler {
         return mapper.writeValueAsString(quests);
     }
 
-    private void sendResponse(String response, HttpExchange exchange, int status) throws IOException {
-        if (status == 200) {
-            exchange.getResponseHeaders().put("Content-type", Collections.singletonList("application/json"));
-            exchange.getResponseHeaders().put("Access-Control-Allow-Origin", Collections.singletonList("*"));
-        }
-        exchange.sendResponseHeaders(status, response.getBytes().length);
-        OutputStream os = exchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
-    }
 }
