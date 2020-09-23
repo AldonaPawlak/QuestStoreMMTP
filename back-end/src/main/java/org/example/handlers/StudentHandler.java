@@ -4,11 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import org.example.DAO.DAOGetSet;
 import org.example.DAO.DBConnection;
 import org.example.DAO.Exception.AbsenceOfRecordsException;
 import org.example.DAO.StudentDAO;
-import org.example.DAO.UserDAO;
 import org.example.config.PasswordCrypter;
 import org.example.model.Student;
 import org.example.model.User;
@@ -24,12 +22,12 @@ public class StudentHandler implements HttpHandler {
 
     DBConnection dbConnection;
     StudentDAO studentDAO;
-    UserDAO userDAO;
+/*    UserDAO userDAO;*/
 
     public StudentHandler() {
         this.dbConnection = new DBConnection();
         this.studentDAO = new StudentDAO(dbConnection);
-        this.userDAO = new UserDAO(dbConnection);
+/*        this.userDAO = new UserDAO(dbConnection);*/
     }
 
     @Override
@@ -83,38 +81,38 @@ public class StudentHandler implements HttpHandler {
     }
 
     private void removeStudent(String userDetailsID) throws Exception {
-        User user = userDAO.get(UUID.fromString(userDetailsID));
-        studentDAO.remove(user);
+        Student student = studentDAO.get(UUID.fromString(userDetailsID));
+        studentDAO.remove(student);
     }
 
     private void editStudentName(String userDetailsID, String newName) throws Exception {
-        User student = userDAO.get(UUID.fromString(userDetailsID));
+        Student student = studentDAO.get(UUID.fromString(userDetailsID));
         student.setName(newName);
         studentDAO.edit(student);
     }
 
     private void editStudentSurname(String userDetailsID, String newSurname) throws AbsenceOfRecordsException {
-        User user = userDAO.get(UUID.fromString(userDetailsID));
-        user.setSurname(newSurname);
-        studentDAO.edit(user);
+        Student student = studentDAO.get(UUID.fromString(userDetailsID));
+        student.setSurname(newSurname);
+        studentDAO.edit(student);
     }
 
     private void editStudentMail(String userDetailsID, String newMail) throws AbsenceOfRecordsException {
-        User user = userDAO.get(UUID.fromString(userDetailsID));
-        user.setEmail(newMail);
-        studentDAO.edit(user);
+        Student student = studentDAO.get(UUID.fromString(userDetailsID));
+        student.setEmail(newMail);
+        studentDAO.edit(student);
     }
 
     private void editStudentPhone(String userDetailsID, String newPhone) throws AbsenceOfRecordsException {
-        User user = userDAO.get(UUID.fromString(userDetailsID));
-        user.setPhoneNumber(newPhone);
-        studentDAO.edit(user);
+        Student student = studentDAO.get(UUID.fromString(userDetailsID));
+        student.setPhoneNumber(newPhone);
+        studentDAO.edit(student);
     }
 
     private void addStudent() {
         Student student = new Student(UUID.randomUUID(), "Name", "Surname", "mail@mail.com",
-                PasswordCrypter.crypter("password"), "student", true, "444 222 000",
-                0);
+                PasswordCrypter.crypter("password"), UUID.fromString("745792a7-681b-4efe-abdd-ca027678b397"),
+                true, "444 222 000", "student", UUID.randomUUID(), 0);
         studentDAO.add(student);
     }
 

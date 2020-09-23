@@ -8,10 +8,8 @@ import org.example.DAO.ArtifactDAO;
 import org.example.DAO.DBConnection;
 import org.example.DAO.Exception.AbsenceOfRecordsException;
 import org.example.DAO.StudentDAO;
-import org.example.DAO.UserDAO;
 import org.example.model.Artifact;
 import org.example.model.Student;
-import org.example.model.User;
 
 import java.io.IOException;
 import java.util.List;
@@ -22,13 +20,13 @@ public class WalletHandler implements HttpHandler {
     DBConnection dbConnection;
     StudentDAO studentDAO;
     ArtifactDAO artifactDAO;
-    UserDAO userDAO;
+/*    UserDAO userDAO;*/
 
     public WalletHandler() {
         this.dbConnection = new DBConnection();
         this.artifactDAO = new ArtifactDAO(dbConnection);
         this.studentDAO = new StudentDAO(dbConnection);
-        this.userDAO = new UserDAO(dbConnection);
+/*        this.userDAO = new UserDAO(dbConnection);*/
     }
 
     @Override
@@ -65,8 +63,8 @@ public class WalletHandler implements HttpHandler {
     }
 
     private String getBalance(String id) throws AbsenceOfRecordsException {
-        User student = userDAO.get(UUID.fromString(id));
-        return String.valueOf(Student.getCoins());
+        Student student = studentDAO.get(UUID.fromString(id));
+        return String.valueOf(student.getCoins());
     }
 
 }

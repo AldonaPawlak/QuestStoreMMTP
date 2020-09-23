@@ -100,7 +100,7 @@ public class StudentDAO /*extends UserDAO*/ implements DAO<Student> {
         try {
             dbConnection.connect();
             PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
-                    "SELECT ud.*, r.name AS role , s.student_id FROM user_details ud JOIN roles r " +
+                    "SELECT ud.*, r.name AS role , s.student_id, s.coins FROM user_details ud JOIN roles r " +
                             "ON r.id = ud.role_id JOIN students s ON s.user_details_id = ud.id ORDER BY surname;");
             ResultSet allStudents = preparedStatement.executeQuery();
             while (allStudents.next()) {
@@ -133,12 +133,12 @@ public class StudentDAO /*extends UserDAO*/ implements DAO<Student> {
         try {
             dbConnection.connect();
             PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
-                    "SELECT ud.*, r.name AS role , s.student_id FROM user_details ud JOIN roles r " +
+                    "SELECT ud.*, r.name AS role , s.student_id, s.coins FROM user_details ud JOIN roles r " +
                             "ON r.id = ud.role_id JOIN students s ON s.user_details_id = ud.id " +
                             "WHERE ud.id = ?;");
+            preparedStatement.setObject(1, id, Types.OTHER);
             ResultSet allStudents = preparedStatement.executeQuery();
             while (allStudents.next()) {
-                final UUID userDetailsID = UUID.fromString(allStudents.getString("id"));
                 final String name = allStudents.getString("name");
                 final String surname = allStudents.getString("surname");
                 final String email = allStudents.getString("email");
@@ -149,7 +149,7 @@ public class StudentDAO /*extends UserDAO*/ implements DAO<Student> {
                 final  String phoneNumber = allStudents.getString("phone_number");
                 final int coins = allStudents.getInt("coins");
                 final UUID roleID = UUID.fromString(allStudents.getString("role_id"));
-                Student student = new Student(userDetailsID, name, surname, email, password, roleID, isActive,
+                Student student = new Student(id, name, surname, email, password, roleID, isActive,
                         phoneNumber, role, studentID, coins);
                 return student;
             }
