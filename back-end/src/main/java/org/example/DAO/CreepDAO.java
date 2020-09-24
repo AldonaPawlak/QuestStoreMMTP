@@ -15,11 +15,9 @@ import java.util.UUID;
 public class CreepDAO implements  DAO<Creep> {
 
     DBConnection dbConnection;
-    DAOGetSet daoGetSet;
 
-    public CreepDAO(DBConnection dbConnection, DAOGetSet daoGetSet) {
+    public CreepDAO(DBConnection dbConnection) {
         this.dbConnection = dbConnection;
-        this.daoGetSet = daoGetSet;
     }
 
     @Override
