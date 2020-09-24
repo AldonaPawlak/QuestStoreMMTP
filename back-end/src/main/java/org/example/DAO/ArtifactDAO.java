@@ -34,8 +34,8 @@ public class ArtifactDAO implements DAO<Artifact>{
             System.out.println("Artifact added successfully.");
             dbConnection.disconnect();
         } catch (SQLException e) {
-            System.out.println("Adding artifact failed.");
             e.printStackTrace();
+           System.out.println("Adding artifact failed.");
         }
     }
 
@@ -50,8 +50,8 @@ public class ArtifactDAO implements DAO<Artifact>{
             System.out.println("Artifact removed successfully.");
             dbConnection.disconnect();
         } catch (SQLException e) {
-            System.out.println("Removing artifact failed.");
             e.printStackTrace();
+            System.out.println("Removing artifact failed.");
         }
     }
 
@@ -69,8 +69,8 @@ public class ArtifactDAO implements DAO<Artifact>{
             System.out.println("Artifact edited successfully.");
             dbConnection.disconnect();
         } catch (SQLException e) {
-            System.out.println("Editing artifact failed.");
             e.printStackTrace();
+            System.out.println("Editing artifact failed.");
         }
     }
 
@@ -114,8 +114,8 @@ public class ArtifactDAO implements DAO<Artifact>{
             dbConnection.disconnect();
             System.out.println("Selected artifact from data base successfully.");
         } catch (SQLException e) {
-            System.out.println("Selecting artifact from data base failed.");
             e.printStackTrace();
+            System.out.println("Selecting artifact from data base failed.");
         }
         throw new AbsenceOfRecordsException();
     }
@@ -139,8 +139,8 @@ public class ArtifactDAO implements DAO<Artifact>{
             dbConnection.disconnect();
             System.out.println("Selected artifacts from data base successfully.");
         } catch (SQLException e) {
-            System.out.println("Selecting artifacts from data base failed.");
             e.printStackTrace();
+            System.out.println("Selecting artifacts from data base failed.");
         }
         return artifacts;
     }

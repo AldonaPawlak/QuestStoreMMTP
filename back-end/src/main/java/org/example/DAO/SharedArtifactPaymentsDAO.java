@@ -1,9 +1,12 @@
 package org.example.DAO;
 
+import org.example.DAO.Exception.AbsenceOfRecordsException;
 import org.example.model.SharedArtifactPayment;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -11,11 +14,9 @@ import java.util.UUID;
 public class SharedArtifactPaymentsDAO implements DAO<SharedArtifactPayment> {
 
     DBConnection dbConnection;
-    DAOGetSet daoGetSet;
 
-    public SharedArtifactPaymentsDAO(DBConnection dbConnection, DAOGetSet daoGetSet) {
+    public SharedArtifactPaymentsDAO(DBConnection dbConnection) {
         this.dbConnection = dbConnection;
-        this.daoGetSet = daoGetSet;
     }
 
     @Override
@@ -30,45 +31,69 @@ public class SharedArtifactPaymentsDAO implements DAO<SharedArtifactPayment> {
 
     @Override
     public void edit(SharedArtifactPayment sharedArtifactPayment) {
-        dbConnection.runSqlQuery(String.format("UPDATE shared_artifacts_payments SET payment = %d WHERE id = '%s';", sharedArtifactPayment.getPayment(), sharedArtifactPayment.getId()));
+        try {
+        dbConnection.connect();
+        PreparedStatement preparedStatement = dbConnection.connect().prepareStatement(
+                "UPDATE shared_artifacts_payments SET payment = %d WHERE id = ?;");
+        preparedStatement.setObject(1, sharedArtifactPayment.getId(), Types.OTHER);
+        preparedStatement.executeUpdate();
+        dbConnection.disconnect();
+        System.out.println("Shared artifacts payments edited successfully.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Editing shared artifacts payments failed.");
+        }
     }
 
     @Override
     public List<SharedArtifactPayment> getAll() {
         List<SharedArtifactPayment> sharedArtifactPayments = new ArrayList<>();
         try {
-            ResultSet allArtifactPayments = daoGetSet.getDataSet("SELECT * FROM shared_artifacts_payments;");
-            while (allArtifactPayments.next()) {
-                final UUID id = UUID.fromString(allArtifactPayments.getString("id"));
-                final UUID studentID = UUID.fromString(allArtifactPayments.getString("student_id"));
-                final UUID studentArtifactID = UUID.fromString(allArtifactPayments.getString("student_artifact_id"));
-                final int payment = allArtifactPayments.getInt("payment");
-                SharedArtifactPayment sharedArtifactPayment = new SharedArtifactPayment(id, studentID, studentArtifactID, payment);
-                sharedArtifactPayments.add(sharedArtifactPayment);
+            dbConnection.connect();
+            PreparedStatement preparedStatement = dbConnection.connect().prepareStatement(
+                    "SELECT * FROM shared_artifacts_payments;");
+            ResultSet allSharedArtifactPayment = preparedStatement.executeQuery();
+            while (allSharedArtifactPayment.next()) {
+                sharedArtifactPayments.add(prepareSharedArtifactPayment(allSharedArtifactPayment));
             }
+            dbConnection.disconnect();
+            System.out.println("Selected shared artifacts payments from data base successfully.");
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println("Selecting shared artifacts payments from data base failed.");
         }
         return sharedArtifactPayments;
     }
 
     @Override
-    public SharedArtifactPayment get(UUID id) {
-        List<SharedArtifactPayment> sharedArtifactPayments = new ArrayList<>();
+    public SharedArtifactPayment get(UUID id) throws AbsenceOfRecordsException {
         try {
-            ResultSet allArtifactPayments = daoGetSet.getDataSet(String.format("SELECT * FROM shared_artifacts_payments WHERE id ='%s';", id));
-            while (allArtifactPayments.next()) {
-                final UUID artifactID = UUID.fromString(allArtifactPayments.getString("id"));
-                final UUID studentID = UUID.fromString(allArtifactPayments.getString("student_id"));
-                final UUID studentArtifactID = UUID.fromString(allArtifactPayments.getString("student_artifact_id"));
-                final int payment = allArtifactPayments.getInt("payment");
-                SharedArtifactPayment sharedArtifactPayment = new SharedArtifactPayment(artifactID, studentID, studentArtifactID, payment);
-                sharedArtifactPayments.add(sharedArtifactPayment);
+            dbConnection.connect();
+            PreparedStatement preparedStatement = dbConnection.connect().prepareStatement("SELECT * FROM " +
+                    "shared_artifacts_payments WHERE id = ?;");
+            preparedStatement.setObject(1, id, Types.OTHER);
+            ResultSet allSharedArtifactPayment = preparedStatement.executeQuery();
+            while (allSharedArtifactPayment.next()) {
+                return prepareSharedArtifactPayment(allSharedArtifactPayment);
             }
+            dbConnection.disconnect();
+            System.out.println("Selected shared artifacts payments from data base successfully.");
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println("Selecting shared artifacts payments from data base failed.");
         }
-        return sharedArtifactPayments.get(0);
+        throw new AbsenceOfRecordsException();
+    }
+
+    private SharedArtifactPayment prepareSharedArtifactPayment(ResultSet allSharedArtifactPayment) throws SQLException {
+        final UUID artifactID = UUID.fromString(allSharedArtifactPayment.getString("id"));
+        final UUID studentID = UUID.fromString(allSharedArtifactPayment.getString("student_id"));
+        final UUID studentArtifactID = UUID.fromString(allSharedArtifactPayment.getString(
+                "student_artifact_id"));
+        final int payment = allSharedArtifactPayment.getInt("payment");
+        SharedArtifactPayment sharedArtifactPayment = new SharedArtifactPayment(
+                artifactID, studentID, studentArtifactID, payment);
+        return sharedArtifactPayment;
     }
 
 }
