@@ -109,7 +109,6 @@ public class ArtifactDAO implements DAO<Artifact>{
             preparedStatement.setObject(1, id, Types.OTHER);
             ResultSet allArtifacts = preparedStatement.executeQuery();
             while (allArtifacts.next()) {
-                /*return czy bez return*/
                 return prepareArtifact(allArtifacts);
             }
             dbConnection.disconnect();

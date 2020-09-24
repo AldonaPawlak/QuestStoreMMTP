@@ -104,20 +104,7 @@ public class StudentDAO /*extends UserDAO*/ implements DAO<Student> {
                             "ON r.id = ud.role_id JOIN students s ON s.user_details_id = ud.id ORDER BY surname;");
             ResultSet allStudents = preparedStatement.executeQuery();
             while (allStudents.next()) {
-                final UUID userDetailsID = UUID.fromString(allStudents.getString("id"));
-                final String name = allStudents.getString("name");
-                final String surname = allStudents.getString("surname");
-                final String email = allStudents.getString("email");
-                final String password = allStudents.getString("password");
-                final String role = allStudents.getString("role");
-                final UUID studentID = UUID.fromString(allStudents.getString("student_id"));
-                final boolean isActive = allStudents.getBoolean("is_active");
-                final  String phoneNumber = allStudents.getString("phone_number");
-                final int coins = allStudents.getInt("coins");
-                final UUID roleID = UUID.fromString(allStudents.getString("role_id"));
-                Student student = new Student(userDetailsID, name, surname, email, password, roleID, isActive,
-                        phoneNumber, role, studentID, coins);
-                students.add(student);
+                students.add(preparedStudent(allStudents));
             }
             dbConnection.disconnect();
             System.out.println("Selected students from data base successfully.");
@@ -139,19 +126,7 @@ public class StudentDAO /*extends UserDAO*/ implements DAO<Student> {
             preparedStatement.setObject(1, id, Types.OTHER);
             ResultSet allStudents = preparedStatement.executeQuery();
             while (allStudents.next()) {
-                final String name = allStudents.getString("name");
-                final String surname = allStudents.getString("surname");
-                final String email = allStudents.getString("email");
-                final String password = allStudents.getString("password");
-                final String role = allStudents.getString("role");
-                final UUID studentID = UUID.fromString(allStudents.getString("student_id"));
-                final boolean isActive = allStudents.getBoolean("is_active");
-                final  String phoneNumber = allStudents.getString("phone_number");
-                final int coins = allStudents.getInt("coins");
-                final UUID roleID = UUID.fromString(allStudents.getString("role_id"));
-                Student student = new Student(id, name, surname, email, password, roleID, isActive,
-                        phoneNumber, role, studentID, coins);
-                return student;
+               return preparedStudent(allStudents);
             }
             dbConnection.disconnect();
             System.out.println("Selected student from data base successfully.");
@@ -160,6 +135,23 @@ public class StudentDAO /*extends UserDAO*/ implements DAO<Student> {
             System.out.println("Selecting student from data base failed.");
         }
         throw new AbsenceOfRecordsException();
+    }
+
+    private Student preparedStudent(ResultSet allStudents) throws SQLException {
+        final UUID userDetailsID = UUID.fromString(allStudents.getString("id"));
+        final String name = allStudents.getString("name");
+        final String surname = allStudents.getString("surname");
+        final String email = allStudents.getString("email");
+        final String password = allStudents.getString("password");
+        final String role = allStudents.getString("role");
+        final UUID studentID = UUID.fromString(allStudents.getString("student_id"));
+        final boolean isActive = allStudents.getBoolean("is_active");
+        final  String phoneNumber = allStudents.getString("phone_number");
+        final int coins = allStudents.getInt("coins");
+        final UUID roleID = UUID.fromString(allStudents.getString("role_id"));
+        Student student = new Student(userDetailsID, name, surname, email, password, roleID, isActive,
+                phoneNumber, role, studentID, coins);
+        return student;
     }
 
 }
