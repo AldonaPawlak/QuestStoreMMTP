@@ -127,7 +127,7 @@ public class ArtifactDAO implements DAO<Artifact>{
         throw new AbsenceOfRecordsException();
     }
 
-    public List<Artifact> getAllbyID(UUID studentID) {
+    public List<Artifact> getAllStudentsArtifacts(UUID studentID) {
         List<Artifact> artifacts = new ArrayList<>();
         try {
             dbConnection.connect();
@@ -139,6 +139,7 @@ public class ArtifactDAO implements DAO<Artifact>{
                             "AND sa.student_id=s.student_id AND s.user_details_id=? AND s.user_details_id=ud.id " +
                             "ORDER BY a.name;");
             preparedStatement.setObject(1, studentID, Types.OTHER);
+            preparedStatement.setObject(2, studentID, Types.OTHER);
             ResultSet allArtifacts = preparedStatement.executeQuery();
             prepareList(allArtifacts, artifacts);
             dbConnection.disconnect();
