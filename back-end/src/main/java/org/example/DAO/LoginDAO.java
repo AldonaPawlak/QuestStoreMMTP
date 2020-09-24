@@ -1,9 +1,11 @@
 package org.example.DAO;
 
+import org.example.DAO.Exception.AbsenceOfRecordsException;
 import org.example.config.PasswordCrypter;
 import org.example.model.User;
 
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
@@ -20,27 +22,26 @@ public class LoginDAO {
 
     public User login(String email, String password) throws Exception {
         password = PasswordCrypter.crypter(password);
-        System.out.println(password);
-        System.out.println(email);
-        try {
-            //TODO we can altough set column logged for user_detail to 1
-            ResultSet result = daoGetSet.getDataSet(
-                    String.format(
-                            "SELECT ud.id, r.name AS role FROM user_details ud LEFT JOIN roles r ON ud.role_id=r.id " +
-                                    "WHERE ud.email='%s' AND ud.password='%s';",
-                            email,
-                            password
-                    ));
-            while (result.next()) {
-                UUID id = UUID.fromString(result.getString("id"));
-                final  String role = result.getString("role");
-
-                return getUser(id, role);
+            try {
+                dbConnection.connect();
+                PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
+                        "SELECT ud.id, r.name AS role FROM user_details ud LEFT JOIN roles r ON ud.role_id=r.id " +
+                        "WHERE ud.email=? AND ud.password = ?;");
+                preparedStatement.setString(1, email);
+                preparedStatement.setString(2, password);
+                ResultSet loggedUserData = preparedStatement.executeQuery();
+                while (loggedUserData.next()) {
+                    final UUID id = UUID.fromString(loggedUserData.getString("id"));
+                    final String role = loggedUserData.getString("role");
+                    return getUser(id, role);
+                }
+                dbConnection.disconnect();
+                System.out.println("Selected student from data base successfully.");
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.out.println("Selecting student from data base failed.");
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        throw new Exception("User not found");
+            throw new AbsenceOfRecordsException();
     }
 
     private User getUser(UUID id, String role) throws Exception {
