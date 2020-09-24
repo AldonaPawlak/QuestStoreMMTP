@@ -13,11 +13,9 @@ import java.util.UUID;
 public class LoginDAO {
 
     DBConnection dbConnection;
-    DAOGetSet daoGetSet;
 
-    public LoginDAO(DBConnection dbConnection, DAOGetSet daoGetSet) {
+    public LoginDAO(DBConnection dbConnection) {
         this.dbConnection = dbConnection;
-        this.daoGetSet = daoGetSet;
     }
 
     public User login(String email, String password) throws Exception {
@@ -53,7 +51,7 @@ public class LoginDAO {
                 StudentDAO studentDAOImp = new StudentDAO(dbConnection);
                 return studentDAOImp.get(id);
             case "creep" :
-                CreepDAO creepDAO = new CreepDAO(dbConnection, daoGetSet);
+                CreepDAO creepDAO = new CreepDAO(dbConnection);
                 return creepDAO.get(id);
             default :
                 throw new Exception("Can not create user with " + role + " type");

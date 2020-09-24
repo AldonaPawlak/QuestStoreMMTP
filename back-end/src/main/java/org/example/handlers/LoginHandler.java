@@ -4,7 +4,6 @@ package org.example.handlers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import org.example.DAO.DAOGetSet;
 import org.example.DAO.DBConnection;
 import org.example.DAO.LoginDAO;
 import org.example.model.User;
@@ -17,7 +16,6 @@ import java.io.InputStreamReader;
 import java.net.*;
 import java.util.Collections;
 import java.util.Map;
-import java.io.*;
 
 public class LoginHandler implements HttpHandler {
 
@@ -26,8 +24,7 @@ public class LoginHandler implements HttpHandler {
 
     public LoginHandler() {
         DBConnection dbConnection = new DBConnection();
-        DAOGetSet daoGetSet = new DAOGetSet(dbConnection);
-        this.loginDAO = new LoginDAO(dbConnection, daoGetSet);
+        this.loginDAO = new LoginDAO(dbConnection);
         this.mapper = new ObjectMapper();
     }
 
