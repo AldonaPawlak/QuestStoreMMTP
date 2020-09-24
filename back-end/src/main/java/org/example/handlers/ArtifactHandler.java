@@ -5,13 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import org.example.DAO.ArtifactDAO;
-import org.example.DAO.DAOGetSet;
 import org.example.DAO.DBConnection;
 import org.example.model.Artifact;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Collections;
 import java.util.List;
 
 public class ArtifactHandler implements HttpHandler {

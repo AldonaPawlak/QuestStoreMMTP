@@ -4,14 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import org.example.DAO.DAOGetSet;
 import org.example.DAO.DBConnection;
 import org.example.DAO.QuestDAO;
 import org.example.model.Quest;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Collections;
 import java.util.List;
 
 public class QuestHandler implements HttpHandler {

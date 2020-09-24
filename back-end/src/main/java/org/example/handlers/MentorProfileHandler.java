@@ -5,14 +5,9 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import org.example.DAO.*;
 import org.example.DAO.Exception.AbsenceOfRecordsException;
-import org.example.model.Creep;
-import org.example.model.Mentor;
-import org.example.model.Student;
 import org.example.model.User;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Collections;
 import java.util.UUID;
 
 public class MentorProfileHandler implements HttpHandler {
@@ -26,7 +21,7 @@ public class MentorProfileHandler implements HttpHandler {
         this.dbConnection = new DBConnection();
         this.mentorDAO = new MentorDAO(dbConnection);
         this.studentDAO = new StudentDAO(dbConnection);
-        this.creepDAO = new CreepDAO(dbConnection, new DAOGetSet(dbConnection));
+        this.creepDAO = new CreepDAO(dbConnection);
     }
 
     public void handle(HttpExchange exchange) throws IOException {
