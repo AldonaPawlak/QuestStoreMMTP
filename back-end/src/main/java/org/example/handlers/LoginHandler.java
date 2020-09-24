@@ -46,7 +46,7 @@ public class LoginHandler implements HttpHandler {
             LoggedUser loggedUser = new LoggedUser(
                     user.getUserDetailsID().toString(),
                     user.getEmail(),
-                    user.getClass().getSimpleName()
+                    user.getRole()
             );
             HttpCookie cookie = new HttpCookie("user", mapper.writeValueAsString(loggedUser));
             exchange.getResponseHeaders().add("Set-Cookie", cookie.toString());

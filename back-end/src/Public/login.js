@@ -22,13 +22,13 @@ function login(data) {
             return responseJson;
         })
         .then ((responseJson) => {
-            if (responseJson.role === "Student") {
+            if (responseJson.role === "student") {
                 window.location.href = "studentProfile.html";
             }
-            if (responseJson.role === "Mentor") {
+            if (responseJson.role === "mentor") {
                 window.location.href = "mentorView.html";
             }
-            if (responseJson.role === "Creep") {
+            if (responseJson.role === "creep") {
                 window.location.href = "creepView.html";
             }
         })
