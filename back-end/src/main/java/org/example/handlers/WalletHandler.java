@@ -57,7 +57,7 @@ public class WalletHandler implements HttpHandler {
     }
 
     private String getArtifacts(String userDetailsID) throws JsonProcessingException {
-        List<Artifact> artifacts = artifactDAO.getAllbyID(UUID.fromString(userDetailsID));
+        List<Artifact> artifacts = artifactDAO.getAllStudentsArtifacts(UUID.fromString(userDetailsID));
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(artifacts);
     }
