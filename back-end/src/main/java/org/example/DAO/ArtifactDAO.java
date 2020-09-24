@@ -84,18 +84,7 @@ public class ArtifactDAO implements DAO<Artifact>{
                             "ON a.artifact_type_id=at.id LEFT JOIN categories c ON a.category_id=c.id " +
                             "ORDER BY a.name;");
             ResultSet allArtifacts = preparedStatement.executeQuery();
-            while (allArtifacts.next()) {
-                final UUID id = UUID.fromString(allArtifacts.getString("id"));
-                final String name = allArtifacts.getString("name");
-                final int price = allArtifacts.getInt("price");
-                final String category = allArtifacts.getString("category");
-                final String description = allArtifacts.getString("description");
-                final String type = allArtifacts.getString("type");
-                final UUID categoryID = UUID.fromString(allArtifacts.getString("category_id"));
-                final UUID typeID = UUID.fromString(allArtifacts.getString("type_id"));
-                Artifact artifact = new Artifact(id, name, price, category, description, type, categoryID, typeID);
-                artifacts.add(artifact);
-            }
+            prepareList(allArtifacts, artifacts);
             dbConnection.disconnect();
             System.out.println("Selected artifacts from data base successfully.");
         } catch (SQLException e) {
@@ -152,18 +141,7 @@ public class ArtifactDAO implements DAO<Artifact>{
             preparedStatement.setObject(1, studentID, Types.OTHER);
             preparedStatement.setObject(2, studentID, Types.OTHER);
             ResultSet allArtifacts = preparedStatement.executeQuery();
-            while (allArtifacts.next()) {
-                final UUID id = UUID.fromString(allArtifacts.getString("id"));
-                final String name = allArtifacts.getString("name");
-                final int price = allArtifacts.getInt("price");
-                final String category = allArtifacts.getString("category");
-                final String description = allArtifacts.getString("description");
-                final String type = allArtifacts.getString("type");
-                final UUID categoryID = UUID.fromString(allArtifacts.getString("category_id"));
-                final UUID typeID = UUID.fromString(allArtifacts.getString("artifact_type_id"));
-                Artifact artifact = new Artifact(id, name, price, category, description, type, categoryID, typeID);
-                artifacts.add(artifact);
-            }
+            prepareList(allArtifacts, artifacts);
             dbConnection.disconnect();
             System.out.println("Selected artifacts from data base successfully.");
         } catch (SQLException e) {
@@ -171,6 +149,21 @@ public class ArtifactDAO implements DAO<Artifact>{
             e.printStackTrace();
         }
         return artifacts;
+    }
+
+    private void prepareList(ResultSet allArtifacts, List<Artifact> artifacts) throws SQLException {
+        while (allArtifacts.next()) {
+            final UUID id = UUID.fromString(allArtifacts.getString("id"));
+            final String name = allArtifacts.getString("name");
+            final int price = allArtifacts.getInt("price");
+            final String category = allArtifacts.getString("category");
+            final String description = allArtifacts.getString("description");
+            final String type = allArtifacts.getString("type");
+            final UUID categoryID = UUID.fromString(allArtifacts.getString("category_id"));
+            final UUID typeID = UUID.fromString(allArtifacts.getString("type_id"));
+            Artifact artifact = new Artifact(id, name, price, category, description, type, categoryID, typeID);
+            artifacts.add(artifact);
+        }
     }
 
 }
