@@ -31,8 +31,8 @@ public class ArtifactDAO implements DAO<Artifact>{
             preparedStatement.setString(5, artifact.getDescription());
             preparedStatement.setObject(6, artifact.getTypeID(), Types.OTHER);
             preparedStatement.executeUpdate();
-            System.out.println("Artifact added successfully.");
             dbConnection.disconnect();
+           System.out.println("Artifact added successfully.");
         } catch (SQLException e) {
             e.printStackTrace();
            System.out.println("Adding artifact failed.");
@@ -47,8 +47,8 @@ public class ArtifactDAO implements DAO<Artifact>{
                     "DELETE FROM artifacts WHERE id = ?;");
             preparedStatement.setObject(1, artifact.getId(), Types.OTHER);
             preparedStatement.executeUpdate();
-            System.out.println("Artifact removed successfully.");
             dbConnection.disconnect();
+            System.out.println("Artifact removed successfully.");
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Removing artifact failed.");

@@ -21,12 +21,38 @@ public class SharedArtifactPaymentsDAO implements DAO<SharedArtifactPayment> {
 
     @Override
     public void add(SharedArtifactPayment sharedArtifactPayment) {
-        dbConnection.runSqlQuery(String.format("INSERT INTO shared_artifacts_payments(id, student_id, student_artifacts_id, payment) VALUES ('%s', '%s', '%s', '%d');", sharedArtifactPayment.getId(), sharedArtifactPayment.getStudentID(), sharedArtifactPayment.getStudentArtifactID(), sharedArtifactPayment.getPayment()));
+        try {
+            dbConnection.connect();
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
+                    "INSERT INTO shared_artifacts_payments (id, student_id, student_artifacts_id, payment) " +
+                            "VALUES(?, ?, ?, ?);");
+            preparedStatement.setObject(1, sharedArtifactPayment.getId(), Types.OTHER);
+            preparedStatement.setObject(2, sharedArtifactPayment.getStudentID(), Types.OTHER);
+            preparedStatement.setObject(3, sharedArtifactPayment.getStudentArtifactID(), Types.OTHER);
+            preparedStatement.setInt(4, sharedArtifactPayment.getPayment());
+            preparedStatement.executeUpdate();
+            dbConnection.disconnect();
+            System.out.println("Artifact added successfully.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Adding artifact failed.");
+        }
     }
 
     @Override
     public void remove(SharedArtifactPayment sharedArtifactPayment) {
-        dbConnection.runSqlQuery(String.format("REMOVE FROM shared_artifacts_payments '%s';", sharedArtifactPayment.getId()));
+        try {
+            dbConnection.connect();
+            PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
+                    "DELETE FROM shared_artifacts_payments WHERE id = ?;");
+            preparedStatement.setObject(1, sharedArtifactPayment.getId(), Types.OTHER);
+            preparedStatement.executeUpdate();
+            dbConnection.disconnect();
+            System.out.println("Shared artifacts payments removed successfully.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Removing shared artifacts payments failed.");
+        }
     }
 
     @Override
@@ -34,8 +60,9 @@ public class SharedArtifactPaymentsDAO implements DAO<SharedArtifactPayment> {
         try {
         dbConnection.connect();
         PreparedStatement preparedStatement = dbConnection.connect().prepareStatement(
-                "UPDATE shared_artifacts_payments SET payment = %d WHERE id = ?;");
-        preparedStatement.setObject(1, sharedArtifactPayment.getId(), Types.OTHER);
+                "UPDATE shared_artifacts_payments SET payment = ? WHERE id = ?;");
+        preparedStatement.setInt(1, sharedArtifactPayment.getPayment());
+        preparedStatement.setObject(2, sharedArtifactPayment.getId(), Types.OTHER);
         preparedStatement.executeUpdate();
         dbConnection.disconnect();
         System.out.println("Shared artifacts payments edited successfully.");
