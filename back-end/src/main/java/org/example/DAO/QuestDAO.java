@@ -80,14 +80,9 @@ public class QuestDAO implements DAO<Quest> {
             dbConnection.connect();
             PreparedStatement preparedStatement = dbConnection.connect().prepareStatement(
                     "SELECT * FROM quests ORDER BY name;");
-            ResultSet questsSet = preparedStatement.executeQuery();
-            while (questsSet.next()) {
-                final UUID id = UUID.fromString(questsSet.getString("id"));
-                final String name = questsSet.getString("name");
-                final String description = questsSet.getString("description");
-                final int value = questsSet.getInt("value");
-                Quest quest = new Quest(id, name, description, value);
-                quests.add(quest);
+            ResultSet allQuests = preparedStatement.executeQuery();
+            while (allQuests.next()) {
+                quests.add(prepareQuest(allQuests));
             }
             dbConnection.disconnect();
             System.out.println("Selected quests from data base successfully.");
@@ -105,14 +100,9 @@ public class QuestDAO implements DAO<Quest> {
             PreparedStatement preparedStatement = dbConnection.connect().prepareStatement(
                     "SELECT * FROM quests WHERE id = ?;");
             preparedStatement.setObject(1, id, Types.OTHER);
-            ResultSet questsSet = preparedStatement.executeQuery();
-            while (questsSet.next()) {
-                final UUID questID = UUID.fromString(questsSet.getString("id"));
-                final String name = questsSet.getString("name");
-                final String description = questsSet.getString("description");
-                final int value = questsSet.getInt("value");
-                Quest quest = new Quest(questID, name, description, value);
-                return quest;
+            ResultSet allQuests = preparedStatement.executeQuery();
+            while (allQuests.next()) {
+                return prepareQuest(allQuests);
             }
             dbConnection.disconnect();
             System.out.println("Selected quest from data base successfully.");
@@ -124,7 +114,6 @@ public class QuestDAO implements DAO<Quest> {
     }
 
     public List<Quest> getAllStudentQuests(UUID id)  {
-        /*We have to pass here student id*/
         List<Quest> quests = new ArrayList<>();
         try {
             dbConnection.connect();
@@ -132,14 +121,9 @@ public class QuestDAO implements DAO<Quest> {
                     "SELECT name, description, value FROM quests, students " +
                             "WHERE students.user_details_id = ? ORDER BY name;;");
             preparedStatement.setObject(1, id, Types.OTHER);
-            ResultSet questsSet = preparedStatement.executeQuery();
-            while (questsSet.next()) {
-                final UUID questID = UUID.fromString(questsSet.getString("id"));
-                final String name = questsSet.getString("name");
-                final String description = questsSet.getString("description");
-                final int value = questsSet.getInt("value");
-                Quest quest = new Quest(questID, name, description, value);
-                quests.add(quest);
+            ResultSet allQuests = preparedStatement.executeQuery();
+            while (allQuests.next()) {
+                quests.add(prepareQuest(allQuests));
             }
             dbConnection.disconnect();
             System.out.println("Selected students quests from data base successfully.");
@@ -148,6 +132,15 @@ public class QuestDAO implements DAO<Quest> {
             System.out.println("Selecting students quests from data base failed.");
         }
         return quests;
+    }
+
+    private Quest prepareQuest(ResultSet allQuests) throws SQLException {
+        final UUID questID = UUID.fromString(allQuests.getString("id"));
+        final String name = allQuests.getString("name");
+        final String description = allQuests.getString("description");
+        final int value = allQuests.getInt("value");
+        Quest quest = new Quest(questID, name, description, value);
+        return quest;
     }
 
 }
