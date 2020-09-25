@@ -13,12 +13,12 @@ import org.example.model.User;
 import java.io.IOException;
 import java.util.UUID;
 
-public class MentorProfileHandler implements HttpHandler {
+public class ProfileHandler implements HttpHandler {
 
     private DBConnection dbConnection;
-    private DAO<User> userDAO;
+    private UserDAO userDAO;
 
-    public MentorProfileHandler(DBConnection dbConnection, DAO<User> userDAO) {
+    public ProfileHandler(DBConnection dbConnection, UserDAO userDAO) {
         this.dbConnection = dbConnection;
         this.userDAO = userDAO;
     }

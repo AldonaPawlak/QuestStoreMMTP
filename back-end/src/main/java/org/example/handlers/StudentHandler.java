@@ -4,11 +4,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import org.example.DAO.DAO;
 import org.example.DAO.DBConnection;
 import org.example.DAO.Exception.AbsenceOfRecordsException;
 import org.example.DAO.StudentDAO;
 import org.example.config.PasswordCrypter;
 import org.example.model.Student;
+import org.example.model.User;
 import org.example.services.DecoderURL;
 
 import java.io.IOException;
@@ -19,12 +21,12 @@ public class StudentHandler implements HttpHandler {
 
     private DBConnection dbConnection;
     private StudentDAO studentDAO;
-/*    UserDAO userDAO;*/
+    private DAO<User> userDAO;
 
-    public StudentHandler(DBConnection dbConnection, StudentDAO studentDAO) {
+    public StudentHandler(DBConnection dbConnection, StudentDAO studentDAO, DAO<User> userDAO) {
         this.dbConnection = dbConnection;
         this.studentDAO = studentDAO;
-/*        this.userDAO = new UserDAO(dbConnection);*/
+        this.userDAO = userDAO;
     }
 
     @Override
@@ -69,7 +71,7 @@ public class StudentHandler implements HttpHandler {
     }
 
     private String getStudents() throws JsonProcessingException {
-        List<Student> students = studentDAO.getAll();
+        List<User> students = userDAO.getAll();
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(students);
     }
@@ -104,10 +106,10 @@ public class StudentHandler implements HttpHandler {
     }
 
     private void addStudent() {
-        Student student = new Student(UUID.randomUUID(), "Name", "Surname", "mail@mail.com",
+        User user = new Student(UUID.randomUUID(), "Name", "Surname", "mail@mail.com",
                 PasswordCrypter.crypter("password"), UUID.fromString("745792a7-681b-4efe-abdd-ca027678b397"),
                 true, "444 222 000", "student", UUID.randomUUID(), 0);
-        studentDAO.add(student);
+        userDAO.add(user);
     }
 
 }
