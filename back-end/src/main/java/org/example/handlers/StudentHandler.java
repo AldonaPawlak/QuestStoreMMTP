@@ -9,24 +9,21 @@ import org.example.DAO.Exception.AbsenceOfRecordsException;
 import org.example.DAO.StudentDAO;
 import org.example.config.PasswordCrypter;
 import org.example.model.Student;
-import org.example.model.User;
 import org.example.services.DecoderURL;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
 public class StudentHandler implements HttpHandler {
 
-    DBConnection dbConnection;
-    StudentDAO studentDAO;
+    private DBConnection dbConnection;
+    private StudentDAO studentDAO;
 /*    UserDAO userDAO;*/
 
-    public StudentHandler() {
-        this.dbConnection = new DBConnection();
-        this.studentDAO = new StudentDAO(dbConnection);
+    public StudentHandler(DBConnection dbConnection, StudentDAO studentDAO) {
+        this.dbConnection = dbConnection;
+        this.studentDAO = studentDAO;
 /*        this.userDAO = new UserDAO(dbConnection);*/
     }
 
@@ -34,12 +31,10 @@ public class StudentHandler implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
         String method = exchange.getRequestMethod();
         String response = "";
-        System.out.println("Method " + method);
         int status = 200;
         try {
             if (method.equals("GET")) {
                 response = getStudents();
-                System.out.println(response);
                 ResponseHelper.sendResponse(response, exchange, status);
             }
             if (method.equals("POST")) {
@@ -66,7 +61,6 @@ public class StudentHandler implements HttpHandler {
                 }
                 response = getStudents();
                 ResponseHelper.sendResponse(response, exchange, status);
-                System.out.println("New response: " + response);
             }
         } catch (Exception e) {
             e.printStackTrace();
