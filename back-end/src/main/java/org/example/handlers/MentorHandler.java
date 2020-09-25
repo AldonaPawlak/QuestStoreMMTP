@@ -7,8 +7,10 @@ import com.sun.net.httpserver.HttpHandler;
 import org.example.DAO.DBConnection;
 import org.example.DAO.Exception.AbsenceOfRecordsException;
 import org.example.DAO.MentorDAO;
+import org.example.DAO.UserDAO;
 import org.example.config.PasswordCrypter;
 import org.example.model.Mentor;
+import org.example.model.User;
 import org.example.services.DecoderURL;
 
 import java.io.IOException;
@@ -23,10 +25,12 @@ public class MentorHandler implements HttpHandler {
 
     private MentorDAO mentorDAO;
     private DBConnection dbConnection;
+    private UserDAO userDAO;
 
-    public MentorHandler(DBConnection dbConnection, MentorDAO mentorDAO) {
+    public MentorHandler(DBConnection dbConnection, MentorDAO mentorDAO, UserDAO userDAO) {
         this.dbConnection = dbConnection;
         this.mentorDAO = mentorDAO;
+        this.userDAO = userDAO;
     }
 
     @Override
@@ -71,7 +75,7 @@ public class MentorHandler implements HttpHandler {
     }
 
     private String getMentors() throws JsonProcessingException {
-        List<Mentor> mentors = mentorDAO.getAll();
+        List<User> mentors = userDAO.getAllMentors();
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(mentors);
     }
