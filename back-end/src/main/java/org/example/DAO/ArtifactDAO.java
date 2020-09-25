@@ -143,8 +143,7 @@ public class ArtifactDAO implements DAO<Artifact>{
         final String type = allArtifacts.getString("type");
         final UUID categoryID = UUID.fromString(allArtifacts.getString("category_id"));
         final UUID typeID = UUID.fromString(allArtifacts.getString("type_id"));
-        Artifact artifact = new Artifact(id, name, price, category, description, type, categoryID, typeID);
-        return artifact;
+        return new Artifact(id, name, price, category, description, type, categoryID, typeID);
     }
 
     private void exceptionHandling(SQLException e, String message) {
