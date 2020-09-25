@@ -17,15 +17,15 @@ import java.util.UUID;
 
 public class WalletHandler implements HttpHandler {
 
-    DBConnection dbConnection;
-    StudentDAO studentDAO;
-    ArtifactDAO artifactDAO;
+    private DBConnection dbConnection;
+    private StudentDAO studentDAO;
+    private ArtifactDAO artifactDAO;
 /*    UserDAO userDAO;*/
 
-    public WalletHandler() {
-        this.dbConnection = new DBConnection();
-        this.artifactDAO = new ArtifactDAO(dbConnection);
-        this.studentDAO = new StudentDAO(dbConnection);
+    public WalletHandler(DBConnection dbConnection, StudentDAO studentDAO, ArtifactDAO artifactDAO) {
+        this.dbConnection = dbConnection;
+        this.artifactDAO = artifactDAO;
+        this.studentDAO = studentDAO;
 /*        this.userDAO = new UserDAO(dbConnection);*/
     }
 
@@ -33,7 +33,6 @@ public class WalletHandler implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
         String method = exchange.getRequestMethod();
         String response = "";
-        System.out.println("Method " + method);
         int status = 200;
         try {
             if (method.equals("GET")) {
@@ -46,7 +45,6 @@ public class WalletHandler implements HttpHandler {
                 if (urlParts[3].equals("cards")) {
                     response = getArtifacts(userDetailsID);
                 }
-                System.out.println(response);
                 ResponseHelper.sendResponse(response, exchange, status);
             }
         } catch (Exception e) {

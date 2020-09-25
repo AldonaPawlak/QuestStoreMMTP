@@ -19,27 +19,24 @@ import java.util.UUID;
 
 public class MentorHandler implements HttpHandler {
 
-    //TODO change program logic to create only one connection and DAO
     //TODO generate is_active update possibility
 
-    DBConnection dbConnection;
-    MentorDAO mentorDAO;
+    private MentorDAO mentorDAO;
+    private DBConnection dbConnection;
 
-    public MentorHandler() {
-        this.dbConnection = new DBConnection();
-        this.mentorDAO = new MentorDAO(dbConnection);
+    public MentorHandler(DBConnection dbConnection, MentorDAO mentorDAO) {
+        this.dbConnection = dbConnection;
+        this.mentorDAO = mentorDAO;
     }
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         String method = exchange.getRequestMethod();
         String response = "";
-        System.out.println("Method " + method);
         int status = 200;
         try {
             if (method.equals("GET")) {
                 response = getMentors();
-                System.out.println(response);
                 ResponseHelper.sendResponse(response, exchange, status);
             }
             if (method.equals("POST")) {
@@ -66,7 +63,7 @@ public class MentorHandler implements HttpHandler {
                 }
                 response = getMentors();
                 ResponseHelper.sendResponse(response, exchange, status);
-                System.out.println("New response: " + response);}
+            }
         } catch (Exception e) {
             e.printStackTrace();
             exchange.sendResponseHeaders(404, response.getBytes().length);

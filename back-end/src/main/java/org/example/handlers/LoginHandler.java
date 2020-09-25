@@ -21,10 +21,11 @@ public class LoginHandler implements HttpHandler {
 
     private LoginDAO loginDAO;
     private ObjectMapper mapper;
+    private DBConnection dbConnection;
 
-    public LoginHandler() {
-        DBConnection dbConnection = new DBConnection();
-        this.loginDAO = new LoginDAO(dbConnection);
+    public LoginHandler(DBConnection dbConnection, LoginDAO loginDAO) {
+        this.dbConnection = dbConnection;
+        this.loginDAO = loginDAO;
         this.mapper = new ObjectMapper();
     }
 
