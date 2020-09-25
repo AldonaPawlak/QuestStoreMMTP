@@ -1,6 +1,7 @@
 package org.example.DAO;
 
 import org.example.DAO.Exception.AbsenceOfRecordsException;
+import org.example.DAO.helpers.Service;
 import org.example.model.Class;
 
 import java.sql.PreparedStatement;
@@ -28,11 +29,9 @@ public class ClassDAO implements DAO<Class>{
             preparedStatement.setObject(1, claass.getId(), Types.OTHER);
             preparedStatement.setString(2, claass.getName());
             preparedStatement.executeUpdate();
-            dbConnection.disconnect();
-            System.out.println("Class added successfully.");
+            Service.disconnect("Class added successfully.", dbConnection);
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Adding class failed.");
+            Service.exceptionHandling(e, "Adding class failed.");
         }
     }
 
@@ -44,11 +43,9 @@ public class ClassDAO implements DAO<Class>{
                     "DELETE FROM classes WHERE id = ?;");
             preparedStatement.setObject(1, claass.getId(), Types.OTHER);
             preparedStatement.executeUpdate();
-            dbConnection.disconnect();
-            System.out.println("Class removed successfully.");
+            Service.disconnect("Class removed successfully.", dbConnection);
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Removing class failed.");
+            Service.exceptionHandling(e, "Removing class failed.");
         }
     }
 
@@ -62,11 +59,9 @@ public class ClassDAO implements DAO<Class>{
             preparedStatement.setString(2, claass.getName());
             preparedStatement.setObject(3, claass.getId());
             preparedStatement.executeUpdate();
-            dbConnection.disconnect();
-            System.out.println("Class edited successfully.");
+            Service.disconnect("Class edited successfully.", dbConnection);
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Editing class failed.");
+            Service.exceptionHandling(e, "Editing class failed.");
         }
     }
 
@@ -81,11 +76,9 @@ public class ClassDAO implements DAO<Class>{
             while (classesSet.next()) {
                 classes.add(prepareClass(classesSet));
             }
-            dbConnection.disconnect();
-            System.out.println("Selected classes from data base successfully.");
+            Service.disconnect("Selected classes from data base successfully.", dbConnection);
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Selecting classes from data base failed.");
+            Service.exceptionHandling(e, "Selecting classes from data base failed.");
         }
         return classes;
     }
@@ -101,11 +94,9 @@ public class ClassDAO implements DAO<Class>{
             while (classesSet.next()) {
                 return prepareClass(classesSet);
             }
-            dbConnection.disconnect();
-            System.out.println("Selected class from data base successfully.");
+            Service.disconnect("Selected class from data base successfully.", dbConnection);
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Selecting class from data base failed.");
+            Service.exceptionHandling(e, "Selecting class from data base failed.");
         }
         throw new AbsenceOfRecordsException();
     }
@@ -124,11 +115,9 @@ public class ClassDAO implements DAO<Class>{
             while (classesSet.next()) {
                 classes.add(prepareClass(classesSet));
             }
-            dbConnection.disconnect();
-            System.out.println("Selected classes from data base successfully.");
+            Service.disconnect("Selected classes from data base successfully.", dbConnection);
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Selecting classes from data base failed.");
+            Service.exceptionHandling(e, "Selecting classes from data base failed.");
         }
         return classes;
     }
@@ -147,11 +136,9 @@ public class ClassDAO implements DAO<Class>{
             while (classesSet.next()) {
                 classes.add(prepareClass(classesSet));
             }
-            dbConnection.disconnect();
-            System.out.println("Selected classes from data base successfully.");
+            Service.disconnect("Selected classes from data base successfully.", dbConnection);
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Selecting classes from data base failed.");
+            Service.exceptionHandling(e, "Selecting classes from data base failed.");
         }
         return classes;
     }
