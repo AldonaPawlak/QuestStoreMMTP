@@ -79,10 +79,7 @@ public class ClassDAO implements DAO<Class>{
                     "SELECT * FROM classes ORDER BY name;");
             ResultSet classesSet = preparedStatement.executeQuery();
             while (classesSet.next()) {
-                final UUID id = UUID.fromString(classesSet.getString("id"));
-                final String name = classesSet.getString("name");
-                Class claass = new Class(id, name);
-                classes.add(claass);
+                classes.add(prepareClass(classesSet));
             }
             dbConnection.disconnect();
             System.out.println("Selected classes from data base successfully.");
@@ -102,10 +99,7 @@ public class ClassDAO implements DAO<Class>{
             preparedStatement.setObject(1, id, Types.OTHER);
             ResultSet classesSet = preparedStatement.executeQuery();
             while (classesSet.next()) {
-                final UUID questID = UUID.fromString(classesSet.getString("id"));
-                final String name = classesSet.getString("name");
-                Class claass = new Class(questID, name);
-                return claass;
+                return prepareClass(classesSet);
             }
             dbConnection.disconnect();
             System.out.println("Selected class from data base successfully.");
@@ -128,10 +122,7 @@ public class ClassDAO implements DAO<Class>{
             preparedStatement.setObject(1, id, Types.OTHER);
             ResultSet classesSet = preparedStatement.executeQuery();
             while (classesSet.next()) {
-                final UUID classID = UUID.fromString(classesSet.getString("id"));
-                final String name = classesSet.getString("name");
-                Class claass = new Class(classID, name);
-                classes.add(claass);
+                classes.add(prepareClass(classesSet));
             }
             dbConnection.disconnect();
             System.out.println("Selected classes from data base successfully.");
@@ -154,10 +145,7 @@ public class ClassDAO implements DAO<Class>{
             preparedStatement.setObject(1, id, Types.OTHER);
             ResultSet classesSet = preparedStatement.executeQuery();
             while (classesSet.next()) {
-                final UUID classID = UUID.fromString(classesSet.getString("id"));
-                final String name = classesSet.getString("name");
-                Class claass = new Class(classID, name);
-                classes.add(claass);
+                classes.add(prepareClass(classesSet));
             }
             dbConnection.disconnect();
             System.out.println("Selected classes from data base successfully.");
@@ -166,6 +154,13 @@ public class ClassDAO implements DAO<Class>{
             System.out.println("Selecting classes from data base failed.");
         }
         return classes;
+    }
+
+    private Class prepareClass(ResultSet classesSet) throws SQLException {
+        final UUID classID = UUID.fromString(classesSet.getString("id"));
+        final String name = classesSet.getString("name");
+        Class claass = new Class(classID, name);
+        return claass;
     }
 
 }
