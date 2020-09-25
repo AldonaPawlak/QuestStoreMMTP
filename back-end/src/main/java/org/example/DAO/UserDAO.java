@@ -1,4 +1,3 @@
-/*
 package org.example.DAO;
 
 import org.example.DAO.Exception.AbsenceOfRecordsException;
@@ -47,7 +46,7 @@ public class UserDAO implements DAO<User> {
             dbConnection.connect();
             PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
                     "SELECT ud.*, r.name AS role FROM user_details ud JOIN roles r ON r.id = ud.role_id " +
-                            "WHERE ud.id ?;");
+                            "WHERE ud.id = ?;");
             preparedStatement.setObject(1, id, Types.OTHER);
             ResultSet result = preparedStatement.executeQuery();
             while (result.next()) {
@@ -63,36 +62,53 @@ public class UserDAO implements DAO<User> {
                 User user;
                 switch (role) {
                     case "mentor" :
-                        final UUID mentorID;
+                        UUID tempID = null;
+                        PreparedStatement mentorStatement = dbConnection.getConnection().prepareStatement(
+                                "SELECT mentor_id FROM mentors WHERE user_details_id = ?;");
+                        mentorStatement.setObject(1, id, Types.OTHER);
+                        ResultSet mentorSet = mentorStatement.executeQuery();
+                        while (mentorSet.next()) {
+                            tempID = UUID.fromString(mentorSet.getString("mentor_id"));
+                        }
                         user = new Mentor(userDetailsID, name, surname, email, password, roleID, isActive, phoneNumber,
-                                role, mentorID);
+                                role, tempID);
                         break;
                     case "creep" :
-                        final UUID creepID;
+                        UUID temporaryID = null;
+                        PreparedStatement creepStatement = dbConnection.getConnection().prepareStatement(
+                                "SELECT creep_id FROM creeps WHERE user_details_id = ?;");
+                        creepStatement.setObject(1, id, Types.OTHER);
+                        ResultSet creepSet = creepStatement.executeQuery();
+                        while (creepSet.next()) {
+                        temporaryID = UUID.fromString(creepSet.getString("creep_id"));
+                        }
                         user = new Creep(id, name, surname, email, password, roleID, isActive, phoneNumber,
-                                role, creepID);
+                                role, temporaryID);
                         break;
                     default :
-                        PreparedStatement coinsStatement = dbConnection.getConnection().prepareStatement(
-                                "SELECT coins FROM students WHERE user_details_id = ?;");
-                        coinsStatement.setObject(1, id, Types.OTHER);
-                        final int coins = result.getInt("coins");
-                        final UUID studentID;
+                        UUID temporarID = null;
+                        int coins = 0;
+                        PreparedStatement studentStatement = dbConnection.getConnection().prepareStatement(
+                                "SELECT coins, student_id FROM students WHERE user_details_id = ?;");
+                        studentStatement.setObject(1, id, Types.OTHER);
+                        ResultSet resultSet = studentStatement.executeQuery();
+                        while (resultSet.next()) {
+                            coins += resultSet.getInt("coins");
+                            temporarID = UUID.fromString(resultSet.getString("student_id"));
+                        }
                         user = new Student(userDetailsID, name, surname, email, password, roleID, isActive,
-                                phoneNumber, role, studentID, coins);
+                                phoneNumber, role, temporarID, coins);
                         break;
                 }
                 return user;
             }
             dbConnection.disconnect();
-            System.out.println("Selected student from data base successfully.");
+            System.out.println("Selected user from data base successfully.");
         } catch (SQLException e) {
-            System.out.println("Selecting student from data base failed.");
             e.printStackTrace();
+            System.out.println("Selecting user from data base failed.");
         }
         throw new AbsenceOfRecordsException();
     }
 
-
 }
-*/

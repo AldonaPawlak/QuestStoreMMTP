@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import org.example.DAO.ArtifactDAO;
+import org.example.DAO.DAO;
 import org.example.DAO.DBConnection;
 import org.example.model.Artifact;
 
@@ -14,9 +14,9 @@ import java.util.List;
 public class ArtifactHandler implements HttpHandler {
 
     private DBConnection dbConnection;
-    private ArtifactDAO artifactDAO;
+    private DAO<Artifact> artifactDAO;
 
-    public ArtifactHandler(DBConnection dbConnection, ArtifactDAO artifactDAO) {
+    public ArtifactHandler(DBConnection dbConnection, DAO<Artifact> artifactDAO) {
         this.dbConnection = dbConnection;
         this.artifactDAO = artifactDAO;
     }
