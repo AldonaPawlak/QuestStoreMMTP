@@ -10,6 +10,7 @@ import org.example.model.Quest;
 import org.example.model.User;
 
 import java.net.InetSocketAddress;
+import java.sql.PreparedStatement;
 
 public class App
 {

@@ -32,7 +32,7 @@ public class ArtifactDAO implements DAO<Artifact>{
             preparedStatement.setString(5, artifact.getDescription());
             preparedStatement.setObject(6, artifact.getTypeID(), Types.OTHER);
             preparedStatement.executeUpdate();
-            Service.disconnect("Artifact added successfully.", dbConnection);
+            Service.closeDBConnection("Artifact added successfully.", dbConnection);
         } catch (SQLException e) {
             Service.exceptionHandling(e, "Adding artifact failed.");
         }
@@ -46,7 +46,7 @@ public class ArtifactDAO implements DAO<Artifact>{
                     "DELETE FROM artifacts WHERE id = ?;");
             preparedStatement.setObject(1, artifact.getId(), Types.OTHER);
             preparedStatement.executeUpdate();
-            Service.disconnect("Artifact removed successfully.", dbConnection);
+            Service.closeDBConnection("Artifact removed successfully.", dbConnection);
         } catch (SQLException e) {
             Service.exceptionHandling(e, "Removing artifact failed.");
         }
@@ -63,7 +63,7 @@ public class ArtifactDAO implements DAO<Artifact>{
             preparedStatement.setString(3, artifact.getDescription());
             preparedStatement.setObject(4, artifact.getId(), Types.OTHER);
             preparedStatement.executeUpdate();
-            Service.disconnect("Artifact edited successfully.", dbConnection);
+            Service.closeDBConnection("Artifact edited successfully.", dbConnection);
         } catch (SQLException e) {
             Service.exceptionHandling(e, "Editing artifact failed.");
         }
@@ -82,7 +82,7 @@ public class ArtifactDAO implements DAO<Artifact>{
             while (allArtifacts.next()) {
                 artifacts.add(prepareArtifact(allArtifacts));
             }
-            Service.disconnect("Selected artifacts from data base successfully.", dbConnection);
+            Service.closeDBConnection("Selected artifacts from data base successfully.", dbConnection);
         } catch (SQLException e) {
             Service.exceptionHandling(e, "Selecting artifacts from data base failed.");
         }
@@ -104,7 +104,7 @@ public class ArtifactDAO implements DAO<Artifact>{
             while (allArtifacts.next()) {
                 return prepareArtifact(allArtifacts);
             }
-            Service.disconnect("Selected artifact from data base successfully.", dbConnection);
+            Service.closeDBConnection("Selected artifact from data base successfully.", dbConnection);
         } catch (SQLException e) {
             Service.exceptionHandling(e, "Selecting artifact from data base failed.");
         }
@@ -127,7 +127,7 @@ public class ArtifactDAO implements DAO<Artifact>{
             while (allArtifacts.next()) {
                 artifacts.add(prepareArtifact(allArtifacts));
             }
-            Service.disconnect("Selected artifacts from data base successfully.", dbConnection);
+            Service.closeDBConnection("Selected artifacts from data base successfully.", dbConnection);
         } catch (SQLException e) {
             Service.exceptionHandling(e, "Selecting artifacts from data base failed.");
         }

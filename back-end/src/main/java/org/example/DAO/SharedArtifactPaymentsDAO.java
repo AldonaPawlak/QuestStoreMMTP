@@ -32,7 +32,7 @@ public class SharedArtifactPaymentsDAO implements DAO<SharedArtifactPayment> {
             preparedStatement.setObject(3, sharedArtifactPayment.getStudentArtifactID(), Types.OTHER);
             preparedStatement.setInt(4, sharedArtifactPayment.getPayment());
             preparedStatement.executeUpdate();
-            Service.disconnect("Artifact added successfully.", dbConnection);
+            Service.closeDBConnection("Artifact added successfully.", dbConnection);
         } catch (SQLException e) {
             Service.exceptionHandling(e,"Adding artifact failed.");
         }
@@ -46,7 +46,7 @@ public class SharedArtifactPaymentsDAO implements DAO<SharedArtifactPayment> {
                     "DELETE FROM shared_artifacts_payments WHERE id = ?;");
             preparedStatement.setObject(1, sharedArtifactPayment.getId(), Types.OTHER);
             preparedStatement.executeUpdate();
-            Service.disconnect("Shared artifacts payments removed successfully.", dbConnection);
+            Service.closeDBConnection("Shared artifacts payments removed successfully.", dbConnection);
         } catch (SQLException e) {
             Service.exceptionHandling(e,"Removing shared artifacts payments failed.");
         }
@@ -61,7 +61,7 @@ public class SharedArtifactPaymentsDAO implements DAO<SharedArtifactPayment> {
         preparedStatement.setInt(1, sharedArtifactPayment.getPayment());
         preparedStatement.setObject(2, sharedArtifactPayment.getId(), Types.OTHER);
         preparedStatement.executeUpdate();
-        Service.disconnect("Shared artifacts payments edited successfully.", dbConnection);
+        Service.closeDBConnection("Shared artifacts payments edited successfully.", dbConnection);
         } catch (SQLException e) {
             Service.exceptionHandling(e, "Editing shared artifacts payments failed.");
         }
@@ -78,7 +78,7 @@ public class SharedArtifactPaymentsDAO implements DAO<SharedArtifactPayment> {
             while (allSharedArtifactPayment.next()) {
                 sharedArtifactPayments.add(prepareSharedArtifactPayment(allSharedArtifactPayment));
             }
-            Service.disconnect("Selected shared artifacts payments from data base successfully.", dbConnection);
+            Service.closeDBConnection("Selected shared artifacts payments from data base successfully.", dbConnection);
         } catch (SQLException e) {
             Service.exceptionHandling(e, "Selecting shared artifacts payments from data base failed.");
         }
@@ -96,7 +96,7 @@ public class SharedArtifactPaymentsDAO implements DAO<SharedArtifactPayment> {
             while (allSharedArtifactPayment.next()) {
                 return prepareSharedArtifactPayment(allSharedArtifactPayment);
             }
-            Service.disconnect("Selected shared artifacts payments from data base successfully.", dbConnection);
+            Service.closeDBConnection("Selected shared artifacts payments from data base successfully.", dbConnection);
         } catch (SQLException e) {
             Service.exceptionHandling(e, "Selecting shared artifacts payments from data base failed.");
         }

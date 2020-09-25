@@ -31,7 +31,7 @@ public class QuestDAO implements DAO<Quest> {
             preparedStatement.setString(3, quest.getDescription());
             preparedStatement.setInt(4, quest.getValue());
             preparedStatement.executeUpdate();
-            Service.disconnect("Quest added successfully.", dbConnection);
+            Service.closeDBConnection("Quest added successfully.", dbConnection);
         } catch (SQLException e) {
             Service.exceptionHandling(e,"Adding quest failed.");
         }
@@ -45,7 +45,7 @@ public class QuestDAO implements DAO<Quest> {
                     "DELETE FROM quests WHERE id = ?;");
             preparedStatement.setObject(1, quest.getId(), Types.OTHER);
             preparedStatement.executeUpdate();
-            Service.disconnect("Quest removed successfully.", dbConnection);
+            Service.closeDBConnection("Quest removed successfully.", dbConnection);
         } catch (SQLException e) {
             Service.exceptionHandling(e, "Removing quest failed.");
         }
@@ -62,7 +62,7 @@ public class QuestDAO implements DAO<Quest> {
             preparedStatement.setInt(3, quest.getValue());
             preparedStatement.setObject(4, quest.getId(), Types.OTHER);
             preparedStatement.executeUpdate();
-            Service.disconnect("Quest edited successfully.", dbConnection);
+            Service.closeDBConnection("Quest edited successfully.", dbConnection);
         } catch (SQLException e) {
             Service.exceptionHandling(e,"Editing quest failed.");
         }
@@ -79,7 +79,7 @@ public class QuestDAO implements DAO<Quest> {
             while (allQuests.next()) {
                 quests.add(prepareQuest(allQuests));
             }
-            Service.disconnect("Selected quests from data base successfully.", dbConnection);
+            Service.closeDBConnection("Selected quests from data base successfully.", dbConnection);
         } catch (SQLException e) {
             Service.exceptionHandling(e,"Selecting quests from data base failed.");
         }
@@ -97,7 +97,7 @@ public class QuestDAO implements DAO<Quest> {
             while (allQuests.next()) {
                 return prepareQuest(allQuests);
             }
-            Service.disconnect("Selected quest from data base successfully.", dbConnection);
+            Service.closeDBConnection("Selected quest from data base successfully.", dbConnection);
         } catch (SQLException e) {
             Service.exceptionHandling(e,"Selecting quest from data base failed.");
         }
@@ -116,7 +116,7 @@ public class QuestDAO implements DAO<Quest> {
             while (allQuests.next()) {
                 quests.add(prepareQuest(allQuests));
             }
-            Service.disconnect("Selected students quests from data base successfully.", dbConnection);
+            Service.closeDBConnection("Selected students quests from data base successfully.", dbConnection);
         } catch (SQLException e) {
             Service.exceptionHandling(e,"Selecting students quests from data base failed.");;
         }
