@@ -1,6 +1,7 @@
 package org.example.DAO;
 
 import org.example.DAO.Exception.AbsenceOfRecordsException;
+import org.example.DAO.helpers.Service;
 import org.example.model.SharedArtifactPayment;
 
 import java.sql.PreparedStatement;
@@ -31,11 +32,9 @@ public class SharedArtifactPaymentsDAO implements DAO<SharedArtifactPayment> {
             preparedStatement.setObject(3, sharedArtifactPayment.getStudentArtifactID(), Types.OTHER);
             preparedStatement.setInt(4, sharedArtifactPayment.getPayment());
             preparedStatement.executeUpdate();
-            dbConnection.disconnect();
-            System.out.println("Artifact added successfully.");
+            Service.disconnect("Artifact added successfully.", dbConnection);
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Adding artifact failed.");
+            Service.exceptionHandling(e,"Adding artifact failed.");
         }
     }
 
@@ -47,11 +46,9 @@ public class SharedArtifactPaymentsDAO implements DAO<SharedArtifactPayment> {
                     "DELETE FROM shared_artifacts_payments WHERE id = ?;");
             preparedStatement.setObject(1, sharedArtifactPayment.getId(), Types.OTHER);
             preparedStatement.executeUpdate();
-            dbConnection.disconnect();
-            System.out.println("Shared artifacts payments removed successfully.");
+            Service.disconnect("Shared artifacts payments removed successfully.", dbConnection);
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Removing shared artifacts payments failed.");
+            Service.exceptionHandling(e,"Removing shared artifacts payments failed.");
         }
     }
 
@@ -64,11 +61,9 @@ public class SharedArtifactPaymentsDAO implements DAO<SharedArtifactPayment> {
         preparedStatement.setInt(1, sharedArtifactPayment.getPayment());
         preparedStatement.setObject(2, sharedArtifactPayment.getId(), Types.OTHER);
         preparedStatement.executeUpdate();
-        dbConnection.disconnect();
-        System.out.println("Shared artifacts payments edited successfully.");
+        Service.disconnect("Shared artifacts payments edited successfully.", dbConnection);
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Editing shared artifacts payments failed.");
+            Service.exceptionHandling(e, "Editing shared artifacts payments failed.");
         }
     }
 
@@ -83,11 +78,9 @@ public class SharedArtifactPaymentsDAO implements DAO<SharedArtifactPayment> {
             while (allSharedArtifactPayment.next()) {
                 sharedArtifactPayments.add(prepareSharedArtifactPayment(allSharedArtifactPayment));
             }
-            dbConnection.disconnect();
-            System.out.println("Selected shared artifacts payments from data base successfully.");
+            Service.disconnect("Selected shared artifacts payments from data base successfully.", dbConnection);
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Selecting shared artifacts payments from data base failed.");
+            Service.exceptionHandling(e, "Selecting shared artifacts payments from data base failed.");
         }
         return sharedArtifactPayments;
     }
@@ -103,11 +96,9 @@ public class SharedArtifactPaymentsDAO implements DAO<SharedArtifactPayment> {
             while (allSharedArtifactPayment.next()) {
                 return prepareSharedArtifactPayment(allSharedArtifactPayment);
             }
-            dbConnection.disconnect();
-            System.out.println("Selected shared artifacts payments from data base successfully.");
+            Service.disconnect("Selected shared artifacts payments from data base successfully.", dbConnection);
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Selecting shared artifacts payments from data base failed.");
+            Service.exceptionHandling(e, "Selecting shared artifacts payments from data base failed.");
         }
         throw new AbsenceOfRecordsException();
     }

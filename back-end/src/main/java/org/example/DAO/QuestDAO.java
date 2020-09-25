@@ -1,6 +1,7 @@
 package org.example.DAO;
 
 import org.example.DAO.Exception.AbsenceOfRecordsException;
+import org.example.DAO.helpers.Service;
 import org.example.model.Quest;
 
 import java.sql.PreparedStatement;
@@ -30,11 +31,9 @@ public class QuestDAO implements DAO<Quest> {
             preparedStatement.setString(3, quest.getDescription());
             preparedStatement.setInt(4, quest.getValue());
             preparedStatement.executeUpdate();
-            System.out.println("Quest added successfully.");
-            dbConnection.disconnect();
+            Service.disconnect("Quest added successfully.", dbConnection);
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Adding quest failed.");
+            Service.exceptionHandling(e,"Adding quest failed.");
         }
     }
 
@@ -46,11 +45,9 @@ public class QuestDAO implements DAO<Quest> {
                     "DELETE FROM quests WHERE id = ?;");
             preparedStatement.setObject(1, quest.getId(), Types.OTHER);
             preparedStatement.executeUpdate();
-            dbConnection.disconnect();
-            System.out.println("Quest removed successfully.");
+            Service.disconnect("Quest removed successfully.", dbConnection);
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Removing quest failed.");
+            Service.exceptionHandling(e, "Removing quest failed.");
         }
     }
 
@@ -65,11 +62,9 @@ public class QuestDAO implements DAO<Quest> {
             preparedStatement.setInt(3, quest.getValue());
             preparedStatement.setObject(4, quest.getId(), Types.OTHER);
             preparedStatement.executeUpdate();
-            dbConnection.disconnect();
-            System.out.println("Quest edited successfully.");
+            Service.disconnect("Quest edited successfully.", dbConnection);
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Editing quest failed.");
+            Service.exceptionHandling(e,"Editing quest failed.");
         }
     }
 
@@ -84,11 +79,9 @@ public class QuestDAO implements DAO<Quest> {
             while (allQuests.next()) {
                 quests.add(prepareQuest(allQuests));
             }
-            dbConnection.disconnect();
-            System.out.println("Selected quests from data base successfully.");
+            Service.disconnect("Selected quests from data base successfully.", dbConnection);
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Selecting quests from data base failed.");
+            Service.exceptionHandling(e,"Selecting quests from data base failed.");
         }
         return quests;
     }
@@ -104,11 +97,9 @@ public class QuestDAO implements DAO<Quest> {
             while (allQuests.next()) {
                 return prepareQuest(allQuests);
             }
-            dbConnection.disconnect();
-            System.out.println("Selected quest from data base successfully.");
+            Service.disconnect("Selected quest from data base successfully.", dbConnection);
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Selecting quest from data base failed.");
+            Service.exceptionHandling(e,"Selecting quest from data base failed.");
         }
         throw new AbsenceOfRecordsException();
     }
@@ -125,11 +116,9 @@ public class QuestDAO implements DAO<Quest> {
             while (allQuests.next()) {
                 quests.add(prepareQuest(allQuests));
             }
-            dbConnection.disconnect();
-            System.out.println("Selected students quests from data base successfully.");
+            Service.disconnect("Selected students quests from data base successfully.", dbConnection);
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Selecting students quests from data base failed.");
+            Service.exceptionHandling(e,"Selecting students quests from data base failed.");;
         }
         return quests;
     }
