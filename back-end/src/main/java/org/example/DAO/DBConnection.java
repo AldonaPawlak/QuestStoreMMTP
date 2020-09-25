@@ -13,7 +13,7 @@ public class DBConnection implements Connect {
     private String DBPassword;
     public Statement statement;
     private Connection connection;
-    JSONreader reader;
+    private JSONreader reader;
 
     public DBConnection() {
         this.reader = new JSONreader();
