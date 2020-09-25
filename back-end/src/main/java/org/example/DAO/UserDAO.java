@@ -1,6 +1,7 @@
 package org.example.DAO;
 
 import org.example.DAO.Exception.AbsenceOfRecordsException;
+import org.example.DAO.helpers.Service;
 import org.example.model.Creep;
 import org.example.model.Mentor;
 import org.example.model.Student;
@@ -102,11 +103,9 @@ public class UserDAO implements DAO<User> {
                 }
                 return user;
             }
-            dbConnection.disconnect();
-            System.out.println("Selected user from data base successfully.");
+            Service.closeDBConnection("Selected user from data base successfully.", dbConnection);
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Selecting user from data base failed.");
+            Service.exceptionHandling(e, "Selecting user from data base failed.");
         }
         throw new AbsenceOfRecordsException();
     }
