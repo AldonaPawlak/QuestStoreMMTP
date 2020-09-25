@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import org.example.DAO.DAO;
 import org.example.DAO.DBConnection;
-import org.example.DAO.QuestDAO;
 import org.example.model.Quest;
 
 import java.io.IOException;
@@ -14,9 +14,9 @@ import java.util.List;
 public class QuestHandler implements HttpHandler {
 
     private DBConnection dbConnection;
-    private QuestDAO questDAO;
+    private DAO<Quest> questDAO;
 
-    public QuestHandler(DBConnection dbConnection, QuestDAO questDAO) {
+    public QuestHandler(DBConnection dbConnection, DAO<Quest> questDAO) {
         this.dbConnection = dbConnection;
         this.questDAO = questDAO;
     }

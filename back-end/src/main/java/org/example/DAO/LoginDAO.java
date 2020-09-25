@@ -34,10 +34,10 @@ public class LoginDAO {
                     return getUser(id, role);
                 }
                 dbConnection.disconnect();
-                System.out.println("Selected student from data base successfully.");
+                System.out.println("Selected user from data base successfully.");
             } catch (SQLException e) {
                 e.printStackTrace();
-                System.out.println("Selecting student from data base failed.");
+                System.out.println("Selecting user from data base failed.");
             }
             throw new AbsenceOfRecordsException();
     }
