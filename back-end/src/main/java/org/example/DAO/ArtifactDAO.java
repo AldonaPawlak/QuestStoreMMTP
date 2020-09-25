@@ -1,7 +1,7 @@
-
 package org.example.DAO;
 
 import org.example.DAO.Exception.AbsenceOfRecordsException;
+import org.example.DAO.helpers.Service;
 import org.example.model.Artifact;
 
 import java.sql.PreparedStatement;
@@ -32,9 +32,9 @@ public class ArtifactDAO implements DAO<Artifact>{
             preparedStatement.setString(5, artifact.getDescription());
             preparedStatement.setObject(6, artifact.getTypeID(), Types.OTHER);
             preparedStatement.executeUpdate();
-            disconnect("Artifact added successfully.");
+            Service.closeDBConnection("Artifact added successfully.", dbConnection);
         } catch (SQLException e) {
-            exceptionHandling(e, "Adding artifact failed.");
+            Service.exceptionHandling(e, "Adding artifact failed.");
         }
     }
 
@@ -46,9 +46,9 @@ public class ArtifactDAO implements DAO<Artifact>{
                     "DELETE FROM artifacts WHERE id = ?;");
             preparedStatement.setObject(1, artifact.getId(), Types.OTHER);
             preparedStatement.executeUpdate();
-            disconnect("Artifact removed successfully.");
+            Service.closeDBConnection("Artifact removed successfully.", dbConnection);
         } catch (SQLException e) {
-            exceptionHandling(e, "Removing artifact failed.");
+            Service.exceptionHandling(e, "Removing artifact failed.");
         }
     }
 
@@ -63,9 +63,9 @@ public class ArtifactDAO implements DAO<Artifact>{
             preparedStatement.setString(3, artifact.getDescription());
             preparedStatement.setObject(4, artifact.getId(), Types.OTHER);
             preparedStatement.executeUpdate();
-            disconnect("Artifact edited successfully.");
+            Service.closeDBConnection("Artifact edited successfully.", dbConnection);
         } catch (SQLException e) {
-            exceptionHandling(e, "Editing artifact failed.");
+            Service.exceptionHandling(e, "Editing artifact failed.");
         }
     }
 
@@ -82,9 +82,9 @@ public class ArtifactDAO implements DAO<Artifact>{
             while (allArtifacts.next()) {
                 artifacts.add(prepareArtifact(allArtifacts));
             }
-            disconnect("Selected artifacts from data base successfully.");
+            Service.closeDBConnection("Selected artifacts from data base successfully.", dbConnection);
         } catch (SQLException e) {
-            exceptionHandling(e, "Selecting artifacts from data base failed.");
+            Service.exceptionHandling(e, "Selecting artifacts from data base failed.");
         }
         return artifacts;
     }
@@ -104,9 +104,9 @@ public class ArtifactDAO implements DAO<Artifact>{
             while (allArtifacts.next()) {
                 return prepareArtifact(allArtifacts);
             }
-            disconnect("Selected artifact from data base successfully.");
+            Service.closeDBConnection("Selected artifact from data base successfully.", dbConnection);
         } catch (SQLException e) {
-            exceptionHandling(e, "Selecting artifact from data base failed.");
+            Service.exceptionHandling(e, "Selecting artifact from data base failed.");
         }
         throw new AbsenceOfRecordsException();
     }
@@ -127,9 +127,9 @@ public class ArtifactDAO implements DAO<Artifact>{
             while (allArtifacts.next()) {
                 artifacts.add(prepareArtifact(allArtifacts));
             }
-            disconnect("Selected artifacts from data base successfully.");
+            Service.closeDBConnection("Selected artifacts from data base successfully.", dbConnection);
         } catch (SQLException e) {
-            exceptionHandling(e, "Selecting artifacts from data base failed.");
+            Service.exceptionHandling(e, "Selecting artifacts from data base failed.");
         }
         return artifacts;
     }
@@ -144,16 +144,6 @@ public class ArtifactDAO implements DAO<Artifact>{
         final UUID categoryID = UUID.fromString(allArtifacts.getString("category_id"));
         final UUID typeID = UUID.fromString(allArtifacts.getString("type_id"));
         return new Artifact(id, name, price, category, description, type, categoryID, typeID);
-    }
-
-    private void exceptionHandling(SQLException e, String message) {
-        e.printStackTrace();
-        System.out.println(message);
-    }
-
-    private void disconnect(String message) {
-        dbConnection.disconnect();
-        System.out.println(message);
     }
 
 }

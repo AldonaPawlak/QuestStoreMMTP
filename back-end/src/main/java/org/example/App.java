@@ -6,9 +6,11 @@ import org.example.DAO.*;
 import org.example.handlers.*;
 import org.example.handlers.MentorProfileHandler;
 import org.example.handlers.StudentHandler;
+import org.example.model.Quest;
+import org.example.model.User;
 
-import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.sql.PreparedStatement;
 
 public class App
 {
@@ -19,13 +21,13 @@ public class App
         LoginDAO loginDAO = new LoginDAO(dbConnection);
         MentorDAO mentorDAO = new MentorDAO(dbConnection);
         StudentDAO studentDAO = new StudentDAO(dbConnection);
-        CreepDAO creepDAO = new CreepDAO(dbConnection);
-        QuestDAO questDAO = new QuestDAO(dbConnection);
+        DAO<Quest> questDAO = new QuestDAO(dbConnection);
+        DAO<User> userDAO = new UserDAO(dbConnection);
 
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
         server.createContext("/mentor", new MentorHandler(dbConnection, mentorDAO));
         server.createContext("/student", new StudentHandler(dbConnection, studentDAO));
-        server.createContext("/mentorView", new MentorProfileHandler(dbConnection, mentorDAO, studentDAO, creepDAO));
+        server.createContext("/mentorView", new MentorProfileHandler(dbConnection, userDAO));
         server.createContext("/login", new LoginHandler(dbConnection, loginDAO));
         server.createContext("/shop", new ArtifactHandler(dbConnection, artifactDAO));
         server.createContext("/quest", new QuestHandler(dbConnection, questDAO));
