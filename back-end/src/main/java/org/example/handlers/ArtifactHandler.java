@@ -13,12 +13,12 @@ import java.util.List;
 
 public class ArtifactHandler implements HttpHandler {
 
-    DBConnection dbConnection;
-    ArtifactDAO artifactDAO;
+    private DBConnection dbConnection;
+    private ArtifactDAO artifactDAO;
 
-    public ArtifactHandler() {
-        this.dbConnection = new DBConnection();
-        this.artifactDAO = new ArtifactDAO(dbConnection);
+    public ArtifactHandler(DBConnection dbConnection, ArtifactDAO artifactDAO) {
+        this.dbConnection = dbConnection;
+        this.artifactDAO = artifactDAO;
     }
 
 
@@ -26,12 +26,10 @@ public class ArtifactHandler implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
         String method = exchange.getRequestMethod();
         String response = "";
-        System.out.println("Method " + method);
         int status = 200;
         try {
             if (method.equals("GET")) {
                 response = getArtifacts();
-                System.out.println(response);
                 ResponseHelper.sendResponse(response, exchange, status);
             }
         } catch (Exception e) {

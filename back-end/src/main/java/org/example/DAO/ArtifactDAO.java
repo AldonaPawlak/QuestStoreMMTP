@@ -1,3 +1,4 @@
+
 package org.example.DAO;
 
 import org.example.DAO.Exception.AbsenceOfRecordsException;
@@ -19,7 +20,7 @@ public class ArtifactDAO implements DAO<Artifact>{
 
     @Override
     public void add(Artifact artifact) {
-       try {
+        try {
             dbConnection.connect();
             PreparedStatement preparedStatement = dbConnection.getConnection().prepareStatement(
                     "INSERT INTO artifacts (id, name, price, category_id, description, artifact_type_id) " +
@@ -31,11 +32,9 @@ public class ArtifactDAO implements DAO<Artifact>{
             preparedStatement.setString(5, artifact.getDescription());
             preparedStatement.setObject(6, artifact.getTypeID(), Types.OTHER);
             preparedStatement.executeUpdate();
-            dbConnection.disconnect();
-           System.out.println("Artifact added successfully.");
+            disconnect("Artifact added successfully.");
         } catch (SQLException e) {
-            e.printStackTrace();
-           System.out.println("Adding artifact failed.");
+            exceptionHandling(e, "Adding artifact failed.");
         }
     }
 
@@ -47,11 +46,9 @@ public class ArtifactDAO implements DAO<Artifact>{
                     "DELETE FROM artifacts WHERE id = ?;");
             preparedStatement.setObject(1, artifact.getId(), Types.OTHER);
             preparedStatement.executeUpdate();
-            dbConnection.disconnect();
-            System.out.println("Artifact removed successfully.");
+            disconnect("Artifact removed successfully.");
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Removing artifact failed.");
+            exceptionHandling(e, "Removing artifact failed.");
         }
     }
 
@@ -66,11 +63,9 @@ public class ArtifactDAO implements DAO<Artifact>{
             preparedStatement.setString(3, artifact.getDescription());
             preparedStatement.setObject(4, artifact.getId(), Types.OTHER);
             preparedStatement.executeUpdate();
-            System.out.println("Artifact edited successfully.");
-            dbConnection.disconnect();
+            disconnect("Artifact edited successfully.");
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Editing artifact failed.");
+            exceptionHandling(e, "Editing artifact failed.");
         }
     }
 
@@ -87,11 +82,9 @@ public class ArtifactDAO implements DAO<Artifact>{
             while (allArtifacts.next()) {
                 artifacts.add(prepareArtifact(allArtifacts));
             }
-            dbConnection.disconnect();
-            System.out.println("Selected artifacts from data base successfully.");
+            disconnect("Selected artifacts from data base successfully.");
         } catch (SQLException e) {
-            System.out.println("Selecting artifacts from data base failed.");
-            e.printStackTrace();
+            exceptionHandling(e, "Selecting artifacts from data base failed.");
         }
         return artifacts;
     }
@@ -111,11 +104,9 @@ public class ArtifactDAO implements DAO<Artifact>{
             while (allArtifacts.next()) {
                 return prepareArtifact(allArtifacts);
             }
-            dbConnection.disconnect();
-            System.out.println("Selected artifact from data base successfully.");
+            disconnect("Selected artifact from data base successfully.");
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Selecting artifact from data base failed.");
+            exceptionHandling(e, "Selecting artifact from data base failed.");
         }
         throw new AbsenceOfRecordsException();
     }
@@ -136,27 +127,34 @@ public class ArtifactDAO implements DAO<Artifact>{
             while (allArtifacts.next()) {
                 artifacts.add(prepareArtifact(allArtifacts));
             }
-            dbConnection.disconnect();
-            System.out.println("Selected artifacts from data base successfully.");
+            disconnect("Selected artifacts from data base successfully.");
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Selecting artifacts from data base failed.");
+            exceptionHandling(e, "Selecting artifacts from data base failed.");
         }
         return artifacts;
     }
 
     private Artifact prepareArtifact(ResultSet allArtifacts) throws SQLException {
-            final UUID id = UUID.fromString(allArtifacts.getString("id"));
-            final String name = allArtifacts.getString("name");
-            final int price = allArtifacts.getInt("price");
-            final String category = allArtifacts.getString("category");
-            final String description = allArtifacts.getString("description");
-            final String type = allArtifacts.getString("type");
-            final UUID categoryID = UUID.fromString(allArtifacts.getString("category_id"));
-            final UUID typeID = UUID.fromString(allArtifacts.getString("type_id"));
-            Artifact artifact = new Artifact(id, name, price, category, description, type, categoryID, typeID);
-            return artifact;
+        final UUID id = UUID.fromString(allArtifacts.getString("id"));
+        final String name = allArtifacts.getString("name");
+        final int price = allArtifacts.getInt("price");
+        final String category = allArtifacts.getString("category");
+        final String description = allArtifacts.getString("description");
+        final String type = allArtifacts.getString("type");
+        final UUID categoryID = UUID.fromString(allArtifacts.getString("category_id"));
+        final UUID typeID = UUID.fromString(allArtifacts.getString("type_id"));
+        Artifact artifact = new Artifact(id, name, price, category, description, type, categoryID, typeID);
+        return artifact;
+    }
+
+    private void exceptionHandling(SQLException e, String message) {
+        e.printStackTrace();
+        System.out.println(message);
+    }
+
+    private void disconnect(String message) {
+        dbConnection.disconnect();
+        System.out.println(message);
     }
 
 }
-

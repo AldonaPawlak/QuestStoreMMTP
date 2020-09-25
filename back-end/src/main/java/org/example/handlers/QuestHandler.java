@@ -13,12 +13,12 @@ import java.util.List;
 
 public class QuestHandler implements HttpHandler {
 
-    DBConnection dbConnection;
-    QuestDAO questDAO;
+    private DBConnection dbConnection;
+    private QuestDAO questDAO;
 
-    public QuestHandler() {
-        this.dbConnection = new DBConnection();
-        this.questDAO = new QuestDAO(dbConnection);
+    public QuestHandler(DBConnection dbConnection, QuestDAO questDAO) {
+        this.dbConnection = dbConnection;
+        this.questDAO = questDAO;
     }
 
 
@@ -26,12 +26,10 @@ public class QuestHandler implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
         String method = exchange.getRequestMethod();
         String response = "";
-        System.out.println("Method " + method);
         int status = 200;
         try {
             if (method.equals("GET")) {
                 response = getQuests();
-                System.out.println(response);
                 ResponseHelper.sendResponse(response, exchange, status);
             }
         } catch (Exception e) {
