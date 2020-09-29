@@ -1,13 +1,17 @@
 package org.example.handlers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
+import org.example.DAO.DAO;
+import org.example.DAO.DBConnection;
 import org.example.DAO.QuestDAO;
 import org.example.model.Quest;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -16,15 +20,27 @@ import java.util.UUID;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class QuestHandlerTest {
 
+    @Mock
+    DBConnection dbConnection;
+
+    @Mock
+    DAO<Quest> questDAO;
+
+    QuestHandler questHandler;
+
+    @BeforeEach
+    void init(){
+        questHandler = new QuestHandler(dbConnection, questDAO);
+    }
+
 
     @Test
-    void should_displayQuests_when_Logged() {
+    void should_displayQuests() throws IOException {
 
         // Arrange
         HttpExchange exchange = mock(HttpExchange.class);
@@ -39,11 +55,15 @@ class QuestHandlerTest {
         when(exchange.getRequestMethod()).thenReturn("GET");
         when(questDAO.getAll()).thenReturn(questsExpected);
 
+        questHandler.handle(exchange);
+
+
         // Assert
         Assertions.assertAll(
-                () -> assertEquals(exchange.getRequestMethod(), "GET", "should return the right method"),
-                () -> assertThat(questDAO.getAll(), is(equalTo(questsExpected))),
-                () -> assertEquals(expected, mapper.writeValueAsString(questsExpected), "should return the right string")
+                () -> verify(exchange, times(1)).getRequestMethod()
+//                () -> assertEquals(exchange.getRequestMethod(), "GET", "should return the right method"),
+//                () -> assertThat(questDAO.getAll(), is(equalTo(questsExpected))),
+//                () -> assertEquals(expected, mapper.writeValueAsString(questsExpected), "should return the right string")
         );
 
     }

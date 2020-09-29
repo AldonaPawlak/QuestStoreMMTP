@@ -95,6 +95,7 @@ public class StudentDAO /*extends UserDAO*/ implements DAO<Student> {
         }
     }
 
+
     public List<Student> getAll() {
         List<Student> students = new ArrayList<>();
         try {
