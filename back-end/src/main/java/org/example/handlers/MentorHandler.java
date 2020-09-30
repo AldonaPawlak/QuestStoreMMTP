@@ -91,7 +91,7 @@ public class MentorHandler implements HttpHandler {
         mentorDAO.edit(mentor);
     }
 
-    private void editMentorSurname(String userDetailsID, String newSurname) throws AbsenceOfRecordsException {
+    void editMentorSurname(String userDetailsID, String newSurname) throws AbsenceOfRecordsException {
         Mentor mentor = mentorDAO.get(UUID.fromString(userDetailsID));
         mentor.setSurname(newSurname);
         mentorDAO.edit(mentor);
