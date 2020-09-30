@@ -2,6 +2,7 @@ package org.example.DAO;
 
 import org.example.DAO.Exception.AbsenceOfRecordsException;
 import org.example.config.PasswordCrypter;
+import org.example.model.Mentor;
 import org.example.model.User;
 
 
@@ -13,9 +14,22 @@ import java.util.UUID;
 public class LoginDAO {
 
     DBConnection dbConnection;
+    MentorDAO mentorDAO;
+    StudentDAO studentDAO;
+    CreepDAO creepDAO;
+
+    public LoginDAO(DBConnection dbConnection, MentorDAO mentorDAO, StudentDAO studentDAO, CreepDAO creepDAO) {
+        this.mentorDAO = mentorDAO;
+        this.studentDAO = studentDAO;
+        this.creepDAO = creepDAO;
+        this.dbConnection = dbConnection;
+    }
 
     public LoginDAO(DBConnection dbConnection) {
         this.dbConnection = dbConnection;
+        this.mentorDAO = new MentorDAO(dbConnection);
+        this.studentDAO = new StudentDAO(dbConnection);
+        this.creepDAO = new CreepDAO(dbConnection);
     }
 
     public User login(String email, String password) throws Exception {
@@ -45,13 +59,10 @@ public class LoginDAO {
     private User getUser(UUID id, String role) throws Exception {
         switch (role) {
             case "mentor" :
-                MentorDAO mentorDAO = new MentorDAO(dbConnection);
                 return mentorDAO.get(id);
             case "student" :
-                StudentDAO studentDAOImp = new StudentDAO(dbConnection);
-                return studentDAOImp.get(id);
+                return studentDAO.get(id);
             case "creep" :
-                CreepDAO creepDAO = new CreepDAO(dbConnection);
                 return creepDAO.get(id);
             default :
                 throw new Exception("Can not create user with " + role + " type");
