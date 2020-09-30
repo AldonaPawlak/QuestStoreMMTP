@@ -1,6 +1,5 @@
 package org.example.handlers;
 
-import org.example.DAO.QuestDAO;
 import org.example.DAO.StudentDAO;
 import org.example.DAO.UserDAO;
 import org.example.model.Student;
@@ -11,11 +10,7 @@ import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
+
 
 
 import java.util.ArrayList;
@@ -24,14 +19,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-//@ExtendWith(MockitoExtension.class)
 public class StudentHandlerTest2 {
 
-    List<User> students;
     UserDAO userDAO;
     StudentDAO studentDAO;
-
-
     StudentHandler studentHandler;
 
     @BeforeEach
@@ -39,17 +30,25 @@ public class StudentHandlerTest2 {
         studentDAO = mock(StudentDAO.class);
         userDAO = mock(UserDAO.class);
         studentHandler = new StudentHandler(studentDAO, userDAO);
-//        students = prepareMockData();
     }
 
 
     @Test
-    public void testGetStudents(){
+    public void should_return_all_students(){
+        //given
         when(userDAO.getAll()).thenReturn(prepareMockData());
+
+        //when
         List<User> students = studentHandler.getStudents();
 
         //then
-        Assert.assertThat(students, Matchers.hasSize(2));
+
+        Assertions.assertAll(
+                () -> Assert.assertThat(students, Matchers.hasSize(2)),
+                () -> assertNotEquals(students.size(), 1)
+        );
+
+
     }
 
     public List<User> prepareMockData(){
@@ -60,7 +59,3 @@ public class StudentHandlerTest2 {
     }
 
 }
-
-//    public List<User> getStudents(){
-//        return userDAO.getAll();
-//    }
