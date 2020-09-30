@@ -14,6 +14,11 @@ public class Student extends User {
         this.coins = coins;
     }
 
+    // for tests
+    public Student(String name, String email){
+        super(name, email);
+    };
+
     public int getCoins() {
         return coins;
     }

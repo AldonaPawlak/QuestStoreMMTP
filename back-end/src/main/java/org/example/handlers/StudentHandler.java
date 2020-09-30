@@ -19,12 +19,11 @@ import java.util.UUID;
 
 public class StudentHandler implements HttpHandler {
 
-    private DBConnection dbConnection;
     private StudentDAO studentDAO;
     private DAO<User> userDAO;
+    private List<User> students;
 
-    public StudentHandler(DBConnection dbConnection, StudentDAO studentDAO, DAO<User> userDAO) {
-        this.dbConnection = dbConnection;
+    public StudentHandler(StudentDAO studentDAO, DAO<User> userDAO) {
         this.studentDAO = studentDAO;
         this.userDAO = userDAO;
     }
@@ -33,10 +32,13 @@ public class StudentHandler implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
         String method = exchange.getRequestMethod();
         String response = "";
+
         int status = 200;
         try {
             if (method.equals("GET")) {
-                response = getStudents();
+//                response = getStudents();
+                students = getStudents();
+                response = makeJSONFromStudents(students);
                 ResponseHelper.sendResponse(response, exchange, status);
             }
             if (method.equals("POST")) {
@@ -61,7 +63,8 @@ public class StudentHandler implements HttpHandler {
                 if (urlParts[3].equals("add")) {
                     addStudent();
                 }
-                response = getStudents();
+//                response = getStudents();
+                response = makeJSONFromStudents(students);
                 ResponseHelper.sendResponse(response, exchange, status);
             }
         } catch (Exception e) {
@@ -70,8 +73,17 @@ public class StudentHandler implements HttpHandler {
         }
     }
 
-    private String getStudents() throws JsonProcessingException {
-        List<User> students = userDAO.getAll();
+//    private String getStudents() throws JsonProcessingException {
+//        List<User> students = userDAO.getAll();
+//        ObjectMapper mapper = new ObjectMapper();
+//        return mapper.writeValueAsString(students);
+//    }
+
+    public List<User> getStudents(){
+        return userDAO.getAll();
+    }
+
+    public String makeJSONFromStudents(List<User> students) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(students);
     }
@@ -105,7 +117,7 @@ public class StudentHandler implements HttpHandler {
         studentDAO.edit(student);
     }
 
-    private void addStudent() {
+    void addStudent() {
         User user = new Student(UUID.randomUUID(), "Name", "Surname", "mail@mail.com",
                 PasswordCrypter.crypter("password"), UUID.fromString("745792a7-681b-4efe-abdd-ca027678b397"),
                 true, "444 222 000", "student", UUID.randomUUID(), 0);

@@ -23,11 +23,11 @@ public class App
 
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
         server.createContext("/mentor", new MentorHandler(dbConnection, mentorDAO, userDAO));
-        server.createContext("/student", new StudentHandler(dbConnection, studentDAO, userDAO));
+        server.createContext("/student", new StudentHandler(studentDAO, userDAO));
         server.createContext("/mentorView", new ProfileHandler(dbConnection, userDAO));
         server.createContext("/login", new LoginHandler(dbConnection, loginDAO));
         server.createContext("/shop", new ArtifactHandler(dbConnection, artifactDAO));
-        server.createContext("/quest", new QuestHandler(dbConnection, questDAO));
+        server.createContext("/quest", new QuestHandler(questDAO));
         server.createContext("/wallet", new WalletHandler(dbConnection, studentDAO, artifactDAO));
 
         server.setExecutor(null);

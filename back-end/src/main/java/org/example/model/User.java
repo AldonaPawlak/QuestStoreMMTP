@@ -28,6 +28,13 @@ public abstract class User {
     }
 
 
+    //for tests
+    public User(String name, String email){
+        this.name = name;
+        this.email = email;
+    };
+
+
     public UUID getUserDetailsID() {
         return userDetailsID;
     }

@@ -13,11 +13,9 @@ import java.util.List;
 
 public class QuestHandler implements HttpHandler {
 
-    private DBConnection dbConnection;
     private DAO<Quest> questDAO;
 
-    public QuestHandler(DBConnection dbConnection, DAO<Quest> questDAO) {
-        this.dbConnection = dbConnection;
+    public QuestHandler(DAO<Quest> questDAO) {
         this.questDAO = questDAO;
     }
 
