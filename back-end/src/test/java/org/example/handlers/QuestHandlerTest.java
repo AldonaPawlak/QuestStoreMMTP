@@ -27,6 +27,7 @@ class QuestHandlerTest {
             new Quest(UUID.fromString("22222222-2222-2222-2222-222222222222"), "name2", "description2", 2));
     String availableQuestsAsJson = "[{\"id\":\"11111111-1111-1111-1111-111111111111\",\"name\":\"name1\",\"description\":\"description1\",\"value\":1}," +
             "{\"id\":\"22222222-2222-2222-2222-222222222222\",\"name\":\"name2\",\"description\":\"description2\",\"value\":2}]";
+
     @BeforeEach
     void init(){
         questDAO = mock(QuestDAO.class);
