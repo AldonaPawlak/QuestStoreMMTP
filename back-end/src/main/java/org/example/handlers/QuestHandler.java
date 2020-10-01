@@ -14,9 +14,11 @@ import java.util.List;
 public class QuestHandler implements HttpHandler {
 
     private DAO<Quest> questDAO;
+    ObjectMapper mapper;
 
-    public QuestHandler(DAO<Quest> questDAO) {
+    public QuestHandler(DAO<Quest> questDAO, ObjectMapper mapper) {
         this.questDAO = questDAO;
+        this.mapper = mapper;
     }
 
 
@@ -36,9 +38,8 @@ public class QuestHandler implements HttpHandler {
         }
     }
 
-    private String getQuests() throws JsonProcessingException {
+    String getQuests() throws JsonProcessingException {
         List<Quest> quests = questDAO.getAll();
-        ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(quests);
     }
 
