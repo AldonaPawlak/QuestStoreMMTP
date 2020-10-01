@@ -24,6 +24,8 @@ public class Artifact {
         this.typeID = typeID;
     }
 
+    public Artifact(String name, int price){};
+
     public UUID getId() {
         return id;
     }

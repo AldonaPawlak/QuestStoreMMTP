@@ -13,12 +13,12 @@ import java.util.List;
 
 public class ArtifactHandler implements HttpHandler {
 
-    private DBConnection dbConnection;
     private DAO<Artifact> artifactDAO;
+    private ObjectMapper mapper;
 
-    public ArtifactHandler(DBConnection dbConnection, DAO<Artifact> artifactDAO) {
-        this.dbConnection = dbConnection;
+    public ArtifactHandler(DAO<Artifact> artifactDAO, ObjectMapper mapper) {
         this.artifactDAO = artifactDAO;
+        this.mapper = mapper;
     }
 
 
@@ -38,9 +38,8 @@ public class ArtifactHandler implements HttpHandler {
         }
     }
 
-    private String getArtifacts() throws JsonProcessingException {
+    String getArtifacts() throws JsonProcessingException {
         List<Artifact> artifacts = artifactDAO.getAll();
-        ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(artifacts);
     }
 
