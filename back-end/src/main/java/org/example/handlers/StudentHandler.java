@@ -22,10 +22,12 @@ public class StudentHandler implements HttpHandler {
     private StudentDAO studentDAO;
     private DAO<User> userDAO;
     private List<User> students;
+    private ObjectMapper mapper;
 
-    public StudentHandler(StudentDAO studentDAO, DAO<User> userDAO) {
+    public StudentHandler(StudentDAO studentDAO, DAO<User> userDAO, ObjectMapper mapper) {
         this.studentDAO = studentDAO;
         this.userDAO = userDAO;
+        this.mapper = mapper;
     }
 
     @Override
@@ -84,34 +86,34 @@ public class StudentHandler implements HttpHandler {
     }
 
     public String makeJSONFromStudents(List<User> students) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
+//        ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(students);
     }
 
-    private void removeStudent(String userDetailsID) throws Exception {
+    void removeStudent(String userDetailsID) throws Exception {
         Student student = studentDAO.get(UUID.fromString(userDetailsID));
         studentDAO.remove(student);
     }
 
-    private void editStudentName(String userDetailsID, String newName) throws Exception {
+    void editStudentName(String userDetailsID, String newName) throws Exception {
         Student student = studentDAO.get(UUID.fromString(userDetailsID));
         student.setName(newName);
         studentDAO.edit(student);
     }
 
-    private void editStudentSurname(String userDetailsID, String newSurname) throws AbsenceOfRecordsException {
+    void editStudentSurname(String userDetailsID, String newSurname) throws AbsenceOfRecordsException {
         Student student = studentDAO.get(UUID.fromString(userDetailsID));
         student.setSurname(newSurname);
         studentDAO.edit(student);
     }
 
-    private void editStudentMail(String userDetailsID, String newMail) throws AbsenceOfRecordsException {
+    void editStudentMail(String userDetailsID, String newMail) throws AbsenceOfRecordsException {
         Student student = studentDAO.get(UUID.fromString(userDetailsID));
         student.setEmail(newMail);
         studentDAO.edit(student);
     }
 
-    private void editStudentPhone(String userDetailsID, String newPhone) throws AbsenceOfRecordsException {
+    void editStudentPhone(String userDetailsID, String newPhone) throws AbsenceOfRecordsException {
         Student student = studentDAO.get(UUID.fromString(userDetailsID));
         student.setPhoneNumber(newPhone);
         studentDAO.edit(student);
