@@ -31,4 +31,11 @@ public class Student extends User {
         return studentID;
     }
 
+    @Override
+    public String toString() {
+        return "Student{" +
+                "name=" + super.getName() +
+                ", email=" + super.getEmail() +
+                '}';
+    }
 }

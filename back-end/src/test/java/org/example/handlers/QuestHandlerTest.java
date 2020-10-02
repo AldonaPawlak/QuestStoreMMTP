@@ -1,5 +1,7 @@
 package org.example.handlers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import org.example.DAO.QuestDAO;
@@ -22,15 +24,19 @@ class QuestHandlerTest {
 
     QuestDAO questDAO;
     QuestHandler questHandler;
+    ObjectMapper mapper;
     List<Quest> availableQuests = Arrays.asList(
             new Quest(UUID.fromString("11111111-1111-1111-1111-111111111111"), "name1", "description1", 1),
             new Quest(UUID.fromString("22222222-2222-2222-2222-222222222222"), "name2", "description2", 2));
     String availableQuestsAsJson = "[{\"id\":\"11111111-1111-1111-1111-111111111111\",\"name\":\"name1\",\"description\":\"description1\",\"value\":1}," +
             "{\"id\":\"22222222-2222-2222-2222-222222222222\",\"name\":\"name2\",\"description\":\"description2\",\"value\":2}]";
+    String availableQuestsAsJson2 = "[{\"id\":\"33111111-1111-1111-1111-111111111111\",\"name\":\"name1\",\"description\":\"description1\",\"value\":1}," +
+            "{\"id\":\"22222222-2222-2222-2222-222222222222\",\"name\":\"name2\",\"description\":\"description2\",\"value\":2}]";
     @BeforeEach
     void init(){
         questDAO = mock(QuestDAO.class);
-        questHandler = new QuestHandler(questDAO);
+        mapper = mock(ObjectMapper.class);
+        questHandler = new QuestHandler(questDAO, mapper);
     }
 
 
@@ -45,6 +51,7 @@ class QuestHandlerTest {
         OutputStream os = mock(OutputStream.class);
         when(exchange.getResponseBody()).thenReturn(os);
         when(questDAO.getAll()).thenReturn(availableQuests);
+        when(mapper.writeValueAsString(availableQuests)).thenReturn(availableQuestsAsJson);
 
         // Act
         questHandler.handle(exchange);
@@ -57,6 +64,20 @@ class QuestHandlerTest {
                 () -> verify(os).write(availableQuestsAsJson.getBytes()),
                 () -> verify(os).close()
         );
+    }
+
+    @Test
+    public void should_return_JSON_from_quests() throws JsonProcessingException {
+        //given
+        when(questDAO.getAll()).thenReturn(availableQuests);
+        when(mapper.writeValueAsString(availableQuests)).thenReturn(availableQuestsAsJson);
+
+        //then
+        Assertions.assertAll(
+                () -> assertEquals(availableQuestsAsJson, questHandler.getQuests()),
+                () -> assertNotEquals(availableQuestsAsJson2, questHandler.getQuests())
+        );
+
     }
 
 }
