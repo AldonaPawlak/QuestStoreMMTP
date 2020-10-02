@@ -8,6 +8,9 @@ import java.util.Map;
 public class Parser {
 
     public static Map<String, String> parseFormData(String formData) throws UnsupportedEncodingException {
+        if (formData == null) {
+            throw new IllegalArgumentException();
+        }
         Map<String, String> map = new HashMap<>();
         String[] pairs = formData.split("&");
         for(String pair : pairs){
